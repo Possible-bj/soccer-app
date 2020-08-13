@@ -93,6 +93,7 @@ let createSeasonSwitch = (season, snDis) => {
         let btn = document.createElement('button')
         btn.textContent = i + 1
         panel.append(btn)
+        panel.scrollLeft = btn.clientWidth * (i - 1)
     }
 }
   let dynamicSort = (prop, order) => {

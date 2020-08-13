@@ -19,7 +19,7 @@ const readTeam = (command, table, sn) => {
     const url = `/request?command=${command}&sn=${sn}`
 fetch(url).then((response) => {
         response.json().then((data) => {
-            if (data.length === 0) return alert('Table is blank')
+            // if (data.length === 0) return alert('Table is blank')
             data.sort(dynamicSort('Pts', 'desc'))
             for(i=1; i<=data.length; i++) {
                 addRows(table)                
@@ -100,6 +100,7 @@ let createSeasonSwitch = (season, snDis) => {
         let btn = document.createElement('button')
         btn.textContent = i + 1
         panel.append(btn)
+        panel.scrollLeft = btn.clientWidth * (i - 1)
     }
 }
 let deleteTable = (table) => {

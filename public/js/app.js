@@ -18,7 +18,7 @@ const readTeam = (command, table, sn) => {
     const url = `/request?command=${command}&sn=${sn}`
 fetch(url).then((response) => {
         response.json().then((data) => {
-            if (data.length === 0) return alert('Table is blank')
+            // if (data.length === 0) return alert('Table is blank')
             data.sort(dynamicSort('Pts', 'desc'))
             for(i=1; i<=data.length; i++) {
                 addRows(table)                
