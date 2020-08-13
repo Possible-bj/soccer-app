@@ -1,0 +1,264 @@
+* {
+    box-sizing: border-box;
+    transition: all .5s ease;
+}
+* button,
+* input {
+    border: 2px solid transparent;
+    outline-color: rgb(7, 138, 7);
+    padding: 10px;  
+}
+button {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.5));
+    box-shadow: 1px 1px 1px 1px #000;
+}
+body {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    margin: 0 auto;
+    padding: 0 16px;
+    color: #333;
+    font-family: arial, sans-serif;
+    display: flex;
+    flex-direction: column; 
+}
+body:before {
+    content: '';
+    position: fixed;
+    right: 0;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    margin: auto;
+    width: 100%;
+    height: 100%;
+    background-image: url('../img/soccer-bg-2.jpeg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;  
+    filter: blur(15px);
+    z-index: -10;
+
+}
+.body-content {
+    position: relative;
+    flex-grow: 1;
+}
+footer {
+    border-top: 1px solid #eeeeee;
+    margin-top: 16px;
+    padding: 16px;
+    font-size: 20px;
+    color: rgb(252, 252, 252);
+}
+#table {
+    width: 100%;
+    height: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+.table-tab, .result-tab {
+    height: 100vh;
+    margin: auto;
+}
+thead {
+    font-weight: 600;
+}
+td:nth-child(2) {
+    text-align: left !important;
+    text-transform: capitalize;
+    font-weight: 600;
+}
+ thead tr, thead td {
+  background: rgb(1, 2, 17);
+  color: #fff;
+  text-align: center;
+  height: 30px;
+}
+tr {
+    background: #fff;
+    /* border: .5px solid #888; */
+}
+tbody td {
+    border-right: .05px solid rgb(0, 0, 0);
+}
+.first-four {
+    background: rgb(107, 212, 107);
+}
+.five-six {
+    background: rgb(231, 231, 137);
+}
+.last-four {
+    background: rgb(218, 106, 106);
+}
+header {
+    text-align: center;
+}
+header h1 {
+    font-size: 64px;
+    color: rgb(1, 2, 17);
+}
+header a {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    font-size: 20px;
+    text-transform: capitalize;
+    margin: 0 5px 0 10px;
+}
+#result-pane {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #333;
+    margin: auto;
+}
+#result-head, #result-foot {
+    height: 5%;
+    width: 100%;
+    background: rgb(1, 2, 17);
+    text-align: center;
+    color: #fff;
+    font-size: 150%;
+    font-weight: 600;
+}
+#results {
+    flex-grow: 1;
+    overflow: auto;
+}
+#results::-webkit-scrollbar {
+    width: 0;
+    display: none;
+}
+.match {
+    width: 100%;
+    height: 50px;
+    display: flex;
+}
+.home-team, .away-team {
+    width: 40%;
+    height: 100%;
+    border: 1px solid transparent; 
+    background: #fff;
+    margin: auto;
+    font-family: Arial, Helvetica, sans-serif;
+    text-transform: uppercase;
+    font-size: 100%;
+    font-weight: 600;
+}
+.away-team {
+    text-align: right;
+}
+.home-team {
+    text-align: left;
+}
+.home-score, .away-score {
+    width: 10%;
+    height: 100%;
+    border: 1px solid transparent;
+    background: #fff;
+    margin: auto;
+    font-weight: 600;
+}
+
+.rel {
+    position: relative;
+}
+.abs {
+    position: absolute;
+}
+.fix {
+    position: fixed;
+}
+.margin-auto {
+    margin: auto;
+}
+.centered {
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+.top-right {
+    right: 0;
+    top: 0;
+}
+.top-center {
+    left: 0;
+    right: 0;
+    top: 0;
+}
+.switch {
+    position: relative;
+    display: flex;
+    width: 100%;
+    background: transparent;
+    border: transparent; 
+    height: 40px;
+    margin-top: 10px;
+    border-radius: 3px;
+}
+.switch-left, .switch-right {
+    height: 100%;
+    color: #000;
+    background: #fff;
+    border: transparent;
+    font-size: 150%;
+    font-weight: 600;
+}
+.switch-right {
+    max-width: 75%;
+    overflow-x: auto; 
+    overflow-y: hidden;
+    white-space: nowrap;
+    display: flex;
+    cursor: pointer;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;  
+}
+.switch-left {
+    background: rgb(163, 235, 163);
+    width: 25%;
+    text-align: center;
+    padding: 5px;
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+.switch-right button {
+    position: relative;
+    height: 100%;
+    width: 50px;
+    background: rgb(163, 235, 163);
+    border: .5px solid rgb(7, 138, 7);
+    font-weight: bold;
+    font-size: 18px;
+    flex-shrink: 0;
+    cursor: pointer;
+    outline-color: rgb(7, 138, 7);
+}
+.switch button:last-child {
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+.switch-right::-webkit-scrollbar {
+    height: 3px;
+}
+.switch-right::-webkit-scrollbar-thumb {
+    height: 3px;
+    background: rgb(7, 138, 7);
+}
+.switch-right::-webkit-scrollbar-track {    
+    background: rgb(163, 235, 163);
+}
+.flex {
+    display: flex;
+}
+.flex-column {
+    flex-direction: column;
+}
+.no-shrink {
+    flex-shrink: 0;
+}
+.curved-edges {
+    border-radius: 3px;
+}

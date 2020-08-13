@@ -1,0 +1,24 @@
+#team-pane, .row {
+    display: flex;
+    flex-direction: column;
+}
+.row img {
+    width: 100%;
+    position: relative;    
+    margin: 16px auto;
+}
+.team {
+    position: relative;
+    background: linear-gradient(-45deg, rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.5));
+    /* linear-gradient(-45deg, rgba(5, 90, 16, .5), rgba(10, 167, 31, .5)); */
+    box-shadow: -.5px -.5px 1px 1px #000;
+    border-radius: 3px;
+    margin: 10px;
+}
+.team-logo {
+    width: 200px;
+    margin: auto;
+}
+.team-info {
+    height: 200px;
+}

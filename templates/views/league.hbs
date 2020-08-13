@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport", content="width=device-width, initial-scale=1"/>
+    <title>
+        Supreme League
+    </title>
+    <link rel="stylesheet" href="/css/main.css" type="text/css"/>
+    <link rel="stylesheet" href="/css/league-style.css" type="text/css"/>
+    <link rel="stylesheet" href="/css/lgscreen.css" type="text/css"/>
+    <style>
+    
+    </style>
+</head>
+
+<body>
+    <div class="body-content">
+        {{>header}}
+         <div class="switch">
+            <div class="switch-left rel">Season</div>
+            <div class="switch-right rel">
+               
+            </div>
+        </div>
+         <h2>Season <span id="sn-display"></span></h2>
+       <div class="league-main-section" id="league-ms">
+           
+    <div>
+    <table id='table' >
+        <thead>
+            <tr>
+                <td>P</td>
+                <td>Team</td>
+                <td>P</td>
+                <td>W</td>
+                <td>D</td>
+                <td>L</td>
+                <td>GF</td>
+                <td>GA</td>
+                <td>GD</td>
+                <td>Pts</td>
+            </tr>
+        </thead>
+        <tbody id='tbody'>
+
+        </tbody>
+    </table>
+       </div>
+
+         <div align="center" class="coronation">
+                    <div class="coronation-head">
+                        <div class="coronation-title"><h1>The King</h1></div>
+                        <div class="crown"><img id="crown"/></div>
+                    </div>
+                    <div class="coronation-body"><img id="coronation-logo" /></div>
+                </div>
+       </div>
+
+
+    </div>
+    {{>footer}}
+    <script src="../js/league-app.js">
+
+    </script>
+</body>
+</html>

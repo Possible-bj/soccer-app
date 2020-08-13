@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport", content="width=device-width, initial-scale=1"/>
+    <title>
+        Supreme League   
+    </title>
+    <link rel="stylesheet" href="/css/main.css" type="text/css"/>
+    <link rel="stylesheet" href="/css/lgscreen.css" type="text/css"/>
+    <style>
+    
+    </style>
+</head>
+
+<body>
+    <div class="body-content">
+        {{>header}}
+        <h2>Season <span id="sn-display"></span> </h2>
+<div class="home-tab">
+    <div class="table-tab">
+    <table id='table' >
+        <thead>
+            <tr>
+                <td>P</td>
+                <td>Team</td>
+                <td>P</td>
+                <td>W</td>
+                <td>D</td>
+                <td>L</td>
+                <td>GF</td>
+                <td>GA</td>
+                <td>GD</td>
+                <td>Pts</td>
+            </tr>
+        </thead>
+        <tbody id='tbody'>
+
+        </tbody>
+    </table>
+    </div>
+<hr/>
+    <div class="result-tab">
+<div id="result-pane">
+    <div id="result-head">Results</div>
+    <div id="results">
+ {{!-- <div class="match">
+            <button class="home-team">home-team</button>
+            <button class="home-score">0</button>
+            <button class="away-score">0</button>
+            <button class="away-team">away-team</button>
+     </div> --}}
+     {{!-- 441130 --}}
+    </div>
+    <div id="result-foot">Supreme League</div>
+</div>
+    </div>
+
+</div>
+       
+
+
+
+
+
+
+    </div>
+    {{>footer}}    
+    <script src="/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport", content="width=device-width, initial-scale=1"/>
+    <title>
+Admin Board
+    </title>
+    <link rel="stylesheet" href="/css/main.css" type="text/css"/>
+    <link rel="stylesheet" href="/css/lgscreen.css" type="text/css"/>
+    <link rel="stylesheet" href="/css/admin-style.css" type="text/css"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <style>
+    
+    </style>
+</head>
+
+<body>
+
+<div class="body-content">
+{{>header}}
+    <div id='form-pane' class=" margin-auto centered">
+        <div class="top margin top-center">
+            <button id="ns" class="top-btn margin-auto">New league</button>  
+            <button id="nscl" class="top-btn margin-auto">New SCL</button>          
+        </div>
+        <div class="lg-format">
+            <div id="first-section" class="rel margin-auto">
+                <div class="first-section-pane act-info rel margin-auto">
+                <b>
+                        <p>When creating a New Result to display, first click on <i>New Result</i> for a new match day,
+                            then click on <i>New Result</i>  </p>
+                        <p>When a season is done and dusted, to start a new season; click on <i>New League</i> for League and <i>New SCL</i> for SCL NOTE: Do not click on New Season while a season is still on</p>
+                    </b>
+                </div>
+                <form action="" id="res-form" class="first-section-pane rel margin-auto">
+                    <center> <h3>Update League Results</h3>
+            <br/>
+    
+            </center>
+            <div id="s-r">
+                        <input id="nr" type="button" class=" margin-auto" value="New Result">
+                    </div>
+                    <div id="h-a">
+                        <input type="text" id="h" placeholder="Home team">
+                        <input type="number" id="h-s" placeholder="0">
+                        <input type="number" id="a-s" placeholder="0">
+                        <input type="text" id="a" placeholder="Away team">
+                    </div>
+                    <button>Submit</button>
+                </form>
+            </div>
+        <div class="second-section">
+            <div class="scl-action-section curved-edges rel margin-auto">
+                <div class="group-action rel">
+                    <form align="center" action="" class="group-action-form rel">
+                        <input type="text" class="group-action-input" placeholder="insert a team into a group">
+                        <button class="group-action-btn">Submit</button>
+                    </form>
+                    <div id="entry-fb"></div>
+                    <div class="scl-fixtures flex flex-column">
+                        <div class="scl-fixture-controls flex flex-column rel margin-auto">
+                            <div class="scl-stages flex no-shrink rel margin-auto">
+                                <div class="scl-stage-ind"></div>
+                               
+                                    <button class="scl-group-chn-btn">
+                                   <label for="A">A</label> 
+                                    <input type="radio" name="group" id="A" value="A">
+                                </button class="scl-group-chn-btn">
+                               
+                                
+                                <button class="scl-group-chn-btn">
+                                    <label for="B">B</label> 
+                                    <input type="radio" name="group" id="B" value="B">
+                                </button>
+                                <button class="scl-group-chn-btn">
+                                    <label for="C">C</label> 
+                                    <input type="radio" name="group" id="C" value="C">
+                                </button>
+                                <button class="scl-group-chn-btn">
+                                    <label for="D">D</label> 
+                                    <input type="radio" name="group" id="D" value="D">
+                                </button>
+                            </div>
+                            <div class="scl-leg-changer flex no-shrink rel margin-auto">
+                                <button class="scl-leg-chn-btn">
+                                    <label for="first-leg">First Leg</label> 
+                                    <input type="radio" name="leg" id="first-leg" value="firstLeg">
+                                </button>
+                                <button class="scl-leg-chn-btn">
+                                    <label for="second-leg">Second Leg</label> 
+                                    <input type="radio" name="leg" id="second-leg" value="secondLeg">
+                                </button>
+                            </div>
+                        </div>
+                        <div class="fixture-box rel curved-edges">
+                            <div class="leg-boxes flex">
+                                <div class="first-leg-box flex flex-column no-shrink">
+                                    <div align="center" class="draw rel">
+                    <input class="home-draw" placeholder="Possible" value="">
+                    <div class="score-board rel">
+                        <div class="scores margin-auto">
+                            <input type="number" class="home-score" placeholder="0" value="">
+                            <input type="number" class="away-score" placeholder="0" value="">
+                        </div>
+                    </div>
+                    <input class="away-draw" placeholder="Smash Pro" value="">
+                    
+                </div>
+                <button class="fix-res-sub margin-auto">Submit</button>
+
+{{!-- admin creator section --}}
+    <div class="admin-pane rel margin-auto">
+        <div class="admin-pane-form max-percent flex flex-column rel margin-auto curved-edges">
+            <div class="admin-pane-input-row flex max-percent">
+                <input type="text" class="admin-pane-input admin-name no-shrink margin-auto curved-edges" placeholder="Admin name">
+                <input type="text" class="admin-pane-input admin-pass no-shrink margin-auto curved-edges" placeholder="Admin pass">
+            </div>
+            <div class="admin-pane-btn-row flex max-percent">
+                <button class="admin-pane-btn margin-auto">create</button>
+                <button class="admin-pane-btn margin-auto">update</button>
+                <button class="admin-pane-btn margin-auto">delete</button>
+            </div>
+        </div>
+    </div>
+
+                        </div>
+                            </div>
+                        </div>
+                        <button class="stage-chn-btn curved-edges">Start Scl</button>
+                    </div>
+                </div>
+                
+            </div>
+        <div class="league-action-section curved-edges rel margin-auto">
+            <center> <h3>Add, Delete and Update a team stastistics</h3>
+            </center>
+            <div id="table-form" class="rel">
+        <label for="team">Team Name</label>
+        <input id="team" required="true" placeholder="Team Name">
+        <label for="P">No of Played matches</label>
+        <input id="P" required="true" placeholder="Played">
+        <label for="W">Wins</label>
+        <input id="W" required="true" placeholder="wins">
+        <label for="D">Draws</label>
+        <input id="D" required="true" placeholder="draws">
+        <label for="L">Losses</label>
+        <input id="L" required="true" placeholder="losses">
+        <label for="GF">Scored</label>
+        <input id="GF" required="true" placeholder="Goals Scored">
+        <label for="GA">Conceed</label>
+        <input id="GA" required="true" placeholder="Goals Conceeded">
+        <label for="GD">Goals Down</label>
+        <input id="GD" required="true" placeholder="Goals Down">
+        <label for="Pts">Points</label>
+        <input id="Pts" required="true" placeholder="Team Points">  
+
+
+    <div id="FB"></div>
+    <div id="btn-pane" class="flex rel margin-auto">
+            <button class="rel margin-auto no-shrink">Create</button>    
+           <button class="rel margin-auto no-shrink">Update</button>
+           <button class="rel margin-auto no-shrink">Delete</button>
+        </div>
+    </div>
+        </div>
+        </div>
+        
+        </div>
+        
+    </div>
+
+</div>
+    {{>footer}}
+    <div class="auth-pane fix margin-auto centered">
+        {{>header}}
+        <div class="auth-box margin-auto centered">
+        <form id="auth-form-pane" class="abs margin-auto centered">
+            <h4 style="width: 100%; text-align: center; color: #000;" class="rel margin-auto">Please Authenticate</h4>
+           <div align="center" class="form-input-pane abs margin-auto centered">
+               <input type="password" id="auth-input" class="rel">
+               <button id="auth-btn" class="rel">Submit</button>
+            </div>
+        </form>
+    </div>
+    <button id='update-btn' class='abs margin-auto'>
+        <i align="center" style="font-size: 300px; color: #ccc;" class="rel key-box margin-auto fa fa-lock"></i>
+    </button>   
+    </div>
+    <script src="../js/admin-app.js"></script>
+    <script>
+    </script>
+</body>
+</html>

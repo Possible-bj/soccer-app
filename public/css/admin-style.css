@@ -1,0 +1,318 @@
+.body-content {
+    display: none;
+}
+#table-form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+}
+#form-pane {
+    color: #000;
+}
+#form-pane::-webkit-scrollbar {
+    display: none;
+    width: 0;
+}
+.auth-pane {
+    background: linear-gradient(-45deg, rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.5));
+    /* display: none; */
+    width: 100%;
+    height: 100%;   
+}
+.auth-box {
+    display: none
+}
+#update-btn {
+    width: 50%;
+    height: 50%;
+    border: 2px solid transparent;
+    border-radius: 5px;
+    padding: 5px;
+    background: transparent;
+    box-shadow: none;
+    right: 0;
+    left: 0;
+    bottom: 100px;
+}
+#auth-form-pane {
+    width: 45%;
+    height: 100px;
+    background: rgb(42, 218, 86);
+    border-radius: 3px;
+    box-shadow: inset -.5px -.5px 5px 2px #000;
+    padding: 10px;
+    text-shadow: 0 0 2px #000;
+}
+.key-box {
+    width: 90%;
+    height: 90%;
+}
+.key-box::before {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+.league-action-section,
+.scl-action-section {
+    width: 100%;
+    height: 103vh;
+    box-shadow: -.5px -.5px 1px 1px #333;
+    padding: 10px;    
+    overflow: auto;
+    background: linear-gradient(-45deg, rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.5));
+    /* linear-gradient(-45deg, rgb(6, 82, 6), rgb(60, 241, 60)); */
+    margin-top: 10px;
+}
+.league-action-section::-webkit-scrollbar {
+    display: none;
+    width: 0;
+}
+.form-input-pane {
+    width: 90%;
+    height: 30%;
+    display:flex;
+}
+#auth-input {
+    width: 70%;
+}
+#auth-btn {
+    width: 30%;
+}
+#table-form input {
+    border-radius: 3px;
+    margin: 3px 0;
+    padding: 10px;
+    border: 2px solid #000;
+}
+#btn-pane {
+    width: 100%;
+}
+#btn-pane button {
+    width: 30%;
+}
+#right-pane-btn button {
+    width: 50%;
+}
+.top {
+    width: 100%;
+    height: 50px;
+    /* background: rgb(46, 135, 218); */
+    display: flex;
+    margin-top: 15px;
+}
+.top-btn {
+    width: 25%;
+    height: 80%;
+    box-shadow: inset -1px -1px 1px 1px #000;
+    background: linear-gradient(45deg, rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.5));
+    border: transparent;
+    border-radius: 3px;
+    font-weight: 600;
+    font-size: 100%; 
+    color: #fff;
+    text-shadow: .5px .5px 1px #000;
+}
+#first-section {
+    width: 100%;
+}
+#res-form {
+    display: flex;
+    flex-direction: column;
+}
+.first-section-pane {
+    box-shadow:  -.5px -.5px 1px 1px #333;
+    padding: 10px;
+    border-radius: 3px;
+    margin: 10px auto; 
+    background: linear-gradient(45deg, rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.5));
+    /* linear-gradient(-45deg, rgb(6, 82, 6), rgb(60, 241, 60)); */
+}
+/* .scl-action-section {
+} */
+.group-action-form {
+    width: 100%;
+    display: flex;
+    padding: 10px;
+}
+.group-action-input,
+.group-action-btn {
+    border-radius: 3px;
+    padding: 7.5px;
+    border: 2px solid transparent;
+    margin: auto;
+}
+.group-action-input {
+    width: 73%;
+}
+.group-action-btn {
+    width: 25%;
+}
+#res-form input, #res-form button {
+    padding: 10px;
+    border-radius: 3px;
+    border: 2px solid transparent;
+    margin: 5px auto;
+}
+#res-form button {
+    width: 100%;
+}
+#s-r, #h-a {
+    display: flex;
+    width: 100%;
+}
+#h, #a {
+    width: 30%;
+}
+#a {
+    text-align: center;
+}
+#h-s, #a-s {
+    width: 15%;
+    text-align: center;
+}
+#nr {
+    width: 50%;
+    height: 80%;
+    box-shadow: inset -1px -1px 1px 1px #000;
+    background: linear-gradient(45deg, rgba(0, 0, 0, 0), rgba(255, 255, 255, 0));
+    border: 2px solid transparent;
+    border-radius: 3px;
+    color: #fff;
+    font-weight: 600;
+    font-size: 100%; 
+}
+.act-info {
+    margin-bottom: 10px;
+    line-height: 35px;
+}
+i {
+    color:red;
+    text-shadow: 0 0 1px #000;
+    font-weight: 600;
+}
+.scl-fixtures {
+    height: 88vh;
+}
+.scl-fixture-controls {
+    width: 100%;
+    display: none;
+}
+/* .scl-fixture-controls > form, */
+.scl-fixture-controls > div {
+    width: 100%;
+}
+.scl-stage-ind {
+    width: 40%;
+    padding: 10px;
+    background: #fff;
+    border-radius: 3px;
+}
+.scl-group-chn-btn {
+    width: 15%;
+    padding: 10px;
+}
+.scl-leg-chn-btn {
+    width: 50%;
+    padding: 10px; 
+}
+.fixture-box {
+    width: 100%;
+    border: 2px solid #fff;
+    flex-grow: 1;
+}
+.leg-boxes {
+    overflow-x: scroll;
+    height: 100%;
+}
+.leg-boxes::-webkit-scrollbar {
+    display: none;
+}
+.first-leg-box,
+.second-leg-box {
+    width: 100%; 
+    align-self: center;   
+}
+.stage-chn-btn {
+    width: 100%;
+    padding: 10px;
+    font-size: 100%;
+    font-weight: 600;
+}
+/* fixture */
+.draw {
+    display: flex;
+    width: 90%;
+    height: 40px;
+    border-radius: 5px;
+    background: transparent; 
+    margin: 20px auto;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+}
+.fix-res-sub {
+    width: 90%;
+    padding: 10px;
+    font-size: 100;
+    font-weight: 600;
+}
+.home-draw,
+.away-draw {
+    width: 40%;
+    height: 100%;
+    background: #fff;
+    border: transparent;
+    padding: 10px;
+    text-align: center;
+}
+.home-draw {
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+.away-draw {
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+.score-board {
+    width: 20%;
+    border: 1px solid #000;
+    background: rgb(1, 2, 17);
+}
+.score-board .scores {
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+.scores {
+    background: #000;
+}
+.scores input {
+    height: 100%;
+    width: 50%;
+    padding: 10px 0;
+    margin: 0;
+    text-align: center;
+    color: #fff;
+    background: rgb(1, 2, 17);
+}
+footer {
+    display: none
+}
+.admin-pane {
+    width: 90%;
+    margin-top: 50px;
+    display: none;
+}
+.admin-pane-input {
+    width: 47%;
+}
+.admin-pane-btn {
+    margin-top: 10px;
+    width: 30%;
+}
+.max-percent {
+    width: 100%;
+}

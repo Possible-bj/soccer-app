@@ -1,0 +1,47 @@
+.draw {
+    display: flex;
+    width: 80%;
+    border-radius: 5px;
+    background: transparent; 
+    margin: 60px auto;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+}
+.home-draw,
+.away-draw {
+    width: 40%;
+    background: #fff;
+    border: transparent;
+    padding: 10px;
+}
+.home-draw {
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+.away-draw {
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+.score-board {
+    width: 20%;
+    border: 1px solid #000;
+    background: rgb(1, 2, 17);
+}
+.score-board .leg {
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+.first-leg {
+    background: #000;
+    padding: 10px;
+}
+.first-leg:hover {
+    display: none;
+}
+.leg div {
+    width: 50%;
+    padding: 0;
+    color: #fff;
+}

@@ -1,0 +1,148 @@
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+    margin-bottom: 0;
+}
+tr td:nth-child(2) {
+    width: 35%;
+}
+#scl-ms {
+    width: 100%;
+}
+.scroller {
+    margin-top: 25px;
+    overflow-x: scroll;
+    width: 100%;
+    scroll-snap-align: center;
+}
+.scroller::-webkit-scrollbar {
+    display: none;
+}
+.container {
+    scroll-snap-type: x mandatory;
+    height: 100%;
+}
+.stage {
+    width: 100%;
+    align-self: center;
+}
+tbody tr:nth-child(1) td:nth-child(1),
+tbody tr:nth-child(2) td:nth-child(1) {
+ background: rgb(107, 212, 107);
+}
+tbody tr:nth-child(3) td:nth-child(1) {
+ background: rgb(231, 231, 137);
+}
+.g-alpha {
+    position: relative;
+    text-align: center;
+    background: rgb(1, 2, 17);
+    padding: 5px;
+    color: #fff;
+    font-weight: 600;
+}
+.stages {
+    width: 100%;
+    display: flex;
+    height: 50%;
+    background: transparent;
+    /* rgb(1, 2, 17); */
+    border-radius: 6px;
+    border: 2px solid rgb(163, 235, 163);
+}
+.stages button {
+    width: 25%;
+    height: 100%;
+    padding: 10px;
+    border: 2px solid transparent;
+    outline-color:rgb(163, 235, 163);
+}
+.stages button:first-child {
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;  
+}
+.stages button:last-child {
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;  
+}
+.draw {
+    display: flex;
+    width: 80%;
+    border-radius: 5px;
+    background: transparent; 
+    margin: 60px auto;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+}
+.home-draw,
+.away-draw {
+    width: 40%;
+    background: #fff;
+    border: transparent;
+    padding: 10px;
+}
+.home-draw {
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+.away-draw {
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+.score-board {
+    width: 20%;
+    border: 1px solid #000;
+    background: rgb(1, 2, 17);
+}
+.score-board .leg {
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+.first-leg {
+    background: #000;
+    padding: 10px;
+}
+.first-leg:hover {
+    display: none;
+}
+.leg div {
+    width: 50%;
+    padding: 0;
+    color: #fff;
+}
+.aggregate .leg div:first-child {
+    border-right: 1px solid #fff;
+}
+.aggregate {
+    width: 100%;
+    max-height: 0;
+    top: 100%;
+    border: 2px solid #fff;
+    overflow: hidden;
+}
+/* .aggregate::after {
+    position: absolute;
+    content: 'agg';
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    padding: 10px;
+}  */
+.aggregate .leg {
+    padding: 10px;
+}
+.aggregate .leg div {
+    color: #000;
+}
+.coronation-title {
+    color: goldenrod    ;
+    text-transform: uppercase;
+    font-family: serif;
+    font-weight: 600;
+    text-shadow: .5px .5px 2px #000; 
+}

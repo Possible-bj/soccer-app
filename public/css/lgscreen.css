@@ -1,0 +1,62 @@
+@media screen and (min-width: 600px) {
+    .home-tab {
+        display: flex;
+        height: 100%;
+    }
+    #result-pane {
+        height: 100%;
+    }
+    .table-tab, .result-tab {
+        width: 47%;
+    }
+    #table {
+        height: 100%;
+    }
+    .lg-format {
+        display: flex;
+        flex-flow: column;
+        width: 100%;
+    }
+    #first-section {
+        display: flex;
+    }
+    .row {
+        display: flex;
+        flex-direction: row;
+    }
+    .row img {
+        width: 70%;
+    }
+    .team {
+        display: flex;
+        width: 46%;
+        margin: 10px auto;
+        /* background: linear-gradient(-45deg, #000, #00f ) */
+    }
+    .team-logo {
+        display: flex;
+        justify-content: center
+    }
+    .team-logo, .team-info {
+        width: 50%;
+        height: 100%;
+        margin: auto;
+    }
+    .table {
+        margin: 10px;
+        width: 45%;
+    }
+    .league-main-section > div {
+        flex-shrink: 0;
+        width: 50%;
+        height: 100%;
+    }
+    .second-section {
+        display: flex;
+        width: 100%;
+    }
+    .second-section > div,
+    .first-section-pane {
+        width: 47%;
+    }
+}
