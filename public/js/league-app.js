@@ -2,25 +2,23 @@ window.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
         const table = document.querySelector('#tbody')
         const snDis = document.querySelector('#sn-display')
-        const resPane = document.querySelector('#results')
-        fetch('/request?command=leagueseason').then((response) => {
+        // const resPane = document.querySelector('#results')
+        fetch('/metadata').then((response) => {
             response.json().then((data) => {
-                snDis.textContent = data.season
-                createSeasonSwitch(data.season, snDis)
-                readTeam('read', table, data.season)
-                readResult('readResult', resPane, data.season, data.day)
+                snDis.textContent = data.league.season
+                createSeasonSwitch(data.league.season, snDis)
+                readTeam(table, data.league.season)
             })
         })      
     }, 500)
   
 })
-
-const readTeam = (command, table, sn) => {
-    const url = `/request?command=${command}&sn=${sn}`
+// right here i am making use of the sort() method with a dynamicSort
+const readTeam = (table, sn) => {
+    const url = `/table/${sn}`
 fetch(url).then((response) => {
         response.json().then((data) => {
-            // if (data.length === 0) return alert('Table is blank')
-            data.sort(dynamicSort('Pts', 'desc'))
+            data.sort(dynamicSort('Pts', 'desc')) //it sorts the array of objects using the points value
             for(i=1; i<=data.length; i++) {
                 addRows(table)                
               }
@@ -94,7 +92,8 @@ let createSeasonSwitch = (season, snDis) => {
         snDis.textContent = e.target.textContent
         let table = document.querySelector('#tbody')
         deleteTable(table)
-        readTeam('read', table, e.target.textContent)
+        const sn = parseInt(e.target.textContent) - 0
+        readTeam(table, sn)
     })
     for (i = 0; i < season; i++) {
         let btn = document.createElement('button')
@@ -109,7 +108,8 @@ let deleteTable = (table) => {
         table.deleteRow(i)
     }
 }
-  let dynamicSort = (prop, order) => {
+// the dynamicSort() function
+let dynamicSort = (prop, order) => {
       let sortOrder = 1
       if (order === 'desc') {
         sortOrder = -1
@@ -123,7 +123,7 @@ let deleteTable = (table) => {
             return 1 * sortOrder
             // a and b are the same 
         } else {
-            return 0 * sortOrder
+            return 0 * sortOrder 
         }
       }
   }

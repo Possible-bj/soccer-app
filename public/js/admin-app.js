@@ -1,32 +1,78 @@
+// Variable Declaration
 const stageChanger = document.querySelector('.stage-chn-btn')
 const fixctrl = document.querySelector('.scl-fixture-controls')
 const stageIndicator = document.querySelector('.scl-stage-ind')
+const sclTeamAddBtn = document.querySelector('.scl-team-add-btn')
+const sclTeamRemoveBtn = document.querySelector('.scl-team-remove-btn')
 const entryFb = document.querySelector('#entry-fb')
+const FB = document.querySelector('#FB')
+const btnPane = document.querySelector('#btn-pane')
+const upBtn = document.querySelector('#update-btn')
+const authFrame = document.querySelector('.auth-pane')
+const adminBoard = document.querySelector('.body-content')
+const leageResBtn = document.querySelector('.res-sub')
+const authPane = document.querySelector('.auth-box')
+const adminInfo = document.querySelector('.admin-info')
+const authForm = document.querySelector('#auth-form-pane')
+const ns = document.querySelector('#ns')
+const nr = document.querySelector('#nr')
+const nscl = document.querySelector('#nscl')
+const sclResultUpdate = document.querySelector('.fix-res-sub')
 window.addEventListener('DOMContentLoaded', () => {
-    fetch('/request?command=sclprogress').then((response) => {
+    leagueIsRunning(); sclIsRunning(); adminBuilder()
+    fetch('/scl/running').then((response) => {
         response.json().then((data) => {
-            switch (data.feedBack) {
-                case 'group stage':
+            switch (data.code) {
+                case 'GS':
                     fixctrl.style.display = 'flex'
                     stageIndicator.textContent = 'Group Stage'
                     stageChanger.textContent = 'End Group Stage'
                     break;
-                case 'quarter finals':
+                case 'QF':
                     modify('Quarter finals')
                     stageChanger.textContent = 'End Qarter Finals'
                     break;
-                case 'semi finals':
+                case 'SF':
                     modify('Semi Finals')
                     stageChanger.textContent = 'End Semi Finals'
                     break;
-                case 'final':
-                    const legs = document.querySelectorAll('.scl-leg-chn-btn')
-                    modify('Final', legs)
+                case 'FIN':                    
+                    modify('Final', document.querySelectorAll('.scl-leg-chn-btn'))
                     stageChanger.textContent = 'End Finals'
+                    break;
+                case 'END':                    
+                    modify('POST SEASON', document.querySelectorAll('.scl-leg-chn-btn'))
+                    stageChanger.textContent = 'Season Ended!'
             }
         })
     })
 })
+const leagueIsRunning = () => {
+    fetch('/league/running').then((response) => {
+        response.json().then((data) => {
+            if (data.feedBack === "yes" || data.feedBack === "ended") {
+                document.querySelector('.league-st-btn').setAttribute('disabled', true)
+            }
+        })
+    })
+}
+const sclIsRunning = () => {
+    fetch('/scl/running').then((response) => {
+        response.json().then((data) => {
+            if (data.feedBack === 'yes') {
+                sclTeamAddBtn.setAttribute('disabled', true)
+                sclTeamRemoveBtn.setAttribute('disabled', true)
+            }
+        })
+    })
+}
+const adminBuilder = () => {
+    fetch('/admin/check').then((response) => {
+        response.json().then((data) => {
+            
+        })
+    })
+}
 const modify = (stage, leg) => {
     fixctrl.style.display = 'flex'
     stageIndicator.textContent = stage                    
@@ -42,65 +88,30 @@ for (i=0;i<4;i++) {
      }
  }
 }
-const FB = document.querySelector('#FB')
-const btnPane = document.querySelector('#btn-pane')
-const upBtn = document.querySelector('#update-btn')
-const authFrame = document.querySelector('.auth-pane')
-const adminBoard = document.querySelector('.body-content')
-const resForm = document.querySelector('#res-form')
-const authPane = document.querySelector('.auth-box')
-const authForm = document.querySelector('#auth-form-pane')
-const ns = document.querySelector('#ns')
-const nr = document.querySelector('#nr')
-const nscl = document.querySelector('#nscl')
-const sclResultUpdate = document.querySelector('.fix-res-sub')
-
-
 btnPane.addEventListener('click', (e) => {
     FB.textContent = ''
     switch (e.target.textContent) {
-        case 'Create':
-             const team = document.querySelector('#team').value.toLowerCase()
-            //  const sN = document.querySelector('#sn').value
+        case 'Add':
+             const team = document.querySelector('#team').value
              if (team === '' ) {
                  FB.style.color = 'blue'
-                FB.textContent = 'Please Provide the team name and the season number'
-            //     FB.scrollIntoView()
+                FB.textContent = 'Please Provide the team name!'
              } else {                
-                updateTeam('add', team, 0, 0, 0, 0, 0, 0, 0, 0, FB)
+                addTeam(team)
              }
-            break;
-        case 'Update':
-                const addTeam = document.querySelector('#team').value.toLowerCase()
-                const P = document.querySelector('#P').value
-                const W = document.querySelector('#W').value
-                const D = document.querySelector('#D').value
-                const L = document.querySelector('#L').value
-                const GF = document.querySelector('#GF').value
-                const GA = document.querySelector('#GA').value
-                const GD = document.querySelector('#GD').value
-                const Pts = document.querySelector('#Pts').value
-                // const sn = document.querySelector('#sn').value
-                if (addTeam === '' || P === '' || W === '' || D === '' || L === '' || GF === '' || GA === '' || GD === '' || Pts  === '') {
-                    FB.style.color = 'blue'
-                    return FB.textContent = 'Please provide all updates and season number!'
-                }
-                updateTeam('edit', addTeam, P, W, D, L, GF, GA, GD, Pts, FB)
-                break;            
-        case 'Delete':
-            const remTeam = document.querySelector('#team').value.toLowerCase()
-            // const Sn = document.querySelector('#sn').value
+            break;         
+        case 'Remove':
+            const remTeam = document.querySelector('#team').value
             if (remTeam === '') {
                 FB.style.color = 'blue'
-                return FB.textContent = 'Please provide team to delete and season number!'
+                return FB.textContent = 'Please provide team to delete!'
             }
-            deleteTeam('remove', remTeam, FB)
+            deleteTeam(remTeam, FB)
     }
    
 })
-//P = 0, W = 0, D = 0, L = 0, GF = 0, GA = 0, GD = 0, Pts = 0,
-const updateTeam = (command, team, P, W, D, L, GF, GA, GD, Pts, FB) => {
-    const url = `/leagueaction?command=${command}&team=${team}&P=${P}&W=${W}&D=${D}&L=${L}&GF=${GF}&GA=${GA}&GD=${GD}&Pts=${Pts}`
+const addTeam = (team) => {
+    const url = `/league/team/add?team=${team}`
     fetch(url).then((response) => {
         response.json().then((data) => {
             if  (data.process === 'Success') {
@@ -109,16 +120,13 @@ const updateTeam = (command, team, P, W, D, L, GF, GA, GD, Pts, FB) => {
             } else {
                 FB.style.color = "Red"
                 FB.textContent = data.feedBack
-                FB.scrollIntoView()
             }
 
         })
     })
-
 }
-
-const deleteTeam = (command, team, FB) => {
-    const url = `/leagueaction?command=${command}&team=${team}`
+const deleteTeam = (team) => {
+    const url = `/league/team/remove?team=${team}`
     fetch(url).then((response) => {
         response.json().then((data) => {
             if  (data.process === 'Success') {
@@ -127,69 +135,87 @@ const deleteTeam = (command, team, FB) => {
             } else {
                 FB.style.color = "Red"
                 FB.textContent = data.feedBack
-                FB.scrollIntoView()
             }
         })
     })
 }
-
-resForm.addEventListener('submit', (e) => {
-    e.preventDefault()
+leageResBtn.addEventListener('click', (e) => {
+            const resInfo = document.querySelector('.res-info')
+            resInfo.textContent = ''
             const ht = document.querySelector('#h').value.toLowerCase()
             const hs = document.querySelector('#h-s').value
             const as = document.querySelector('#a-s').value
-            const at = document.querySelector('#a').value.toLowerCase()
+            const at = document.querySelector('#a').value.toLowerCase()            
             if (ht === '' || hs === '' || as === '' || at === '') {
-                return alert('Please provide all result data')
+                return resInfo.textContent = ('Please provide all result data')
             }
-        updateResult('result', ht, hs, as, at)
+            let leg = document.querySelectorAll('input[name="league-leg"]:checked')
+            if (leg.length === 0) return resInfo.textContent = 'Please check a leg!'
+            updateResult(ht, hs, as, at, leg[0].value, resInfo)
 })
-const updateResult = (command, ht, hs, as, at) => {
-    const url = `/leagueaction?command=${command}&ht=${ht}&hs=${hs}&as=${as}&at=${at}`
+const updateResult = (ht, hs, as, at, leg, resInfo) => {
+    const url = `/league/result/add?ht=${ht}&hs=${hs}&as=${as}&at=${at}&leg=${leg}`
     fetch(url).then((response) => {
         response.json().then((data) => {
-            alert(data.feedBack)
+            resInfo.textContent = (data.feedBack)
         })
     })
 }
 ns.addEventListener('click', () => {
-    const val = confirm('Are you sure you want to proceed to a new season?')
+    const val = confirm('Are you sure you want to modify the league season?')
     if (!val) return 0
-    nextLevel('nextLeagueSeason')
+    const inc = prompt('Would you like to decrease or increase the league season?', '+ or -')
+    if (!inc) return 0 
+    nextLevel(`newleague/${inc}`)
 })
 nscl.addEventListener('click', () => {
-    const val = confirm('Are you sure you want to proceed to a new season?')
+    const val = confirm('Are you sure you want to modify the scl season?')
     if (!val) return 0
-    nextLevel('nextSclSeason')   
+    const inc = prompt('Would you like to decrease or increase the scl season?', '+ or -')
+    if (!inc) return 0 
+    nextLevel(`newscl/${inc}`)   
 })
 nr.addEventListener('click', () => {
-    const val = confirm('Are you sure you want to create a new match result?')
+    const val = confirm('Are you sure you want to modify the match result day?')
     if (!val) return 0
-    nextLevel('nextLeagueDay')
+    const inc = prompt('Would you like to decrease or increase the match day?', '+ or -')
+    if (!inc) return 0 
+    nextLevel(`newday/${inc}`)
 })
 const nextLevel = (command) => {
-    fetch(`/leagueaction?command=${command}`).then((response) => {
+    fetch(`/${command}`).then((response) => {
         response.json().then((data) => {
-            if(data.length !== 0) return alert('Success')
+            if(data.length !== 0) return alert(data.feedBack)
             alert('Fail')
         })
     }) 
 }
-const sclGroupAddForm = document.querySelector('.group-action-form')
-sclGroupAddForm.addEventListener('submit', (e) => {
-    e.preventDefault()
+sclTeamAddBtn.addEventListener('click', () => {
     const team = document.querySelector('.group-action-input').value.toLowerCase()    
-    if (team === '') return entryFb.textContent = 'Please insert a team'
+    if (team === '') return entryFb.textContent = 'Please insert the team to add!'
     entryFb.textContent = ''
-    const url = `/sclaction?command=selectGroup&team=${team}`
+    const url = `/scl/groups/team/add?team=${team}`
+    fetch(url).then((response) => {
+        response.json().then((data) => {
+            if (data.feedBack === 'Success') {
+                return entryFb.textContent = `Team has been added to group ${data.group}`
+            }
+            entryFb.textContent = data.feedBack
+        })
+    })
+})
+sclTeamRemoveBtn.addEventListener('click', () => {
+    const team = document.querySelector('.group-action-input').value.toLowerCase()    
+    if (team === '') return entryFb.textContent = 'Please insert the team to remove!'
+    entryFb.textContent = ''
+    const url = `/scl/groups/team/remove?team=${team}`
     fetch(url).then((response) => {
         response.json().then((data) => {
                 entryFb.textContent = data.feedBack
         })
     })
 })
-sclResultUpdate.addEventListener('click', () => {
-    
+sclResultUpdate.addEventListener('click', () => { 
     const h = document.querySelector('.home-draw').value.toLowerCase()
     const hs = document.querySelector('.home-score').value
     const a = document.querySelector('.away-draw').value.toLowerCase()
@@ -198,9 +224,9 @@ sclResultUpdate.addEventListener('click', () => {
     const leg = legs.length>0? legs[0].value: null
     const gs = document.querySelectorAll('input[name="group"]:checked')
     const g = gs.length>0? gs[0].value: null
-    if (g && leg) url = `/sclaction?command=updateSclResult&h=${h}&hs=${hs}&a=${a}&as=${as}&leg=${leg}&g=${g}`
-    else if (leg) url = `/sclaction?command=updateSclResult&h=${h}&hs=${hs}&a=${a}&as=${as}&leg=${leg}`
-    else url = `/sclaction?command=updateSclResult&h=${h}&hs=${hs}&a=${a}&as=${as}&leg=firstLeg`
+    if (g && leg) url = `/scl/result/add?h=${h}&hs=${hs}&a=${a}&as=${as}&leg=${leg}&g=${g}`
+    else if (leg) url = `/scl/result/add?&h=${h}&hs=${hs}&a=${a}&as=${as}&leg=${leg}`
+    else url = `/scl/result/add?h=${h}&hs=${hs}&a=${a}&as=${as}&leg=firstLeg`
     if (h === '' || hs === '' || a === '' || as === '') return entryFb.textContent = "Please provide all data"
     sclFixtureUpdate(url)
 })
@@ -214,31 +240,39 @@ const sclFixtureUpdate = (url) => {
 stageChanger.addEventListener('click', (e) => {
     switch (e.target.textContent) {
         case 'Start Scl':
-            sclProgress('startScl')
+            sclProgress('/scl/start/GS')
             break;
         case 'End Group Stage':
+            const GsEndConsent = confirm('Group Stage is running, do you wish to end however?')
+            if ( !GsEndConsent ) return 0 
             modify('Quarter finals')
             e.target.textContent = 'End Qarter Finals'
-            sclProgress('endGS')
+            sclProgress('/scl/start/QF')
             break;
         case 'End Qarter Finals':
+            const QfEndConsent = confirm('Quarter Finals is running, do you wish to end however?')
+            if (!QfEndConsent) return 0
             modify('Semi finals')
             e.target.textContent = 'End Semi Finals'
-            sclProgress('endQF')
+            sclProgress('/scl/start/SF')
             break;
         case 'End Semi Finals':
+            const SfEndConsent = confirm('Semi Finals is running, do you wish to end however?')
+            if (!SfEndConsent) return 0
             modify('finals', document.querySelectorAll('.scl-leg-chn-btn'))
             e.target.textContent = 'End Finals'
-            sclProgress('endSF')
+            sclProgress('/scl/start/FIN')
             break;
         case 'End Finals':
-            modify('Season Ended', document.querySelectorAll('.scl-leg-chn-btn'))
-            e.target.textContent = 'Season Ended'
-            sclProgress('endSeason')
+            const FinEndConsent = confirm('Final is running, if you wish to end however, check that yoou have recorded the result!')
+            if (!FinEndConsent) return 0
+            modify('POST SEASON', document.querySelectorAll('.scl-leg-chn-btn'))
+            e.target.textContent = 'Season Ended!'
+            sclProgress('/scl/end')
     }
 })
-const sclProgress = (command) => {
-    fetch(`/sclaction?command=${command}`).then((response) => {
+const sclProgress = (url) => {
+    fetch(url).then((response) => {
         response.json().then((data) => {
             if (data.feedBack === 'teams have not been submitted!') {
                 stageChanger.textContent = 'Start Scl'
@@ -269,7 +303,7 @@ authForm.addEventListener('submit', (e) => {
     e.preventDefault()
     authPane.style.display = 'none'
     const authInput = document.querySelector('#auth-input').value
-    const url = `/auth?command=auth&lockpass=${authInput}`
+    const url = `/admin/auth?pass=${authInput}`
     fetch(url).then((response) => {
         response.json().then((data) => {
             switch (data.feedBack) {
@@ -290,34 +324,61 @@ authForm.addEventListener('submit', (e) => {
 
 const adminPaneBtn = document.querySelector('.admin-pane-btn-row')
 adminPaneBtn.addEventListener('click', (e) => {
-    // e.preventDefault()
-    const name = (document.querySelector('.admin-name').value).toLowerCase()
-    const pass = (document.querySelector('.admin-pass').value).toLowerCase()
+    const name = (document.querySelector('.admin-name').value).toLowerCase().trim()
+    const pass = (document.querySelector('.admin-pass').value).toLowerCase().trim()
     switch (e.target.textContent) {
         case 'create':
             if (name === '' || pass === '') {
-                return entryFb.textContent = 'please provide the name and pass!'
+                return adminInfo.textContent = 'please provide the name and pass!'
             }
-            adminFunc('create', name, pass)
+            adminFunc('/admin/add', name, pass)
             break;
         case 'update':
             if (name === '' || pass === '') {
-                return entryFb.textContent = 'please provide the name and pass!'
+                return adminInfo.textContent = 'please provide the name and pass!'
             }
-            adminFunc('edit', name, pass)
+            adminFunc('/admin/update', name, pass)
             break;
         case 'delete':
             if (name === '') {
-                return entryFb.textContent = 'please provide the admin name to delete!'
+                return adminInfo.textContent = 'please provide the admin name to delete!'
             }
-            adminFunc('delete', name, pass)
+            adminFunc('/admin/remove', name)
     }
 })
 const adminFunc = (command, name, pass) => {
-    const url = `/auth?command=${command}&name=${name}&pass=${pass}`
+    const url = `${command}?name=${name}&pass=${pass}`
     fetch(url).then((response) => {
         response.json().then((data) => {
-            entryFb.textContent = data.feedBack
+            adminInfo.textContent = data.feedBack
         })
     })
 }
+const leagueStBtn = document.querySelector('.league-st-btn')
+leagueStBtn.addEventListener('click', () => {
+    const endConsent = confirm('Are you sure you want to start league? if sure, Ensure that you have added all teams before starting!')
+    if (!endConsent) return 0
+    fetch('/league/start').then((response) => {
+        response.json().then((data) => {
+            if (data.feedBack === 'yes') {
+                FB.textContent = "League Started!"
+                leagueStBtn.setAttribute('disabled', true)
+            } else {
+                FB.textContent = data.feedBack
+            }
+        })
+    })
+})
+const leagueEndBtn = document.querySelector('.league-end-btn')
+leagueEndBtn.addEventListener('click', () => {
+    const endConsent = confirm('Are you sure you want to end league? if sure, Ensure that you have updated all results before ending!')
+    if (!endConsent) return 0
+    fetch('/league/end').then((response) => {
+        response.json().then((data) => {
+            FB.textContent = data.feedBack
+            // if (data.feedBack === 'yes') {
+            //     leagueStBtn.setAttribute('disabled', true)
+            // }
+        })
+    })
+})

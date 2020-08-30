@@ -15,12 +15,12 @@
 }
 .auth-pane {
     background: linear-gradient(-45deg, rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.5));
-    /* display: none; */
+    display: block;
     width: 100%;
     height: 100%;   
 }
 .auth-box {
-    display: none
+    display: none;
 }
 #update-btn {
     width: 50%;
@@ -56,17 +56,22 @@
     bottom: 0;
 }
 .league-action-section,
-.scl-action-section {
-    width: 100%;
-    height: 103vh;
-    box-shadow: -.5px -.5px 1px 1px #333;
-    padding: 10px;    
+.scl-action-section,
+.admin-pane {
+    box-shadow: -.5px -.5px 1px 1px #333;    
     overflow: auto;
     background: linear-gradient(-45deg, rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.5));
     /* linear-gradient(-45deg, rgb(6, 82, 6), rgb(60, 241, 60)); */
     margin-top: 10px;
 }
-.league-action-section::-webkit-scrollbar {
+.league-action-section,
+.scl-action-section {
+    width: 100%;
+    height: 103vh;
+    padding: 10px;
+}
+.league-action-section::-webkit-scrollbar,
+.scl-action-section::-webkit-scrollbar {
     display: none;
     width: 0;
 }
@@ -89,9 +94,13 @@
 }
 #btn-pane {
     width: 100%;
+    margin-bottom: 10px;
 }
 #btn-pane button {
-    width: 30%;
+    width: 45%;
+}
+#league-ctrl button {
+    width: 45%;
 }
 #right-pane-btn button {
     width: 50%;
@@ -104,7 +113,7 @@
     margin-top: 15px;
 }
 .top-btn {
-    width: 25%;
+    width: 28%;
     height: 80%;
     box-shadow: inset -1px -1px 1px 1px #000;
     background: linear-gradient(45deg, rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.5));
@@ -133,9 +142,7 @@
 /* .scl-action-section {
 } */
 .group-action-form {
-    width: 100%;
-    display: flex;
-    padding: 10px;
+    margin-bottom: 10px;
 }
 .group-action-input,
 .group-action-btn {
@@ -145,10 +152,11 @@
     margin: auto;
 }
 .group-action-input {
-    width: 73%;
+    width: 95%;
+    margin-bottom: 5px;
 }
 .group-action-btn {
-    width: 25%;
+    width: 45%;
 }
 #res-form input, #res-form button {
     padding: 10px;
@@ -194,7 +202,7 @@ i {
     font-weight: 600;
 }
 .scl-fixtures {
-    height: 88vh;
+    height: 70vh;
 }
 .scl-fixture-controls {
     width: 100%;
@@ -217,6 +225,9 @@ i {
 .scl-leg-chn-btn {
     width: 50%;
     padding: 10px; 
+}
+.league-leg-chn-btn {
+    width: 50%;
 }
 .fixture-box {
     width: 100%;
@@ -265,7 +276,6 @@ i {
     height: 100%;
     background: #fff;
     border: transparent;
-    padding: 10px;
     text-align: center;
 }
 .home-draw {
@@ -277,8 +287,8 @@ i {
     border-bottom-right-radius: 3px;
 }
 .score-board {
+    height: 100%;
     width: 20%;
-    border: 1px solid #000;
     background: rgb(1, 2, 17);
 }
 .score-board .scores {
@@ -298,12 +308,9 @@ i {
     color: #fff;
     background: rgb(1, 2, 17);
 }
-footer {
-    display: none
-}
 .admin-pane {
-    width: 90%;
-    margin-top: 50px;
+    width: 98%;
+    padding: 15px;
     display: none;
 }
 .admin-pane-input {
@@ -313,6 +320,14 @@ footer {
     margin-top: 10px;
     width: 30%;
 }
-.max-percent {
-    width: 100%;
+.league-ctrl-frame {
+    max-height: 0;
+    overflow: hidden;
+    margin-top: 5px;
+}
+#entry-fb {
+    color: blue;
+}
+footer {
+    display: none;
 }

@@ -2,11 +2,11 @@ window.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
         const table = document.querySelectorAll('.gbody')
         const snDis = document.querySelector('#scl-id')
-        fetch('/request?command=sclseason').then((response) => {
+        fetch('/metadata').then((response) => {
             response.json().then((data) => {
-                snDis.textContent = data.season
-                createSeasonSwitch(data.season, snDis)
-                readGroups('fetchGS', table, data.season)
+                snDis.textContent = data.scl.season
+                createSeasonSwitch(data.scl.season, snDis)
+                readGroups(table, data.scl.season)
             })
         })      
     }, 500)
@@ -20,15 +20,16 @@ const slHS = document.querySelectorAll('.sl-home-score')
 const slAS = document.querySelectorAll('.sl-away-score')
 const finHS = document.querySelectorAll('.fin-home-score')
 const finAS = document.querySelectorAll('.fin-away-score')
-const readGroups = (command, table, sn) => {
+const readGroups = (table, sn) => {
+    document.querySelector('.sn-avail-info').textContent = ''
     const groups = ['A', 'B', 'C', 'D']
     for (i=0; i<4; i++) {
         const body = table[i]
         const g = groups[i]
-        const url = `/request?command=${command}&sn=${sn}&g=${g}`
+        const url = `/scl/fetch/group?sn=${sn}&g=${g}`
 fetch(url).then((response) => {
         response.json().then((data) => {
-            if (data.length === 0) return alert('Table is blank')
+            if (data.feedBack) return document.querySelector('.sn-avail-info').textContent = data.feedBack
             data.sort(dynamicSort('Pts', 'desc'))
                 for(let i=0; i<10; i++) {
                         distribute(body, data.length, data)
@@ -36,19 +37,20 @@ fetch(url).then((response) => {
         })
     })
     }
-    readKO('fetchKO', sn)
+    readKO(sn)
 }
-const readKO = (command, sn) => {
-    const url = `/request?command=${command}&sn=${sn}`
-    let i = 0
+const readKO = (sn) => {
+    document.querySelector('.sn-avail-info').textContent = ''
+    const url = `/scl/fetch/ko?sn=${sn}`
     fetch(url).then((response) => {
         response.json().then((data) => {
-            draw(i, data)          
+            if (data.feedBack) return document.querySelector('.sn-avail-info').textContent = data.feedBack
+            draw(data)          
         })
     })
 }
-const draw = (i, data) => {
-    for (; i<data.length; i++) {
+const draw = (data) => {
+    for (i=0; i<data.length; i++) {
         homeDraw[i].textContent = data[i].firstLeg.home
         awayDraw[i].textContent = data[i].firstLeg.away
         if (data[i].firstLeg.played) {
@@ -62,11 +64,15 @@ const draw = (i, data) => {
         }
         flHS[i].textContent = data[i].firstLeg.hs
         flAS[i].textContent = data[i].firstLeg.as
+        if (i < 6) {
         slHS[i].textContent = data[i].secondLeg.hs
         slAS[i].textContent = data[i].secondLeg.as
         finHS[i].textContent = parseInt(data[i].firstLeg.hs) + parseInt(data[i].secondLeg.as )
         finAS[i].textContent = parseInt(data[i].firstLeg.as) + parseInt(data[i].secondLeg.hs)
+        }
+        if (i === 6) {
         document.querySelector('#coronation-logo').setAttribute('src', `../img/${data[6].qualified}.png`)
+        }
     }
 }
   let distribute = (table, rowCount, teams) => {
@@ -87,7 +93,7 @@ let createSeasonSwitch = (season, snDis) => {
     panel.addEventListener('click', (e) => {
         snDis.textContent = e.target.textContent
         const table = document.querySelectorAll('.gbody')
-        readGroups('fetchGS', table, e.target.textContent)
+        readGroups(table, (e.target.textContent - 0))
     })
     for (i = 0; i < season; i++) {
         let btn = document.createElement('button')

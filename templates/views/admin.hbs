@@ -32,7 +32,7 @@ Admin Board
                         <p>When a season is done and dusted, to start a new season; click on <i>New League</i> for League and <i>New SCL</i> for SCL NOTE: Do not click on New Season while a season is still on</p>
                     </b>
                 </div>
-                <form action="" id="res-form" class="first-section-pane rel margin-auto">
+                <div id="res-form" class="first-section-pane rel margin-auto">
                     <center> <h3>Update League Results</h3>
             <br/>
     
@@ -40,22 +40,37 @@ Admin Board
             <div id="s-r">
                         <input id="nr" type="button" class=" margin-auto" value="New Result">
                     </div>
+                    <div class="league-leg-changer max-percent flex no-shrink rel margin-auto">
+                                <button class="league-leg-chn-btn">
+                                    <label for="league-first-leg">First Leg</label> 
+                                    <input type="radio" name="league-leg" id="league-first-leg" value="firstLeg">
+                                </button>
+                                <button class="league-leg-chn-btn">
+                                    <label for="league-second-leg">Second Leg</label> 
+                                    <input type="radio" name="league-leg" id="league-second-leg" value="secondLeg">
+                                </button>
+                            </div>
                     <div id="h-a">
-                        <input type="text" id="h" placeholder="Home team">
-                        <input type="number" id="h-s" placeholder="0">
-                        <input type="number" id="a-s" placeholder="0">
-                        <input type="text" id="a" placeholder="Away team">
+                        <input name="ht" type="text" id="h" placeholder="Home team">
+                        <input name="hs" type="number" id="h-s" placeholder="0">
+                        <input name="as" type="number" id="a-s" placeholder="0">
+                        <input name="at" type="text" id="a" placeholder="Away team">
                     </div>
-                    <button>Submit</button>
-                </form>
+                    <div class="res-info"></div>
+                    <button class="res-sub">Submit</button>
+                </div>
             </div>
         <div class="second-section">
             <div class="scl-action-section curved-edges rel margin-auto">
+                <h3 align="center"> SCL Updates</h3>
                 <div class="group-action rel">
-                    <form align="center" action="" class="group-action-form rel">
+                    <div align="center" class="flex flex-column margin-auto max-percent group-action-form rel">
                         <input type="text" class="group-action-input" placeholder="insert a team into a group">
-                        <button class="group-action-btn">Submit</button>
-                    </form>
+                        <div class="flex margin-auto rel max-percent">
+                        <button class="group-action-btn scl-team-add-btn">Add</button>
+                        <button class="group-action-btn scl-team-remove-btn">Remove</button>
+                        </div>
+                    </div>
                     <div id="entry-fb"></div>
                     <div class="scl-fixtures flex flex-column">
                         <div class="scl-fixture-controls flex flex-column rel margin-auto">
@@ -94,35 +109,20 @@ Admin Board
                         </div>
                         <div class="fixture-box rel curved-edges">
                             <div class="leg-boxes flex">
-                                <div class="first-leg-box flex flex-column no-shrink">
+                                <div align="center" class="first-leg-box flex flex-column no-shrink">
+                                    Update SCL Results
                                     <div align="center" class="draw rel">
-                    <input class="home-draw" placeholder="Possible" value="">
+                    <input class="home-draw" placeholder="Home Team" value="">
                     <div class="score-board rel">
                         <div class="scores margin-auto">
                             <input type="number" class="home-score" placeholder="0" value="">
                             <input type="number" class="away-score" placeholder="0" value="">
                         </div>
                     </div>
-                    <input class="away-draw" placeholder="Smash Pro" value="">
+                    <input class="away-draw" placeholder="Away Team" value="">
                     
                 </div>
                 <button class="fix-res-sub margin-auto">Submit</button>
-
-{{!-- admin creator section --}}
-    <div class="admin-pane rel margin-auto">
-        <div class="admin-pane-form max-percent flex flex-column rel margin-auto curved-edges">
-            <div class="admin-pane-input-row flex max-percent">
-                <input type="text" class="admin-pane-input admin-name no-shrink margin-auto curved-edges" placeholder="Admin name">
-                <input type="text" class="admin-pane-input admin-pass no-shrink margin-auto curved-edges" placeholder="Admin pass">
-            </div>
-            <div class="admin-pane-btn-row flex max-percent">
-                <button class="admin-pane-btn margin-auto">create</button>
-                <button class="admin-pane-btn margin-auto">update</button>
-                <button class="admin-pane-btn margin-auto">delete</button>
-            </div>
-        </div>
-    </div>
-
                         </div>
                             </div>
                         </div>
@@ -132,34 +132,25 @@ Admin Board
                 
             </div>
         <div class="league-action-section curved-edges rel margin-auto">
-            <center> <h3>Add, Delete and Update a team stastistics</h3>
+            <center> <h3>Supreme League 
+                <br/> Add and Remove a team from the table 
+                <br/> Start and End League </h3>
             </center>
             <div id="table-form" class="rel">
         <label for="team">Team Name</label>
         <input id="team" required="true" placeholder="Team Name">
-        <label for="P">No of Played matches</label>
-        <input id="P" required="true" placeholder="Played">
-        <label for="W">Wins</label>
-        <input id="W" required="true" placeholder="wins">
-        <label for="D">Draws</label>
-        <input id="D" required="true" placeholder="draws">
-        <label for="L">Losses</label>
-        <input id="L" required="true" placeholder="losses">
-        <label for="GF">Scored</label>
-        <input id="GF" required="true" placeholder="Goals Scored">
-        <label for="GA">Conceed</label>
-        <input id="GA" required="true" placeholder="Goals Conceeded">
-        <label for="GD">Goals Down</label>
-        <input id="GD" required="true" placeholder="Goals Down">
-        <label for="Pts">Points</label>
-        <input id="Pts" required="true" placeholder="Team Points">  
-
 
     <div id="FB"></div>
     <div id="btn-pane" class="flex rel margin-auto">
-            <button class="rel margin-auto no-shrink">Create</button>    
-           <button class="rel margin-auto no-shrink">Update</button>
-           <button class="rel margin-auto no-shrink">Delete</button>
+            <button class="rel margin-auto no-shrink">Add</button>    
+           <button class="rel margin-auto no-shrink">Remove</button>
+        </div>
+        <button class="league-ctrl-collapser-btn">Start Or End League</button>
+        <div class="league-ctrl-frame">
+        <div id="league-ctrl" class="flex max-percent rel margin-auto">
+            <button class="rel league-st-btn margin-auto no-shrink">Start League</button>    
+           <button class="rel league-end-btn margin-auto no-shrink">End League</button>
+        </div>
         </div>
     </div>
         </div>
@@ -168,10 +159,24 @@ Admin Board
         </div>
         
     </div>
-
+{{!-- admin creator section --}}
+    <div class="admin-pane rel margin-auto">
+        <div class="admin-pane-form max-percent flex flex-column rel margin-auto curved-edges">
+            <div class="admin-pane-input-row flex max-percent">
+                <input type="text" class="admin-pane-input admin-name no-shrink margin-auto curved-edges" placeholder="Admin name">
+                <input type="text" class="admin-pane-input admin-pass no-shrink margin-auto curved-edges" placeholder="Admin pass">
+            </div>
+            <div class="admin-info"></div>
+            <div class="admin-pane-btn-row flex max-percent">
+                <button class="admin-pane-btn margin-auto">create</button>
+                <button class="admin-pane-btn margin-auto">update</button>
+                <button class="admin-pane-btn margin-auto">delete</button>
+            </div>
+        </div>
+    </div>
 </div>
     {{>footer}}
-    <div class="auth-pane fix margin-auto centered">
+    <div class="auth-pane fix curved-edges margin-auto centered">
         {{>header}}
         <div class="auth-box margin-auto centered">
         <form id="auth-form-pane" class="abs margin-auto centered">
@@ -188,6 +193,15 @@ Admin Board
     </div>
     <script src="../js/admin-app.js"></script>
     <script>
+        const collapseBtn = document.querySelector('.league-ctrl-collapser-btn')
+        collapseBtn.addEventListener('click', () => {
+            const slideOut =  collapseBtn.nextElementSibling
+            if (slideOut.style.maxHeight) {
+                slideOut.style.maxHeight = null
+            } else {
+                slideOut.style.maxHeight = slideOut.scrollHeight + 'px'
+            }
+        })
     </script>
 </body>
 </html>

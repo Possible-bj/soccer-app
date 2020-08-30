@@ -1,25 +1,36 @@
 {
-  "name": "node-course",
+  "name": "soccer-app",
   "version": "1.0.0",
-  "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "node src/app.js",
-    "dev": "nodemon src/app.js -e js,hbs",
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js -e js,hbs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Benjamin Possible",
   "license": "ISC",
   "dependencies": {
     "chalk": "^3.0.0",
     "express": "^4.16.0",
     "generatorics": "^1.1.0",
     "hbs": "^4.1.0",
+    "mongodb": "^3.6.0",
+    "mongoose": "^5.10.0",
     "request": "^2.88.0",
     "validator": "^12.2.0",
     "yargs": "^15.3.1"
   },
   "devDependencies": {
+    "env-cmd": "^10.1.0",
     "nodemon": "^2.0.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Benjaminpossible/soccer-app.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Benjaminpossible/soccer-app/issues"
+  },
+  "homepage": "https://github.com/Benjaminpossible/soccer-app#readme",
+  "description": ""
 }
