@@ -12,29 +12,29 @@ router.get('/metadata', async (req, res) => {
             if (data.length !== 0) return res.send(data[0])
         const meta = new metadata({
             league: {
-                season: 15,
+                season: 1,
                 day: 1
             },
             scl: {
-                season: 15,
+                season: 1,
                 running: 'none',
                 shortCode: 'none'
             }
         })
-        meta.save()
+        await meta.save()
     const leagues = new league({
         season: meta.league.season,
         teams: [],
         fixtures: []
     })
-    leagues.save()
+    await leagues.save()
     const leagueResults = new leagueResult({
         season: meta.league.season,
         day: 1,
         result: []
     })
-    leagueResults.save()
-    newSclStages(meta.scl.season) 
+    await leagueResults.save()
+    await newSclStages(meta.scl.season) 
     res.send(meta)
 })
 router.get('/newday/:inc', async (req, res) => {

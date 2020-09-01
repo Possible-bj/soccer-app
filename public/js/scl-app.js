@@ -30,7 +30,7 @@ const readGroups = (table, sn) => {
 fetch(url).then((response) => {
         response.json().then((data) => {
             if (data.feedBack) return document.querySelector('.sn-avail-info').textContent = data.feedBack
-            data.sort(dynamicSort('Pts', 'desc'))
+            data.sort(dynamicSort('Pts', 'GD'))
                 for(let i=0; i<10; i++) {
                         distribute(body, data.length, data)
               }       
@@ -102,25 +102,16 @@ let createSeasonSwitch = (season, snDis) => {
         panel.scrollLeft = btn.clientWidth * (i - 1)
     }
 }
-  let dynamicSort = (prop, order) => {
-      let sortOrder = 1
-      if (order === 'desc') {
-        sortOrder = -1
-      }
-      return function (a, b) {
+let dynamicSort = (prop, tieBreaker) => {
+    const sortOrder = -1
+    return function (a, b) {
         //   a should come before b in the sorted order
-        if (a[prop] < b[prop]) {
-            return -1 * sortOrder
-            // a should come after b in sorted order
-        } else if (a[prop] > b[prop]) {
-            return 1 * sortOrder
-            // a and b are the same 
-        } else {
-            return 0 * sortOrder
-        }
-      }
-  }
-// const draw = document.querySelectorAll('.draw')
-// homeDraw[0].textContent = 'Dragon Balls Super'
-// alert(finAS.length)
- 
+        if (a[prop] < b[prop]) return -1 * sortOrder
+        // a should come after b in sorted order
+            else if (a[prop] > b[prop]) return 1 * sortOrder
+            // a and b are the same, compare by the tieBreaker value
+                if (a[tieBreaker] < b[tieBreaker]) return -1 * sortOrder
+                    else if (a[tieBreaker] > b[tieBreaker]) return 1 * sortOrder 
+                        return 0 * sortOrder
+    }
+}

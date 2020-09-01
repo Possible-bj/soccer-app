@@ -1,5 +1,5 @@
 const express = require('express')
-// require('dotenv').config()`
+// require('dotenv').config()
 require('./db/mongoose')
 const path = require('path')
 const hbs = require('hbs')
@@ -13,7 +13,7 @@ const sfRouter = require('./routers/sclSF')
 const finRouter = require('./routers/sclFIN')
 const authRouter = require('./routers/auth')
 
-const app = express()
+const app = express()  
 const port = process.env.PORT
 app.use(metadataRouter)
 app.use(pageRouter)

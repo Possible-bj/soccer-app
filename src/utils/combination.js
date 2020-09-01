@@ -17,7 +17,7 @@ const combination = (arr, callback) => {
 const createQF = async (season, teams, callback) => {
     const arr = []
     for (x in teams) {
-        teams[x].sort(dynamicSort('Pts', 'desc'))
+        teams[x].sort(dynamicSort('Pts', 'GD'))
         arr.push(teams[x][0].team)
         arr.push(teams[x][1].team)
     }
@@ -58,22 +58,17 @@ const createFIN = async (season, teams, callback)=> {
         feedBack: 'Semi Finals ended and Final begins!'
     })
 }
-const dynamicSort = (prop, order) => {
-    let sortOrder = 1
-    if (order === 'desc') {
-      sortOrder = -1
-    }
+let dynamicSort = (prop, tieBreaker) => {
+    const sortOrder = -1
     return function (a, b) {
-      //   a should come before b in the sorted order
-      if (a[prop] < b[prop]) {
-          return -1 * sortOrder
-          // a should come after b in sorted order
-      } else if (a[prop] > b[prop]) {
-          return 1 * sortOrder
-          // a and b are the same 
-      } else {
-          return 0 * sortOrder
-      }
+        //   a should come before b in the sorted order
+        if (a[prop] < b[prop]) return -1 * sortOrder
+        // a should come after b in sorted order
+            else if (a[prop] > b[prop]) return 1 * sortOrder
+            // a and b are the same, compare by the tieBreaker value
+                if (a[tieBreaker] < b[tieBreaker]) return -1 * sortOrder
+                    else if (a[tieBreaker] > b[tieBreaker]) return 1 * sortOrder 
+                        return 0 * sortOrder
     }
 }
 const fix = (arr, callback) => {

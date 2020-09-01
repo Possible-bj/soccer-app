@@ -22,7 +22,7 @@ const readTeam = (table, sn) => {
 fetch(url).then((response) => {
         response.json().then((data) => {
             // if (data.length === 0) return alert('Table is blank')
-            data.sort(dynamicSort('Pts', 'desc'))
+            data.sort(dynamicSort('Pts', 'GD'))
             for(i=1; i<=data.length; i++) {
                 addRows(table)                
               }
@@ -125,23 +125,18 @@ let addRows = (table) => {
       }
   }
 
-  let dynamicSort = (prop, order) => {
-      let sortOrder = 1
-      if (order === 'desc') {
-        sortOrder = -1
-      }
-      return function (a, b) {
+  let dynamicSort = (prop, tieBreaker) => {
+    const sortOrder = -1
+    return function (a, b) {
         //   a should come before b in the sorted order
-        if (a[prop] < b[prop]) {
-            return -1 * sortOrder
-            // a should come after b in sorted order
-        } else if (a[prop] > b[prop]) {
-            return 1 * sortOrder
-            // a and b are the same 
-        } else {
-            return 0 * sortOrder
-        }
-      }
-  }
+        if (a[prop] < b[prop]) return -1 * sortOrder
+        // a should come after b in sorted order
+            else if (a[prop] > b[prop]) return 1 * sortOrder
+            // a and b are the same, compare by the tieBreaker value
+                if (a[tieBreaker] < b[tieBreaker]) return -1 * sortOrder
+                    else if (a[tieBreaker] > b[tieBreaker]) return 1 * sortOrder 
+                        return 0 * sortOrder
+    }
+}
 
   

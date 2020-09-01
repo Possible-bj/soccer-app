@@ -5,4 +5,8 @@ mongoose.connect(encodeURI(process.env.MONGODB_URL), {
     useCreateIndex: true,
     useFindAndModify: false
 }
-).catch(e => {console.log(e.message)})
+).then((result) => {
+    console.log(result)
+}).catch(e => {
+    console.log(e.message)
+})
