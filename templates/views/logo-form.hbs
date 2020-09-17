@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport", content="width=device-width, initial-scale=1"/>
+    <title>
+
+    </title>
+    <link rel="stylesheet" href="/css/main.css" type="text/css"/>
+    <style>
+    .logo-actions button {
+    width: 45%;
+}
+.logo-inputs {
+    padding: 0;
+    border: 1px solid #fff;
+    height: 45px;
+}
+.logo-name {
+    width: 30%;
+    height: 100%;
+}
+.logo {
+    width: 55%;
+}
+.logo-submit-btn,
+.logo-update-btn {
+    width: 15%;
+}
+.logo-rem-name {
+    width: 65%;
+    height: 100%;
+}
+.logo-remove-btn {
+    width: 35%;
+}
+ 
+    </style>
+</head>
+
+<body>
+<form align="center" method="POST" action="/team/add" enctype="multipart/form-data" class="flex flex-column max-percent rel margin-auto logo-submit-form">
+        <h3 class="logo-submit-header">Submit a team Logo</h3>
+        <div class="logo-inputs flex margin-auto max-percent rel curved-edges">
+            <input type="text" required name="logoname" class="logo-name no-shrink rel margin-auto" placeholder='team name'>
+            <input type="file" required name="logo" class="logo no-shrink rel margin-auto">
+            <button type="submit" class="logo-submit-btn rel margin-auto no-shrink">Submit</button>
+        </div>
+    </form>
+ <form align="center" method="POST" action="/team/update" enctype="multipart/form-data" class="flex flex-column max-percent rel margin-auto logo-submit-form">
+        <h3 class="logo-submit-header">Update a team Logo</h3>
+        <div class="logo-inputs flex margin-auto max-percent rel curved-edges">
+            <input type="text" required name="logoname" class="logo-name no-shrink rel margin-auto" placeholder='team name'>
+            <input type="file" required name="logo" class="logo no-shrink rel margin-auto">
+            <button type="submit" class="logo-update-btn rel margin-auto no-shrink">Update</button>
+        </div>
+    </form>
+    <form align="center" method="POST" action="/team/remove" enctype="multipart/form-data" class="flex flex-column max-percent rel margin-auto logo-submit-form">
+        <h3 class="logo-submit-header">Remove a team Logo</h3>
+        <div class="logo-inputs flex margin-auto max-percent rel curved-edges">
+            <input type="text" required name="logoname" class="logo-rem-name no-shrink rel margin-auto" placeholder='team name'>
+            <button type="submit" class="logo-remove-btn rel margin-auto no-shrink">Remove</button>
+        </div>
+    </form>
+    <script>
+    </script>
+</body>
+</html>
+

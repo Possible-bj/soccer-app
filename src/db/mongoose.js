@@ -6,7 +6,7 @@ mongoose.connect(encodeURI(process.env.MONGODB_URL), {
     useFindAndModify: false
 }
 ).then((result) => {
-    console.log(result)
+    console.log(result.Mongoose)
 }).catch(e => {
     console.log(e.message)
 })

@@ -77,7 +77,7 @@ const draw = (data) => {
 }
   let distribute = (table, rowCount, teams) => {
       for(i=0; i<rowCount; i++) {
-                table.rows[i].cells[1].textContent = teams[i].team
+                table.rows[i].cells[1].innerHTML = `<img class='logo-thumb' src='/team/logo/${teams[i].team}'> <span> ${teams[i].team} </span>`
                 table.rows[i].cells[2].textContent = teams[i].P
                 table.rows[i].cells[3].textContent = teams[i].W
                 table.rows[i].cells[4].textContent = teams[i].D

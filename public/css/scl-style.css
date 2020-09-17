@@ -4,9 +4,9 @@
     text-align: center;
     margin-bottom: 0;
 }
-tr td:nth-child(2) {
-    width: 35%;
-}
+/* tr td:nth-child(2) {
+    width: 35% !important;
+} */
 #scl-ms {
     width: 100%;
 }
@@ -33,6 +33,10 @@ tbody tr:nth-child(2) td:nth-child(1) {
 }
 tbody tr:nth-child(3) td:nth-child(1) {
  background: rgb(231, 231, 137);
+ }
+
+tbody td:nth-child(2) {
+    width: 200px !important;
 }
 .g-alpha {
     position: relative;

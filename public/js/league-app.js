@@ -56,8 +56,8 @@ let addRows = (table) => {
                   positionIndicator(table, i)
                   break;
             case 1:
-                cell[cellCount].textContent = teams[i].team
-                document.querySelector('#coronation-logo').setAttribute('src', `../img/${teams[0].team}.png`)
+                cell[cellCount].innerHTML = `<img class='logo-thumb' src='/team/logo/${teams[i].team}'> <span> ${teams[i].team}</span>`
+                document.querySelector('.coronation-body').innerHTML = `<img id='coronation-logo' src='/team/logo/${teams[0].team}'>`
                 break;
             case 2:
                 cell[cellCount].textContent = teams[i].P

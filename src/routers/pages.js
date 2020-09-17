@@ -29,6 +29,13 @@ router.get('/scl', (req, res) => {
     })
 })
 
+router.get('/logo', (req, res) => {
+    res.render('logo-form', {
+        title:  'Supreme Champions League',
+        name: 'Benjamin Possible'
+    })
+})
+
 router.get('/admin', (req, res) => {
     res.render('404', {
         title: 'Page Not Found!',

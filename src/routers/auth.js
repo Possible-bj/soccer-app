@@ -65,20 +65,6 @@ router.get('/admin/update', async (req, res) => {
         })
     })
 })
-router.get('/admin/check', async (req, res) => {
-    await admin.find({}).then( async (result) => {
-        if (result.length === 0) {
-            const newAdmin = new admin({
-                name: 'possible',
-                pass: 'mazerunner'
-            })
-            await newAdmin.save()
-        }
-        console.log(result)
-    }).catch((e) => {
-        console.log({feedBack: e.message})
-    })
-})
 router.get('/admin/get/all', async (req, res) => {
     await admin.find({}).then((result) =>{
         res.send(result)

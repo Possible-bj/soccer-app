@@ -93,9 +93,8 @@ let addRows = (table) => {
                   cell[cellCount].textContent = i + 1
                   positionIndicator(table, i)
                   break;
-            case 1:
-                cell[cellCount].textContent = teams[i].team
-                cell[cellCount].style.textAlign = 'center'
+            case 1:                
+                cell[cellCount].innerHTML = `<img class='logo-thumb' src='/team/logo/${teams[i].team}'> <span> ${teams[i].team}</span>`
                 break;
             case 2:
                 cell[cellCount].textContent = teams[i].P

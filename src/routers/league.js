@@ -1,6 +1,7 @@
 const express = require('express')
 const metadata = require('../models/metadata')
 const league = require('../models/league')
+const team = require('../models/team')
 const combination = require('../utils/combination')
 const router = new express.Router()
 router.get('/table/:sn', async (req, res) => {

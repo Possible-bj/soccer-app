@@ -46,6 +46,9 @@
         margin: 10px;
         width: 45%;
     }
+    .table-row {
+        width: 100%
+    }
     .league-main-section > div {
         flex-shrink: 0;
         width: 50%;

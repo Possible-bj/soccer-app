@@ -311,7 +311,7 @@ authForm.addEventListener('submit', (e) => {
                     if (data.admin === 'possible') {
                         document.querySelector('.admin-pane').style.display = 'block'
                     }
-                    alert(`You are welcome ${data.admin}`)
+                    // alert(`You are welcome ${data.admin}`)
                     openOrCloseForm('open')
                     break;
                 case 'fail':

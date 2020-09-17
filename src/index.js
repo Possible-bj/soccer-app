@@ -12,6 +12,7 @@ const qfRouter = require('./routers/sclQF')
 const sfRouter = require('./routers/sclSF')
 const finRouter = require('./routers/sclFIN')
 const authRouter = require('./routers/auth')
+const teamRouter = require('./routers/team')
 
 const app = express()  
 const port = process.env.PORT
@@ -24,6 +25,7 @@ app.use(qfRouter)
 app.use(sfRouter)
 app.use(finRouter)
 app.use(authRouter)
+app.use(teamRouter)
 
 const publicPath = path.join(__dirname, '../public')
 const viewsPath = path.join(__dirname, '../templates/views')
