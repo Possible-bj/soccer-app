@@ -43,8 +43,8 @@
         margin: auto;
     }
     .table {
-        margin: 10px;
-        width: 45%;
+        margin: 10px auto;
+        width: 47% !important;
     }
     .table-row {
         width: 100%
@@ -61,5 +61,17 @@
     .second-section > div,
     .first-section-pane {
         width: 47%;
+    }
+    .logo-thumb {
+        width: 10px !important;
+    }
+    .league-result-match {
+        height: 200px;
+    }
+    .league-result-pane {
+        width: 60%;
+    }
+    .team-logos {
+        width: 120px;
     }
 }

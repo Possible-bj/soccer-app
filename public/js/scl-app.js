@@ -29,7 +29,11 @@ const readGroups = (table, sn) => {
         const url = `/scl/fetch/group?sn=${sn}&g=${g}`
 fetch(url).then((response) => {
         response.json().then((data) => {
-            if (data.feedBack) return document.querySelector('.sn-avail-info').textContent = data.feedBack
+            if (data.feedBack) {
+                document.querySelector('.sn-avail-info').textContent = data.feedBack
+                distribute(body, 0, 0)
+                return 0
+            } 
             data.sort(dynamicSort('Pts', 'GD'))
                 for(let i=0; i<10; i++) {
                         distribute(body, data.length, data)
@@ -71,22 +75,37 @@ const draw = (data) => {
         finAS[i].textContent = parseInt(data[i].firstLeg.as) + parseInt(data[i].secondLeg.hs)
         }
         if (i === 6) {
-        document.querySelector('#coronation-logo').setAttribute('src', `../img/${data[6].qualified}.png`)
+        document.querySelector('#coronation-logo').innerHTML = `<img src='team/logo/${data[6].qualified}'>`
         }
     }
 }
   let distribute = (table, rowCount, teams) => {
-      for(i=0; i<rowCount; i++) {
-                table.rows[i].cells[1].innerHTML = `<img class='logo-thumb' src='/team/logo/${teams[i].team}'> <span> ${teams[i].team} </span>`
-                table.rows[i].cells[2].textContent = teams[i].P
-                table.rows[i].cells[3].textContent = teams[i].W
-                table.rows[i].cells[4].textContent = teams[i].D
-                table.rows[i].cells[5].textContent = teams[i].L
-                table.rows[i].cells[6].textContent = teams[i].GF
-                table.rows[i].cells[7].textContent = teams[i].GA
-                table.rows[i].cells[8].textContent = teams[i].GD
-                table.rows[i].cells[9].textContent = teams[i].Pts               
-        }
+      if (rowCount === 0) {
+          for (i=0; i<4; i++) {
+            table.rows[i].cells[1].innerHTML = ''
+            table.rows[i].cells[2].textContent = ''
+            table.rows[i].cells[3].textContent = ''
+            table.rows[i].cells[4].textContent = ''
+            table.rows[i].cells[5].textContent = ''
+            table.rows[i].cells[6].textContent = ''
+            table.rows[i].cells[7].textContent = ''
+            table.rows[i].cells[8].textContent = ''
+            table.rows[i].cells[9].textContent = ''
+          }        
+      } else {
+        for(i=0; i<rowCount; i++) {
+            table.rows[i].cells[1].innerHTML = `<img class='logo-thumb' src='/team/logo/${teams[i].team}'> <span> ${teams[i].team} </span>`
+            table.rows[i].cells[2].textContent = teams[i].P
+            table.rows[i].cells[3].textContent = teams[i].W
+            table.rows[i].cells[4].textContent = teams[i].D
+            table.rows[i].cells[5].textContent = teams[i].L
+            table.rows[i].cells[6].textContent = teams[i].GF
+            table.rows[i].cells[7].textContent = teams[i].GA
+            table.rows[i].cells[8].textContent = teams[i].GD
+            table.rows[i].cells[9].textContent = teams[i].Pts               
+    }
+      }
+      
   }
 let createSeasonSwitch = (season, snDis) => {
     let panel = document.querySelector('.switch-right')

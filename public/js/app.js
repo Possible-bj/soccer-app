@@ -38,29 +38,38 @@ const readResult = (pane, sn, day) => {
     const url = `/league/result?season=${sn}&day=${day}`
     fetch(url).then((response) => {
         response.json().then((data) => {
+            if ( data.feedBack ) {
+                return pane.innerHTML = `<div class="no-result rel max-percent margin-auto"> <div align="center" class="abs margin-auto centered" >${data.feedBack}</div> </div>`
+            }
             for (i=0; i<data.length; i++) {
-                const div = document.createElement('div')
-                div.classList.add('match')
-                const ht = document.createElement('div')
-                ht.classList.add('home-team')
+                const div = document.createElement('div')                
+                const ht = document.createElement('div')                
                 const leg = document.createElement('div')
+                const at = document.createElement('div')
+                const as = document.createElement('div')
+                const hs = document.createElement('div')                
+                div.classList.add('match')
+                ht.classList.add('home-team')
                 leg.classList.add('league-result-leg')
+                hs.classList.add('home-score')
+                as.classList.add('away-score')
+                at.classList.add('away-team')
                 if(data[i].leg === 'firstLeg') leg.textContent = '1L'
                 if(data[i].leg === 'secondLeg') leg.textContent = '2L'
-                ht.textContent = data[i].ht
+                ht.textContent = data[i].ht                                
+                hs.textContent = data[i].hs
+                as.textContent = data[i].as
+                at.textContent = data[i].at
+                if ( data[i].hs > data[i].as ) {
+                    ht.style.color = 'green'; hs.style.color = 'green';
+                }
+                if ( data[i].as > data[i].hs ) {
+                    at.style.color = 'green'; as.style.color = 'green';
+                }
                 ht.append(leg)
                 div.append(ht)
-                const hs = document.createElement('div')
-                hs.classList.add('home-score')
-                hs.textContent = data[i].hs
-                div.append(hs)
-                const as = document.createElement('div')
-                as.classList.add('away-score')
-                as.textContent = data[i].as
-                div.append(as)
-                const at = document.createElement('div')
-                at.classList.add('away-team')
-                at.textContent = data[i].at
+                div.append(hs)                                                
+                div.append(as)                                
                 div.append(at)
                 pane.append(div)
             }

@@ -63,6 +63,15 @@ router.get('/newday/:inc', async (req, res) => {
     await meta[0].save()
     }
     if (inc.charCodeAt(0) === 43) {
+        const data = await leagueResult.findOne({ 
+            season: meta[0].league.season,
+            day: meta[0].league.day
+        })
+        if (data.result.length < 20) {
+            return res.status(400).send({
+                feedBack: 'current match day slot is not full yet'
+            })
+        }
         meta[0].league.day++
         await meta[0].save()
     const result = new leagueResult({

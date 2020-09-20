@@ -1,5 +1,5 @@
 const express = require('express')
-// require('dotenv').config()
+require('dotenv').config()
 require('./db/mongoose')
 const path = require('path')
 const hbs = require('hbs')

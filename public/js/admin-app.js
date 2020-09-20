@@ -18,6 +18,7 @@ const ns = document.querySelector('#ns')
 const nr = document.querySelector('#nr')
 const nscl = document.querySelector('#nscl')
 const sclResultUpdate = document.querySelector('.fix-res-sub')
+const resInfo = document.querySelector('.res-info')
 window.addEventListener('DOMContentLoaded', () => {
     leagueIsRunning(); sclIsRunning(); adminBuilder()
     fetch('/scl/running').then((response) => {
@@ -139,8 +140,7 @@ const deleteTeam = (team) => {
         })
     })
 }
-leageResBtn.addEventListener('click', (e) => {
-            const resInfo = document.querySelector('.res-info')
+leageResBtn.addEventListener('click', (e) => {            
             resInfo.textContent = ''
             const ht = document.querySelector('#h').value.toLowerCase()
             const hs = document.querySelector('#h-s').value
@@ -185,8 +185,8 @@ nr.addEventListener('click', () => {
 const nextLevel = (command) => {
     fetch(`/${command}`).then((response) => {
         response.json().then((data) => {
-            if(data.length !== 0) return alert(data.feedBack)
-            alert('Fail')
+            if(data.feedBack) return resInfo.textContent = (data.feedBack)
+            resInfo.textContent = ('Fail')
         })
     }) 
 }
@@ -311,7 +311,7 @@ authForm.addEventListener('submit', (e) => {
                     if (data.admin === 'possible') {
                         document.querySelector('.admin-pane').style.display = 'block'
                     }
-                    // alert(`You are welcome ${data.admin}`)
+                    document.querySelector('.admin-presence').textContent = data.admin.toUpperCase()
                     openOrCloseForm('open')
                     break;
                 case 'fail':

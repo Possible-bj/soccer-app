@@ -1,8 +1,9 @@
 const express = require('express')
+const bodyParser = require('body-parser')
 const multer = require('multer')
 const team = require('../models/team')
 const router = new express.Router()
-
+router.use(bodyParser.urlencoded({ extended: true}))
 const upload = multer({
     limits: {
         fileSize: 50000
@@ -15,7 +16,7 @@ const upload = multer({
     }
 })
 
-router.post('/team/add', upload.single('logo'), async (req, res) => {
+router.post('/team/logo/add', upload.single('logo'), async (req, res) => {
     const name = (req.body.logoname).toLowerCase().trim()
     const data = new team({
         name: name,
@@ -27,6 +28,27 @@ router.post('/team/add', upload.single('logo'), async (req, res) => {
     res.status(400).send({ error: error.message })
 })
 
+router.post('/team/logo/update', upload.single('logo'), async (req, res) => {
+    const name = (req.body.logoname).toLowerCase().trim()
+    const logo = req.file.buffer
+    const data = await team.findOne({ name })
+    if (!data) {
+        return res.status(400).send({ feedback: 'team logo does not exist!' })
+    }
+    data.logo = logo
+    await data.save()
+    res.redirect('/logo')
+})
+
+router.post('/team/logo/remove', async (req, res) => {
+    const name = (req.body.logoname).toLowerCase().trim()
+    await team.deleteOne({ name }, async (e, del) => {
+        if ( del.deletedCount === 0) {
+            return res.status(400).send({ feedback: 'team logo does not exist!' })
+        }
+        res.redirect('/logo')
+    })
+})
 router.get('/team/logo/:name', async (req, res) => {
     const name = req.params.name
     const data = await team.findOne({ name })

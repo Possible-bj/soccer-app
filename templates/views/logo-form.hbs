@@ -38,7 +38,7 @@
 </head>
 
 <body>
-<form align="center" method="POST" action="/team/add" enctype="multipart/form-data" class="flex flex-column max-percent rel margin-auto logo-submit-form">
+<form align="center" method="POST" action="/team/logo/add" enctype="multipart/form-data" class="flex flex-column max-percent rel margin-auto logo-submit-form">
         <h3 class="logo-submit-header">Submit a team Logo</h3>
         <div class="logo-inputs flex margin-auto max-percent rel curved-edges">
             <input type="text" required name="logoname" class="logo-name no-shrink rel margin-auto" placeholder='team name'>
@@ -46,7 +46,7 @@
             <button type="submit" class="logo-submit-btn rel margin-auto no-shrink">Submit</button>
         </div>
     </form>
- <form align="center" method="POST" action="/team/update" enctype="multipart/form-data" class="flex flex-column max-percent rel margin-auto logo-submit-form">
+ <form align="center" method="POST" action="/team/logo/update" enctype="multipart/form-data" class="flex flex-column max-percent rel margin-auto logo-submit-form">
         <h3 class="logo-submit-header">Update a team Logo</h3>
         <div class="logo-inputs flex margin-auto max-percent rel curved-edges">
             <input type="text" required name="logoname" class="logo-name no-shrink rel margin-auto" placeholder='team name'>
@@ -54,10 +54,11 @@
             <button type="submit" class="logo-update-btn rel margin-auto no-shrink">Update</button>
         </div>
     </form>
-    <form align="center" method="POST" action="/team/remove" enctype="multipart/form-data" class="flex flex-column max-percent rel margin-auto logo-submit-form">
+    <form align="center" method="POST" action="/team/logo/remove" class="flex flex-column max-percent rel margin-auto logo-submit-form">
         <h3 class="logo-submit-header">Remove a team Logo</h3>
         <div class="logo-inputs flex margin-auto max-percent rel curved-edges">
             <input type="text" required name="logoname" class="logo-rem-name no-shrink rel margin-auto" placeholder='team name'>
+            <input style="display: none" type="file" name="logo" class="logo-rem-name no-shrink rel margin-auto">
             <button type="submit" class="logo-remove-btn rel margin-auto no-shrink">Remove</button>
         </div>
     </form>

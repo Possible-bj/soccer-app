@@ -1,8 +1,8 @@
 .table {
-    width: 100%;
     border-collapse: collapse;
     text-align: center;
     margin-bottom: 0;
+    width: 100%;
 }
 /* tr td:nth-child(2) {
     width: 35% !important;
@@ -54,6 +54,13 @@ tbody td:nth-child(2) {
     /* rgb(1, 2, 17); */
     border-radius: 6px;
     border: 2px solid rgb(163, 235, 163);
+}
+.stage-head {
+    color: rgb(1, 2, 17);
+    text-shadow: .5px .5px 1px #fff;
+    font-family: cursive;
+    font-weight: 600;
+    text-transform: uppercase;
 }
 .stages button {
     width: 25%;

@@ -15,15 +15,33 @@ const router = new express.Router()
 
 router.get('/league/result', async (req, res) => {
         const season = req.query.season, day = req.query.day
-        await leagueResult.findOne({ season, day }, async (_e, result) => {
-            res.status(200).send(result.result)
-        })
+        const pagedResult = []
+        const result = await leagueResult.findOne({ season, day }) 
+        if (result.result.length === 0) {
+            return res.status(400).send({
+                feedBack: 'No results yet!'
+            })
+        }       
+        if (!req.query.pager) {            
+            return res.status(200).send(result.result)            
+        }        
+        for (i=0; i<5; i++) {            
+            let x = ((req.query.pager) - 0) + i
+            pagedResult.push(result.result[x])         
+        }
+        res.status(200).send(pagedResult)
 })
 router.get('/league/result/add', async (req, res) => {
-    const ht = req.query.ht, hs = parseInt(req.query.hs), as = parseInt(req.query.as), at = req.query.at , leg = req.query.leg
+    const ht = (req.query.ht).trim(), hs = parseInt(req.query.hs), as = parseInt(req.query.as), at = (req.query.at).trim() , leg = req.query.leg
     const team = [ht, at]
     const meta = await metadata.find({})
     const season = meta[0].league.season, day = meta[0].league.day
+    const data = await leagueResult.findOne({ season, day })
+    if (data.result.length === 20) {
+        return res.status(400).send({
+            feedBack: `Match day ${day} result slot is full, create a new match day by clicking on "New Result" above!`
+        })
+    }
     const table = await league.findOne({ season })
     for (i = 0; i < 2; i++) {
         const duplicate = table.teams.find((data) => data.team === team[i])
