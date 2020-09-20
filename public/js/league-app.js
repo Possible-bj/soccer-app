@@ -9,8 +9,7 @@ window.addEventListener('DOMContentLoaded', () => {
         fetch('/metadata').then((response) => {
             response.json().then((data) => {
                 snDis.textContent = data.league.season
-                dayDis.textContent = data.league.day
-                createSeasonSwitch(data.league.season, data.league.day, snDis)
+                createSeasonSwitch(data.league.season, data.league.day)
                 readTeam(table, data.league.season)
                 readResult(resultPane, data.league.season, data.league.day, 0)
             })
@@ -35,6 +34,9 @@ fetch(url).then((response) => {
     })
 }
 const readResult = (pane, sn, day, pager) => {
+    if ( day === 0 ) {
+        return pane.innerHTML = `<div class="no-result rel max-percent margin-auto"> <div align="center" class="abs margin-auto centered" >No Results!</div> </div>` 
+    }
     const url = `/league/result?season=${sn}&day=${day}&pager=${pager}`
     fetch(url).then((response) => {
         response.json().then((data) => {
@@ -124,19 +126,25 @@ let addRows = (table) => {
 
       }
   }
-let createSeasonSwitch = (season, day, snDis) => {
+let createSeasonSwitch = (season, day) => {
     let panel = document.querySelector('.switch-right')
     let dayPanel = document.querySelector('.switch-right-result')
     panel.addEventListener('click', (e) => {
         snDis.textContent = e.target.textContent
         let table = document.querySelector('#tbody')
-        deleteTable(table)
+        deleteTable(table)        
         const sn = parseInt(e.target.textContent) - 0
+        howManyDaysInTheSeason(sn, (day) => {
+            createDaySwitch(day, dayPanel)
+            clearPane(resultPane.childElementCount, resultPane)        
+                readResult(resultPane, sn, day, 0)
+        })        
         readTeam(table, sn)
+          
     })
     dayPanel.addEventListener('click', (e) => {
         dayDis.textContent = e.target.textContent        
-        if (resultPane.childElementCount > 0) clearPane(resultPane.childElementCount)
+        if (resultPane.childElementCount > 0) clearPane(resultPane.childElementCount, resultPane)
         const day = parseInt(e.target.textContent) - 0
         const sn = parseInt(snDis.textContent) - 0
         readResult(resultPane, sn, day, 0)
@@ -147,18 +155,33 @@ let createSeasonSwitch = (season, day, snDis) => {
         panel.append(btn)
         panel.scrollLeft = btn.clientWidth * (i - 1)
     }
+    createDaySwitch(day, dayPanel)
+}
+const createDaySwitch = (day, dayPanel) => {
+    if (dayPanel.childElementCount > 0) {
+        clearPane(dayPanel.childElementCount, dayPanel)
+    }
+    dayDis.textContent = day !== 0? day : ''
     for (i = 0; i < day; i++) {
         let btn = document.createElement('button')
-        btn.textContent = i + 1
+        btn.textContent = i + 1         
         dayPanel.append(btn)
         dayPanel.scrollLeft = btn.clientWidth * (i - 1)
     }
+}
+const howManyDaysInTheSeason = (season, cb) => {
+    const url = `season/day/${season}`
+    fetch(url).then((response) => {
+        response.json().then((data) => {
+            cb(data.day)
+        })
+    })
 }
 for (i=0; i<page.length; i++) {
     page[i].addEventListener('click', (e) => {
         const day = parseInt(dayDis.textContent) - 0
         const sn = parseInt(snDis.textContent) - 0
-        clearPane(resultPane.childElementCount)
+        clearPane(resultPane.childElementCount, resultPane)
         const pager = (e.target.textContent) - 0
         switch(pager) {
             case 1:
@@ -181,10 +204,10 @@ let deleteTable = (table) => {
         table.deleteRow(i)
     }
 }
-let clearPane = (childCount) => {
+let clearPane = (childCount, clearPane) => {
     let i = 0
         do  {
-            resultPane.removeChild(resultPane.children[resultPane.children.length - 1])
+            clearPane.removeChild(clearPane.children[clearPane.children.length - 1])
             i++
         } while (i < childCount)
 }

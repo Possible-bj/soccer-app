@@ -225,6 +225,14 @@ router.get('/scl/fetch/ko', async (req, res) => {
     res.send(fixtures)
 
 })
+router.get('/season/day/:season', async (req, res) => {
+    const season = (req.params.season - 0)
+    const data = await leagueResult.find({ season })
+    res.status(200).send({
+        day: data.length
+    })
+})
+
 const newSclStages = async (season) => {
     const GS = new sclGS({
         season: season,
