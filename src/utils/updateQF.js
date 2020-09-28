@@ -3,7 +3,6 @@ const sclQF = require('../models/sclQF')
 const  updateQF = async (h, hs, a, as, leg, season, callback) => {
     const data = await sclQF.findOne({ season })
     if (`${h} vs ${a}` in data.fixtures[0]) {
-        console.log(`${h} vs ${a}` in data.fixtures[0])
         switch (data.fixtures[0][`${h} vs ${a}`][leg].played) {
             case true:
                 return callback({
@@ -34,7 +33,6 @@ const  updateQF = async (h, hs, a, as, leg, season, callback) => {
         }
 
     } else if (`${a} vs ${h}` in data.fixtures[0]) {
-        console.log(`${a} vs ${h}` in data.fixtures[0])
         switch (data.fixtures[0][`${a} vs ${h}`][leg].played) {
             case true:
                 return callback({

@@ -58,7 +58,7 @@ const createFIN = async (season, teams, callback)=> {
         feedBack: 'Semi Finals ended and Final begins!'
     })
 }
-let dynamicSort = (prop, tieBreaker) => {
+const dynamicSort = (prop, tieBreaker) => {
     const sortOrder = -1
     return function (a, b) {
         //   a should come before b in the sorted order
@@ -76,7 +76,6 @@ const fix = (arr, callback) => {
     while(tm.length>0) {
         let num = Math.floor(Math.random()*tm.length)        
         if (num === 0) num++
-        console.log(num)
     const firstTeam = tm[0], secondTeam = tm[num] 
     draw[`${firstTeam} vs ${secondTeam}`] = {
         firstLeg: {home: firstTeam, hs: 0, away: secondTeam, as: 0, played: false},
@@ -89,8 +88,5 @@ const fix = (arr, callback) => {
 }
 
 module.exports = {
-    combination: combination,
-    createQF: createQF,
-    createSF: createSF,
-    createFIN: createFIN
+    combination, createQF, createSF, createFIN, dynamicSort
 }

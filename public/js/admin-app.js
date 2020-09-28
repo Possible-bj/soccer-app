@@ -51,8 +51,12 @@ window.addEventListener('DOMContentLoaded', () => {
 const leagueIsRunning = () => {
     fetch('/league/running').then((response) => {
         response.json().then((data) => {
-            if (data.feedBack === "yes" || data.feedBack === "ended") {
+            if (data.feedBack === "yes") {
                 document.querySelector('.league-st-btn').setAttribute('disabled', true)
+            }
+            if ( data.feedBack === "ended" ) {
+                document.querySelector('.league-st-btn').setAttribute('disabled', true)
+                document.querySelector('.league-end-btn').setAttribute('disabled', true)
             }
         })
     })
@@ -142,10 +146,10 @@ const deleteTeam = (team) => {
 }
 leageResBtn.addEventListener('click', (e) => {            
             resInfo.textContent = ''
-            const ht = document.querySelector('#h').value.toLowerCase()
+            const ht = document.querySelector('#h').value.toLowerCase().trim()
             const hs = document.querySelector('#h-s').value
             const as = document.querySelector('#a-s').value
-            const at = document.querySelector('#a').value.toLowerCase()            
+            const at = document.querySelector('#a').value.toLowerCase().trim()      
             if (ht === '' || hs === '' || as === '' || at === '') {
                 return resInfo.textContent = ('Please provide all result data')
             }
@@ -191,7 +195,8 @@ const nextLevel = (command) => {
     }) 
 }
 sclTeamAddBtn.addEventListener('click', () => {
-    const team = document.querySelector('.group-action-input').value.toLowerCase()    
+    entryFb.textContent = ''
+    const team = document.querySelector('.group-action-input').value.toLowerCase().trim()
     if (team === '') return entryFb.textContent = 'Please insert the team to add!'
     entryFb.textContent = ''
     const url = `/scl/groups/team/add?team=${team}`
@@ -205,7 +210,7 @@ sclTeamAddBtn.addEventListener('click', () => {
     })
 })
 sclTeamRemoveBtn.addEventListener('click', () => {
-    const team = document.querySelector('.group-action-input').value.toLowerCase()    
+    const team = document.querySelector('.group-action-input').value.toLowerCase().trim()  
     if (team === '') return entryFb.textContent = 'Please insert the team to remove!'
     entryFb.textContent = ''
     const url = `/scl/groups/team/remove?team=${team}`
@@ -216,9 +221,10 @@ sclTeamRemoveBtn.addEventListener('click', () => {
     })
 })
 sclResultUpdate.addEventListener('click', () => { 
-    const h = document.querySelector('.home-draw').value.toLowerCase()
+    entryFb.textContent = ''
+    const h = document.querySelector('.home-draw').value.toLowerCase().trim()
     const hs = document.querySelector('.home-score').value
-    const a = document.querySelector('.away-draw').value.toLowerCase()
+    const a = document.querySelector('.away-draw').value.toLowerCase().trim()
     const as = document.querySelector('.away-score').value
     const legs = document.querySelectorAll('input[name="leg"]:checked')
     const leg = legs.length>0? legs[0].value: null
@@ -373,12 +379,10 @@ const leagueEndBtn = document.querySelector('.league-end-btn')
 leagueEndBtn.addEventListener('click', () => {
     const endConsent = confirm('Are you sure you want to end league? if sure, Ensure that you have updated all results before ending!')
     if (!endConsent) return 0
+    leagueEndBtn.setAttribute('disabled', true)
     fetch('/league/end').then((response) => {
         response.json().then((data) => {
             FB.textContent = data.feedBack
-            // if (data.feedBack === 'yes') {
-            //     leagueStBtn.setAttribute('disabled', true)
-            // }
         })
     })
 })

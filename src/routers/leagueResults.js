@@ -43,6 +43,11 @@ router.get('/league/result/add', async (req, res) => {
         })
     }
     const table = await league.findOne({ season })
+    if (table.running === 'ended') {
+        return res.status(400).send({
+            feedBack: 'League has ended!'
+        })
+    }
     for (i = 0; i < 2; i++) {
         const duplicate = table.teams.find((data) => data.team === team[i])
         if (!duplicate) {

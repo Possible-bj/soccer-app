@@ -75,7 +75,7 @@ const draw = (data) => {
         finAS[i].textContent = parseInt(data[i].firstLeg.as) + parseInt(data[i].secondLeg.hs)
         }
         if (i === 6) {
-        document.querySelector('#coronation-logo').innerHTML = `<img src='team/logo/${data[6].qualified}'>`
+        document.querySelector('.coronation-body').innerHTML = `<img src='team/logo/${data[6].qualified}'>`
         }
     }
 }

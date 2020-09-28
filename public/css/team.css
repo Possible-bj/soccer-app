@@ -9,9 +9,9 @@
 }
 .team {
     position: relative;
-    background: linear-gradient(-45deg, rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.5));
-    /* linear-gradient(-45deg, rgba(5, 90, 16, .5), rgba(10, 167, 31, .5)); */
-    box-shadow: -.5px -.5px 1px 1px #000;
+    background: linear-gradient(-45deg, rgb(5, 90, 16), rgb(10, 167, 31));
+    /* linear-gradient(-45deg, rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.5)); */    
+    box-shadow: 0 -4px 1px .5px rgb(1, 2, 17);
     border-radius: 3px;
     margin: 10px;
 }
@@ -20,5 +20,44 @@
     margin: auto;
 }
 .team-info {
-    height: 200px;
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+}
+.league-stats,
+.scl-stats {
+    position: relative;
+    height: 50%;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0;
+    color: #fff;
+    text-shadow: 2px 2px 1px rgb(1, 2, 17);
+    /* border: 1px solid #000; */
+}
+.team-info hr {
+    position: relative;
+    width: 80%;
+    background: rgb(1, 2, 17s);
+    margin: 0 auto 5px auto;
+}
+.team-info h3 {
+    margin: 0;
+    color: rgb(10, 167, 31);
+}
+/* stats table style */
+.stats-table {
+    width: 90%;
+    color: rgb(2, 4, 43);
+    font-weight: 600;
+    text-shadow: none;
+    border-collapse: collapse;
+}
+.stats-table tr {
+    position: relative;
+    background: transparent !important;
+}
+.stats-table td {
+    border: .05px solid rgba(5, 90, 16, .5) !important;
+    text-align: center !important;
 }

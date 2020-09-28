@@ -50,7 +50,7 @@ router.get('/league/team/add', async (req, res) => {
     })
 })
 router.get('/league/team/remove', async (req, res) => {
-    const team = req.query.team.toLowerCase()
+    const team = req.query.team.toLowerCase().trim()
     await metadata.find({}, async (e, meta) => {
         const season = meta[0].league.season
         const table = await league.findOne({ season })

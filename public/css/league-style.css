@@ -62,7 +62,7 @@
     border: 1px solid transparent;
     font-size: 80%;
     color: #fff;
-    /* box-shadow: .5px .5px 5px 1px #000; */
+    box-shadow: -.5px -.5px 1px 1px #000;
 }
 .home-logo {
     top: 0;

@@ -2,6 +2,10 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const multer = require('multer')
 const team = require('../models/team')
+const metadata = require('../models/metadata')
+const league = require('../models/league')
+const { getCurrentLeagueStats, getOverallLeagueStats, getLeagueTrophies,
+getOverallSclStats, getCurrentSclStats, getSclTrophies } = require('../utils/team')
 const router = new express.Router()
 router.use(bodyParser.urlencoded({ extended: true}))
 const upload = multer({
@@ -49,6 +53,7 @@ router.post('/team/logo/remove', async (req, res) => {
         res.redirect('/logo')
     })
 })
+
 router.get('/team/logo/:name', async (req, res) => {
     const name = req.params.name
     const data = await team.findOne({ name })
@@ -61,4 +66,38 @@ router.get('/team/logo/:name', async (req, res) => {
     res.set('Content-Type', 'image/png')
     res.send(data.logo)
 })
+
+router.get('/team/logo', async (req, res) => {
+    const teamsObj = []        
+    const teams = await team.find({})
+    const meta = await metadata.find({})
+    const currentLeague = await league.findOne({ season: meta[0].league.season })
+    const allLeagues = await league.find({})
+    for (let i = 0; i < teams.length; i++) {
+        const toObj = teams[i].toObject()
+        if (toObj.name !== "supreme") {
+            delete toObj.logo; delete toObj._id; delete toObj.createdAt; delete toObj.updatedAt,delete toObj.__v
+            const overallLeagueStats = getOverallLeagueStats(toObj, allLeagues)
+            const currentLeagueStats = getCurrentLeagueStats(toObj, currentLeague)
+            const leagueTrophies = getLeagueTrophies(toObj, allLeagues)
+            const overallSclStats = await getOverallSclStats(toObj)
+            const currentSclStats = await getCurrentSclStats(toObj, meta[0].scl.season)
+            const sclTrophies = await getSclTrophies(toObj)
+            toObj.leagueStats = {
+                overall: overallLeagueStats,
+                current: currentLeagueStats,
+                trophies: leagueTrophies.length
+            }
+            toObj.sclStats = {
+                overall: overallSclStats,
+                current: currentSclStats,
+                trophies: sclTrophies.length
+            }
+            teamsObj.push(toObj)
+        }
+    }
+    res.send(teamsObj)
+})
+
+
 module.exports = router
