@@ -1,5 +1,4 @@
 window.addEventListener('DOMContentLoaded', () => {    
-    setTimeout(() => {
         const table = document.querySelector('#tbody')
         const snDis = document.querySelector('#sn-display')
         const matchDay = document.querySelector('.match-day')
@@ -12,10 +11,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 readResult(resPane, data.league.season, data.league.day)
             })
         })      
-    }, 500)
   
-})
-
 const readTeam = (table, sn) => {
     const url = `/table/${sn}`
     // `/request?command=${command}&sn=${sn}`
@@ -146,5 +142,4 @@ let addRows = (table) => {
                         return 0 * sortOrder
     }
 }
-
-  
+})

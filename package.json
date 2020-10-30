@@ -1,7 +1,6 @@
 {
   "name": "soccer-app",
   "version": "1.0.0",
-  "main": "app.js",
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js -e js,hbs",

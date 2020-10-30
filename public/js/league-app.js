@@ -3,7 +3,6 @@ const snDis = document.querySelector('#sn-display')
 const dayDis = document.querySelector('#day-display')
 const page = document.querySelectorAll('.page')
 window.addEventListener('DOMContentLoaded', () => {    
-    setTimeout(() => {
         const table = document.querySelector('#tbody')
         // const resPane = document.querySelector('#results')
         fetch('/metadata').then((response) => {
@@ -14,9 +13,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 readResult(resultPane, data.league.season, data.league.day, 0)
             })
         })      
-    }, 500)
   
-})
 // right here i am making use of the sort() method with a dynamicSort
 const readTeam = (table, sn) => {
     const url = `/table/${sn}`
@@ -225,3 +222,4 @@ let dynamicSort = (prop, tieBreaker) => {
                         return 0 * sortOrder
     }
 }
+})

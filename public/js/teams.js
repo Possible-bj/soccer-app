@@ -1,11 +1,5 @@
-
-
 const teamPane = document.querySelector('#team-pane')
 window.addEventListener('DOMContentLoaded', () => {
-    setTimeout(() => {
-        setUp()
-    }, 2000)
-
 const setUp = () => {
     fetch('/team/logo').then((response) => {
         response.json().then((data) => {
@@ -222,4 +216,5 @@ const plot = (data) => {
 teamPane.append(rowDiv)
     }
 }
+setUp()
 })

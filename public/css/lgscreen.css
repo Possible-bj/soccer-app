@@ -60,8 +60,13 @@
     }
     .second-section > div,
     .first-section-pane {
-        width: 47%;
+        width: 100%;
     }
+    .league-action-section,
+.scl-action-section {
+    width: 47% !important;
+    flex-shrink: 0;
+}
     .logo-thumb {
         width: 10px !important;
     }

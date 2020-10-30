@@ -1,5 +1,4 @@
 window.addEventListener('DOMContentLoaded', () => {    
-    setTimeout(() => {
         const table = document.querySelectorAll('.gbody')
         const snDis = document.querySelector('#scl-id')
         fetch('/metadata').then((response) => {
@@ -8,10 +7,8 @@ window.addEventListener('DOMContentLoaded', () => {
                 createSeasonSwitch(data.scl.season, snDis)
                 readGroups(table, data.scl.season)
             })
-        })      
-    }, 500)
-  
-})
+        }) 
+
 const homeDraw = document.querySelectorAll('.home-draw')
 const awayDraw = document.querySelectorAll('.away-draw')
 const flHS = document.querySelectorAll('.fl-home-score')
@@ -134,3 +131,4 @@ let dynamicSort = (prop, tieBreaker) => {
                         return 0 * sortOrder
     }
 }
+})

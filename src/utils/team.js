@@ -3,23 +3,16 @@ const sclQF = require('../models/sclQF')
 const sclSF = require('../models/sclSF')
 const sclFIN = require('../models/sclFIN')
 const { dynamicSort } = require('./combination')
-const getOverallLeagueStats = (toObj, allLeagues) => {
+const getOverallLeagueStats = async (team, arr, allLeagues) => {
     const overall = { P: 0, W: 0, D: 0, L: 0, GF: 0, GA: 0, GD: 0, Pts: 0 }
-    allLeagues.forEach((league) => {
-        league.teams.filter((data) => {
-                    if (data.team === toObj.name) {
-                        overall.P += data.P
-                        overall.W += data.W
-                        overall.D += data.D
-                        overall.L += data.L                        
-                        overall.GF += data.GF
-                        overall.GA += data.GA
-                        overall.GD += data.GD
-                        overall.Pts += data.Pts
-                    }                                                      
-            })
-        })
-        return overall
+    let i = 0
+    do {
+        const overallObj = arr.length === 0? overall : arr[0]
+        if (arr.length > 0 ) arr.pop()        
+        arr.push(await accumulate(overallObj, allLeagues[i], team) )
+        i++
+    } while( i < allLeagues.length )
+    return arr[0]
 }
 const getCurrentLeagueStats = (toObj, currentLeague) => {
     const leagueToObj = currentLeague.toObject()
@@ -38,11 +31,19 @@ const getCurrentLeagueStats = (toObj, currentLeague) => {
     })
     return current
 }
-const getLeagueTrophies = (toObj, allLeagues) => {
-    const trophies = []
+const getLeagueTrophies = (team, allLeagues) => {
+    const trophies = [], teamObj = []
     allLeagues.forEach((league) => {
-        league.teams.sort(dynamicSort('Pts', 'GD'))
-        if (league.teams[0].team === toObj.name) {
+        for(i=0; i<league.teams.length; i++) {
+            const team = league.teams[i].team
+            const deduction = league.teams[i].deduction
+            const current = { team: team, P: 0, W: 0, D: 0, L: 0, GF: 0, GA: 0, GD: 0, Pts: 0 }
+            const stats = accumulate(current, league, team)
+            stats.Pts = stats.Pts - deduction
+            teamObj.push(stats)
+        }
+        teamObj.sort(dynamicSort('Pts', 'GD'))
+        if (teamObj[0].team === team) {
             if (league.running === 'ended') trophies.push(1)
         }
     })
@@ -70,8 +71,8 @@ const getCurrentSclStats = async (toObj, season) => {
     const currentSF = await sclSF.findOne({ season })
     const currentFIN = await sclFIN.findOne({ season })
     const current1 = await accumulateGroupStageStats(current, currentGS, toObj)
-    const current2 = await accumulate(current1, currentQF, toObj)
-    const current3 = await accumulate(current2, currentSF, toObj)
+    const current2 = await accumulate(current1, currentQF, toObj.name)
+    const current3 = await accumulate(current2, currentSF, toObj.name)
     const current4 = await accumulateFinStats(current3, currentFIN.fixtures[0], toObj)
     return current4
 }
@@ -102,7 +103,7 @@ const accumulateOverallKOStageStats = async (overall,  arr, allDoc, obj) => {
     do {
         const overallObj = arr.length === 0? overall : arr[0]
         if (arr.length > 0 ) arr.pop()        
-        arr.push(await accumulate(overallObj, allDoc[i], obj) )
+        arr.push(await accumulate(overallObj, allDoc[i], obj.name) )
         i++
     } while( i < allDoc.length )
     return arr[0]
@@ -135,56 +136,60 @@ const accumulateGroupStageStats = (current, currentGS, toObj) => {
     }
     return current
 }
-const accumulate = (current, doc, obj) => {
+const accumulate = (current, doc, team) => {
     for (x in doc.fixtures[0]) {
-        if (x.includes(obj.name)) {
-            doc = doc.fixtures[0][x]
-            if (doc.firstLeg.played) {
+        if (x.includes(team)) {
+            // doc = doc
+            if (doc.fixtures[0][x].firstLeg.played) {
                 current.P++
-                if ( doc.firstLeg.home === obj.name) {
-                    const win = doc.firstLeg.hs > doc.firstLeg.as? 1:0
-                    const lose = doc.firstLeg.as > doc.firstLeg.hs? 1:0
-                    const draw = doc.firstLeg.hs === doc.firstLeg.as? 1:0
+                if ( doc.fixtures[0][x].firstLeg.home === team) {
+                    const win = doc.fixtures[0][x].firstLeg.hs > doc.fixtures[0][x].firstLeg.as? 1:0
+                    const lose = doc.fixtures[0][x].firstLeg.as > doc.fixtures[0][x].firstLeg.hs? 1:0
+                    const draw = doc.fixtures[0][x].firstLeg.hs === doc.fixtures[0][x].firstLeg.as? 1:0
                     current.W += win
                     current.D += draw
                     current.L += lose
-                    current.GF += doc.firstLeg.hs
-                    current.GA += doc.firstLeg.as
+                    current.GF += doc.fixtures[0][x].firstLeg.hs
+                    current.GA += doc.fixtures[0][x].firstLeg.as
                     current.GD += (current.GF - current.GA)
+                    current.Pts = (current.W * 3) + current.D
                 } else {
-                    const win = doc.firstLeg.as > doc.firstLeg.hs? 1:0
-                    const lose = doc.firstLeg.hs > doc.firstLeg.as? 1:0
-                    const draw = doc.firstLeg.hs === doc.firstLeg.as? 1:0
+                    const win = doc.fixtures[0][x].firstLeg.as > doc.fixtures[0][x].firstLeg.hs? 1:0
+                    const lose = doc.fixtures[0][x].firstLeg.hs > doc.fixtures[0][x].firstLeg.as? 1:0
+                    const draw = doc.fixtures[0][x].firstLeg.hs === doc.fixtures[0][x].firstLeg.as? 1:0
                     current.W += win
                     current.D += draw
                     current.L += lose
-                    current.GF += doc.firstLeg.as
-                    current.GA += doc.firstLeg.hs
+                    current.GF += doc.fixtures[0][x].firstLeg.as
+                    current.GA += doc.fixtures[0][x].firstLeg.hs
                     current.GD += (current.GF - current.GA)
+                    current.Pts = (current.W * 3) + current.D
                 }
             }
-            if (doc.secondLeg.played) {
+            if (doc.fixtures[0][x].secondLeg.played) {
                 current.P++
-                if ( doc.secondLeg.home === obj.name) {
-                    const win = doc.secondLeg.hs > doc.secondLeg.as? 1:0
-                    const lose = doc.secondLeg.as > doc.secondLeg.hs? 1:0
-                    const draw = doc.secondLeg.hs === doc.secondLeg.as? 1:0
+                if ( doc.fixtures[0][x].secondLeg.home === team) {
+                    const win = doc.fixtures[0][x].secondLeg.hs > doc.fixtures[0][x].secondLeg.as? 1:0
+                    const lose = doc.fixtures[0][x].secondLeg.as > doc.fixtures[0][x].secondLeg.hs? 1:0
+                    const draw = doc.fixtures[0][x].secondLeg.hs === doc.fixtures[0][x].secondLeg.as? 1:0
                     current.W += win
                     current.D += draw
                     current.L += lose
-                    current.GF += doc.secondLeg.hs
-                    current.GA += doc.secondLeg.as
+                    current.GF += doc.fixtures[0][x].secondLeg.hs
+                    current.GA += doc.fixtures[0][x].secondLeg.as
                     current.GD += (current.GF - current.GA)
+                    current.Pts = (current.W * 3) + current.D
                 } else {
-                    const win = doc.secondLeg.as > doc.secondLeg.hs? 1:0
-                    const lose = doc.secondLeg.hs > doc.secondLeg.as? 1:0
-                    const draw = doc.secondLeg.hs === doc.secondLeg.as? 1:0
+                    const win = doc.fixtures[0][x].secondLeg.as > doc.fixtures[0][x].secondLeg.hs? 1:0
+                    const lose = doc.fixtures[0][x].secondLeg.hs > doc.fixtures[0][x].secondLeg.as? 1:0
+                    const draw = doc.fixtures[0][x].secondLeg.hs === doc.fixtures[0][x].secondLeg.as? 1:0
                     current.W += win
                     current.D += draw
                     current.L += lose
-                    current.GF += doc.secondLeg.as
-                    current.GA += doc.secondLeg.hs
+                    current.GF += doc.fixtures[0][x].secondLeg.as
+                    current.GA += doc.fixtures[0][x].secondLeg.hs
                     current.GD += (current.GF - current.GA)
+                    current.Pts = (current.W * 3) + current.D
                 }
             }
         }
@@ -225,5 +230,5 @@ const accumulateFinStats = (current, FIN, obj) => {
 }
 module.exports = {
    getLeagueTrophies, getCurrentLeagueStats, getOverallLeagueStats,
-   getOverallSclStats, getCurrentSclStats, getSclTrophies
+   getOverallSclStats, getCurrentSclStats, getSclTrophies, accumulate
 }

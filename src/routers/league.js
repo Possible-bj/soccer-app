@@ -1,8 +1,8 @@
 const express = require('express')
 const metadata = require('../models/metadata')
 const league = require('../models/league')
-const team = require('../models/team')
-const combination = require('../utils/combination')
+const team = require('../utils/combination')
+const { accumulate } = require('../utils/team')
 const router = new express.Router()
 router.get('/table/:sn', async (req, res) => {
     const season = req.params.sn
@@ -11,7 +11,16 @@ router.get('/table/:sn', async (req, res) => {
     if (!table) {
         throw new Error('Could not find table')
     }
-    res.status(200).send(table.teams)
+    const teamObj = []
+    for(i=0; i<table.teams.length; i++) {
+        const team = table.teams[i].team
+        const deduction = table.teams[i].deduction
+        const current = { team: team, P: 0, W: 0, D: 0, L: 0, GF: 0, GA: 0, GD: 0, Pts: 0 }
+        const stats = accumulate(current, table, team)
+        stats.Pts = stats.Pts - deduction
+        teamObj.push(stats)
+    }
+    res.status(200).send(teamObj)
     } catch(e) {
         res.status(400).send({ feedback: e.message})
     }
@@ -79,6 +88,20 @@ router.get('/league/team/remove', async (req, res) => {
         }
     })
 })
+router.get('/league/deduct', async (req, res) => {
+    const team = req.query.team, val = req.query.val - 0
+    const meta = await metadata.find({}), season = meta[0].league.season
+    const League = await league.findOne({ season })
+    League.teams.find((data) => {
+        if (data.team === team) {
+            data.deduction = val
+        }
+    })
+    await League.save()
+    res.status(201).send({
+        feedBack: 'point deducted!'
+    })
+})
 router.get('/league/start', async (req, res) => {
     await metadata.find({}, async (e, meta) => {
         const season = meta[0].league.season, arr = []
@@ -97,17 +120,17 @@ router.get('/league/start', async (req, res) => {
         res.send({ feedBack: table.running })
     })
 })
-router.get('/league/end', async (req, res) => {
-    await metadata.find({}, async (e, meta) => {
+router.get('/league/end', async (_req, res) => {
+    await metadata.find({}, async (_e, meta) => {
         const season = meta[0].league.season
-        await league.findOne({ season }, async (e, table) => {
-            if (table.running === 'no') {
+        await league.findOne({ season }, async (_e, League) => {
+            if (League.running === 'no') {
                 return res.status(400).send({
                     feedBack: 'Current League has not started, cannot End!'
                 })
             }
-            table.running = 'ended'
-            await table.save()
+            League.running = 'ended'
+            await League.save()
             res.status(200).send({
                 feedBack: 'League Ended!'
             })

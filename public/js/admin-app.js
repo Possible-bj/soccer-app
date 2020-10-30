@@ -1,3 +1,4 @@
+// import { fix } from './fa-draw.js'
 // Variable Declaration
 const stageChanger = document.querySelector('.stage-chn-btn')
 const fixctrl = document.querySelector('.scl-fixture-controls')
@@ -19,8 +20,9 @@ const nr = document.querySelector('#nr')
 const nscl = document.querySelector('#nscl')
 const sclResultUpdate = document.querySelector('.fix-res-sub')
 const resInfo = document.querySelector('.res-info')
+const correctPaneInfo = document.querySelector('.correct-pane-info')
 window.addEventListener('DOMContentLoaded', () => {
-    leagueIsRunning(); sclIsRunning(); adminBuilder()
+    leagueIsRunning(); sclIsRunning();
     fetch('/scl/running').then((response) => {
         response.json().then((data) => {
             switch (data.code) {
@@ -71,13 +73,13 @@ const sclIsRunning = () => {
         })
     })
 }
-const adminBuilder = () => {
-    fetch('/admin/check').then((response) => {
-        response.json().then((data) => {
+// const adminBuilder = () => {
+//     fetch('/admin/check').then((response) => {
+//         response.json().then((data) => {
             
-        })
-    })
-}
+//         })
+//     })
+// }
 const modify = (stage, leg) => {
     fixctrl.style.display = 'flex'
     stageIndicator.textContent = stage                    
@@ -113,7 +115,6 @@ btnPane.addEventListener('click', (e) => {
             }
             deleteTeam(remTeam, FB)
     }
-   
 })
 const addTeam = (team) => {
     const url = `/league/team/add?team=${team}`
@@ -153,9 +154,9 @@ leageResBtn.addEventListener('click', (e) => {
             if (ht === '' || hs === '' || as === '' || at === '') {
                 return resInfo.textContent = ('Please provide all result data')
             }
-            let leg = document.querySelectorAll('input[name="league-leg"]:checked')
-            if (leg.length === 0) return resInfo.textContent = 'Please check a leg!'
-            updateResult(ht, hs, as, at, leg[0].value, resInfo)
+            let leagueLeg = document.querySelector('input[name="league-leg"]')
+            let leg = leagueLeg.checked? 'secondLeg' : 'firstLeg'
+            updateResult(ht, hs, as, at, leg, resInfo)
 })
 const updateResult = (ht, hs, as, at, leg, resInfo) => {
     const url = `/league/result/add?ht=${ht}&hs=${hs}&as=${as}&at=${at}&leg=${leg}`
@@ -386,3 +387,67 @@ leagueEndBtn.addEventListener('click', () => {
         })
     })
 })
+const leagueLegNob = document.querySelector('.league-leg-nob')
+const leagueLeg = document.querySelector('.league-leg')
+leagueLegNob.addEventListener('click', () => {
+    if(!leagueLeg.checked) {        
+        leagueLegNob.style.transform = 'translateX(30px)';
+        leagueLeg.checked = true
+    } else {
+        leagueLegNob.style.transform = 'translateX(0)';
+        leagueLeg.checked = false
+    }
+})
+const deductBtn = document.querySelector('.deduct-btn')
+deductBtn.addEventListener('click', () => {
+    correctPaneInfo.textContent = ''
+    const deductTeam = document.querySelector('#deduct-team').value
+    const deductPoint = document.querySelector('#deduct-point').value
+    if ( deductTeam === '' || deductPoint === '') return correctPaneInfo.textContent = 'Please provide the team and the point to deduct!'
+    const url = `/league/deduct?team=${deductTeam}&val=${deductPoint}`
+    fetch(url).then((response) => {
+        response.json().then((data) => {
+            correctPaneInfo.textContent = data.feedBack
+        })
+    })
+})
+const deleteBtn = document.querySelector('.delete-btn')
+deleteBtn.addEventListener('click', () => {
+    correctPaneInfo.textContent = ''
+    const slotId = document.querySelector('#slot-id').value
+    const day = document.querySelector('#match-day').value
+    if ( slotId === '' || day === '') return correctPaneInfo.textContent = 'Please provide the position number and the match day!'
+    const url = `/league/result/delete?slotId=${slotId}&day=${day}`
+    fetch(url).then((response) => {
+        response.json().then((data) => {
+            correctPaneInfo.textContent = data.feedBack
+        })
+    })
+})
+const correctBtn = document.querySelector('.correct-btn')
+correctBtn.addEventListener('click', () => {
+    correctPaneInfo.textContent = ''
+    const slotId = document.querySelector('#slot-id').value
+    const day = document.querySelector('#match-day').value
+    const hs = document.querySelector('#hs').value
+    const as = document.querySelector('#as').value
+    if ( slotId === '' || day === '' || hs === '' || as === '') 
+    return correctPaneInfo.textContent = 'Please provide the position number and the match day!'
+    const url = `/league/result/correct?slotId=${slotId}&day=${day}&hs=${hs}&as=${as}`
+    fetch(url).then((response) => {
+        response.json().then((data) => {
+            correctPaneInfo.textContent = data.feedBack
+        })
+    })
+})
+
+// const faDrawBtn = document.querySelector('.fa-draw-btn')
+// faDrawBtn.addEventListener('click', () => {
+//     alert('clicked')
+//     const teams = document.querySelector('.fa-teams').value.trim()
+//     const arr = teams.split(' ')
+//     fix(arr, (fixtures) => {
+//         alert(fixtures[0])
+//     })
+// })
+

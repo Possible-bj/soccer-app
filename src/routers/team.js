@@ -76,10 +76,11 @@ router.get('/team/logo', async (req, res) => {
     for (let i = 0; i < teams.length; i++) {
         const toObj = teams[i].toObject()
         if (toObj.name !== "supreme") {
+            const arr = []
             delete toObj.logo; delete toObj._id; delete toObj.createdAt; delete toObj.updatedAt,delete toObj.__v
-            const overallLeagueStats = getOverallLeagueStats(toObj, allLeagues)
+            const overallLeagueStats = await getOverallLeagueStats(toObj.name, arr, allLeagues)
             const currentLeagueStats = getCurrentLeagueStats(toObj, currentLeague)
-            const leagueTrophies = getLeagueTrophies(toObj, allLeagues)
+            const leagueTrophies = getLeagueTrophies(toObj.name, allLeagues)
             const overallSclStats = await getOverallSclStats(toObj)
             const currentSclStats = await getCurrentSclStats(toObj, meta[0].scl.season)
             const sclTrophies = await getSclTrophies(toObj)

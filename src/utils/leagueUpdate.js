@@ -1,98 +1,78 @@
 const league = require('../models/league')
-const  updateFixture = async (h, hs, as, a, leg, sn, callback) => {
-    //h = home, a = away, hs = hGoals, as = aGoals, leg = firstLeg/secondLeg
-    //sn = season
-    const table = await league.findOne({ season: sn })
-    if (`${h} vs ${a}` in table.fixtures[0]) {        
+const  updateFixture = async (h, hs, as, a, leg, season, operation, callback) => {
+    const table = await league.findOne({ season })
+    
+    if (`${h} vs ${a}` in table.fixtures[0]) {  
+
         switch (table.fixtures[0][`${h} vs ${a}`][leg].played) {
             case true:
-                return callback({
-                    feedBack: 'Match already recorded!'
+                if ( operation === 'update' ) {
+                    return callback({
+                    feedBack: `${leg} already recorded! (${table.fixtures[0][`${h} vs ${a}`][leg].home}
+                    ${table.fixtures[0][`${h} vs ${a}`][leg].hs} : ${table.fixtures[0][`${h} vs ${a}`][leg].as}
+                    ${table.fixtures[0][`${h} vs ${a}`][leg].away})`
                 })
+                } // if else if statement end
+                await set(h, hs, as, a, h, leg, table, season, operation, callback)
+                break;                
             case false:
-                if (table.fixtures[0][`${h} vs ${a}`][leg].home === h) {
-                    await league.updateOne({ season: sn}, {
-                        $inc: {
-                            [`fixtures.0.${h} vs ${a}.${leg}.hs`]: hs,
-                            [`fixtures.0.${h} vs ${a}.${leg}.as`]: as
-                        },
-                        $set: {
-                            [`fixtures.0.${h} vs ${a}.${leg}.played`]: true
-                        }
-                    })
-                    } else {
-                        await league.updateOne({ season: sn}, {
-                            $inc: {
-                                [`fixtures.0.${h} vs ${a}.${leg}.hs`]: as,
-                                [`fixtures.0.${h} vs ${a}.${leg}.as`]: hs
-                            },
-                            $set: {
-                                [`fixtures.0.${h} vs ${a}.${leg}.played`]: true
-                            }
-                        })
-                        }
-        }
-    } else if (`${a} vs ${h}` in table.fixtures[0]) {        
+                await set(h, hs, as, a, h, leg, table, season, operation, callback)
+        } // switch end
+    } else if (`${a} vs ${h}` in table.fixtures[0]) {
+
         switch (table.fixtures[0][`${a} vs ${h}`][leg].played) {
             case true:
-                return callback({
-                    feedBack: 'Match already recorded!'
+                if ( operation === 'update' ) {
+                    return callback({
+                    feedBack: `${leg} already recorded! (${table.fixtures[0][`${a} vs ${h}`][leg].home}
+                    ${table.fixtures[0][`${a} vs ${h}`][leg].hs} : ${table.fixtures[0][`${a} vs ${h}`][leg].as}
+                    ${table.fixtures[0][`${a} vs ${h}`][leg].away})`
                 })
+                }// if statement end
+                await set(a, hs, as, h, h, leg, table, season, operation, callback) 
+                break;
             case false:
-                if (table.fixtures[0][`${a} vs ${h}`][leg].home === h) {
-                    await league.updateOne({ season: sn}, {
-                        $inc: {
-                            [`fixtures.0.${a} vs ${h}.${leg}.hs`]: hs,
-                            [`fixtures.0.${a} vs ${h}.${leg}.as`]: as
-                        },
-                        $set: {
-                            [`fixtures.0.${a} vs ${h}.${leg}.played`]: true
-                        }
-                    })
-                    } else {
-                        await league.updateOne({ season: sn}, {
-                            $inc: {
-                                [`fixtures.0.${a} vs ${h}.${leg}.hs`]: as,
-                                [`fixtures.0.${a} vs ${h}.${leg}.as`]: hs
-                            },
-                            $set: {
-                                [`fixtures.0.${a} vs ${h}.${leg}.played`]: true
-                            }
-                        })
-                    }
-        }
-    }
-    await leagueStatUpdate(sn, h, hs, as, a, callback)
-}
-const leagueStatUpdate = async (sn, h, hs, as, a, callback) => {
-    const table = await league.findOne({ season: sn })
-    const hStat = hs>as? 1:0, aStat = as>hs? 1:0, draw = hs===as? 1:0
-    const team = [h, a], stat = [hStat, aStat], goal = [hs, as]
-        for (i = 0; i<2; i++) {
-            table.teams.find((data) => {
-                if (data.team === team[i]) {
-                    data.P++
-                    if (draw === 1) {
-                        data.W += 0
-                        data.D += 1
-                        data.L += 0
-                    } else if (stat[i] === 1) {
-                        data.W += 1
-                        data.D += 0
-                        data.L += 0
-                    } else {
-                        data.W += 0
-                        data.D += 0
-                        data.L += 1                    
-                    }
-                    data.GF += goal[i]
-                    data.GA += i===0? goal[i + 1]: goal[i - 1]
-                    data.GD = data.GF - data.GA
-                    data.Pts = (data.W * 3) + data.D
+                    await set(a, hs, as, h, h, leg, table, season, operation, callback)
+        } //switch ends
+    } // else if statement ens
+} // updateFixture ends
+const set = async (t1, hs, as, t2, h, leg, table, season, operation, callback) => {
+    if (table.fixtures[0][`${t1} vs ${t2}`][leg].home === h) {
+        await league.updateOne({ season }, {
+            $set: {
+                [`fixtures.0.${t1} vs ${t2}.${leg}.hs`]: hs,
+                [`fixtures.0.${t1} vs ${t2}.${leg}.as`]: as
+            }
+        })
+        await validatePlayed(t1, t2, leg, operation, season, callback)
+        } else {
+            await league.updateOne({ season }, {
+                $set: {
+                    [`fixtures.0.${t1} vs ${t2}.${leg}.hs`]: as,
+                    [`fixtures.0.${t1} vs ${t2}.${leg}.as`]: hs
                 }
             })
+            await validatePlayed(t1, t2, leg, operation, season, callback)
+            }
+} // set function ends
+const validatePlayed = async (t1, t2, leg, operation, season, callback) => {
+    switch (operation) {
+        case 'delete':
+                await league.updateOne({ season }, {
+                    $set: {
+                        [`fixtures.0.${t1} vs ${t2}.${leg}.played`]: false
+                    }
+                })
+            break;
+        case 'correct':
+            break;
+        case 'update':
+                await league.updateOne({ season }, {
+                    $set: {
+                        [`fixtures.0.${t1} vs ${t2}.${leg}.played`]: true
+                    }
+                })
         }
-    await table.save()
-    callback()
+        callback()
 }
 module.exports = updateFixture

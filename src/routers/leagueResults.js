@@ -2,9 +2,6 @@ const express = require('express')
 const league = require('../models/league')
 const leagueResult = require('../models/leagueResults')
 const sclGS = require('../models/sclGS')
-const sclQF = require('../models/sclQF')
-const sclSF = require('../models/sclSF')
-const sclFIN = require('../models/sclFIN')
 const metadata = require('../models/metadata')
 const updateFixture = require('../utils/leagueUpdate')
 const updateGS = require('../utils/updateGS')
@@ -56,7 +53,7 @@ router.get('/league/result/add', async (req, res) => {
             })
         }
     }
-    await updateFixture(ht, hs, as, at, leg, season, async (feedBack) => {
+    await updateFixture(ht, hs, as, at, leg, season, 'update', async (feedBack) => {
         if (feedBack) {
             return res.status(400).send(feedBack)
         }
@@ -67,6 +64,61 @@ router.get('/league/result/add', async (req, res) => {
             feedBack: 'result inserted!'
         })
     })
+})
+router.get('/league/result/delete', async (req, res) => {
+    const slotId = req.query.slotId - 1, day = req.query.day - 0
+    const meta = await metadata.find({}), season = meta[0].league.season
+    try {
+        const League = await league.findOne({ season })
+            if (League.running === 'ended') {
+                throw new Error('League has Ended!')
+            }
+        const results = await leagueResult.findOne({ season, day })
+        const result = results.result[slotId]
+        if (!result) {
+            throw new Error('Result Does not Exist!')
+        }
+        await updateFixture(result.ht, 0, 0, result.at, result.leg, season, 'delete', async () => { 
+
+        })
+        results.result.splice(slotId, 1)
+        await results.save()  
+        res.status(200).send({
+            feedBack: 'Result Deleted!'
+        })
+    } catch (e) {
+        res.status(404).send({
+            feedBack: e.message
+        })
+    }
+})
+router.get('/league/result/correct', async (req, res) => {
+    const slotId = req.query.slotId - 1, day = req.query.day - 0, hs = req.query.hs - 0, as = req.query.as - 0
+    const meta = await metadata.find({}), season = meta[0].league.season
+    try {
+        const League = await league.findOne({ season })
+            if (League.running === 'ended') {
+                throw new Error('League has Ended!')
+            }
+        const results = await leagueResult.findOne({ season, day })
+        const result = results.result[slotId]
+        if (!result) {
+            throw new Error('Result Does not Exist!')
+        }
+        await updateFixture(result.ht, hs, as, result.at, result.leg, season, 'correct', async () => { 
+
+        })
+        results.result[slotId].hs = hs
+        results.result[slotId].as = as
+        await results.save()  
+        res.status(200).send({
+            feedBack: 'Result Corrected!'
+        })
+    } catch (e) {
+        res.status(404).send({
+            feedBack: e.message
+        })
+    }
 })
 router.get('/scl/result/add', async (req, res) => {
     const h = req.query.h, hs = (req.query.hs - 0), as = (req.query.as - 0), a = req.query.a, leg = req.query.leg, g = req.query.g === null? null: req.query.g

@@ -7,6 +7,7 @@
     border: 2px solid transparent;
     outline-color: rgb(7, 138, 7);
     padding: 10px;
+    border-radius: 3px;
     cursor: pointer;
 }
 button {
@@ -207,6 +208,9 @@ hr {
     left: 0;
     right: 0;
     top: 0;
+}
+.suc-font {
+    color: #09831B;
 }
 .centered-left {
     top: 0;
