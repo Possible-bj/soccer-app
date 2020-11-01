@@ -38,7 +38,7 @@
 .team-info hr {
     position: relative;
     width: 80%;
-    background: rgb(1, 2, 17s);
+    background:rgba(5, 90, 16, .5) !important;
     margin: 0 auto 5px auto;
 }
 .team-info h3 {
@@ -61,3 +61,6 @@
     border: .05px solid rgba(5, 90, 16, .5) !important;
     text-align: center !important;
 }
+/* hr {
+    background: .05px solid rgba(5, 90, 16, .5) !important;
+} */

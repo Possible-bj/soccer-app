@@ -423,6 +423,7 @@ footer {
   }
   .fa-draws {
     background: #fff;
+    box-shadow: -.5px -.5px 1px 1px #333;    
     border: transparent;
     border-radius: 3px;
     margin-bottom: 10px;
@@ -457,6 +458,7 @@ footer {
 /* correction style */
 .correction-pane {
     background: linear-gradient(-45deg, rgb(5, 90, 16), rgb(10, 167, 31));
+    box-shadow: -.5px -.5px 1px 1px #333;    
     min-height: 200px;
     padding: 15px;
     margin-bottom: 10px;

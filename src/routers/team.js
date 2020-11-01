@@ -79,7 +79,7 @@ router.get('/team/logo', async (req, res) => {
             const arr = []
             delete toObj.logo; delete toObj._id; delete toObj.createdAt; delete toObj.updatedAt,delete toObj.__v
             const overallLeagueStats = await getOverallLeagueStats(toObj.name, arr, allLeagues)
-            const currentLeagueStats = getCurrentLeagueStats(toObj, currentLeague)
+            const currentLeagueStats = await getCurrentLeagueStats(toObj.name, currentLeague)
             const leagueTrophies = getLeagueTrophies(toObj.name, allLeagues)
             const overallSclStats = await getOverallSclStats(toObj)
             const currentSclStats = await getCurrentSclStats(toObj, meta[0].scl.season)
@@ -87,12 +87,12 @@ router.get('/team/logo', async (req, res) => {
             toObj.leagueStats = {
                 overall: overallLeagueStats,
                 current: currentLeagueStats,
-                trophies: leagueTrophies.length
+                trophies: leagueTrophies
             }
             toObj.sclStats = {
                 overall: overallSclStats,
                 current: currentSclStats,
-                trophies: sclTrophies.length
+                trophies: sclTrophies
             }
             teamsObj.push(toObj)
         }

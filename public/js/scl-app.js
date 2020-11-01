@@ -107,6 +107,7 @@ const draw = (data) => {
 let createSeasonSwitch = (season, snDis) => {
     let panel = document.querySelector('.switch-right')
     panel.addEventListener('click', (e) => {
+        wipeKO()
         snDis.textContent = e.target.textContent
         const table = document.querySelectorAll('.gbody')
         readGroups(table, (e.target.textContent - 0))
@@ -117,6 +118,27 @@ let createSeasonSwitch = (season, snDis) => {
         panel.append(btn)
         panel.scrollLeft = btn.clientWidth * (i - 1)
     }
+}
+let wipeKO = () => {
+    let num = homeDraw.length
+    for (i=0; i<num; i++) {
+        homeDraw[i].textContent = '?'
+        awayDraw[i].textContent = '?'
+        homeDraw[i].style.color = ''
+        awayDraw[i].style.color = ''
+        homeDraw[i].style.fontWeight = ''
+        awayDraw[i].style.fontWeight = ''
+        flHS[i].textContent = 0
+        flAS[i].textContent = 0
+        if ( i < 6 ) {
+            slHS[i].textContent = 0
+            slAS[i].textContent = 0
+            finHS[i].textContent = 0
+            finAS[i].textContent = 0
+        }
+        
+    }
+    document.querySelector('.coronation-body').innerHTML = `<img src='team/logo/supreme'>`
 }
 let dynamicSort = (prop, tieBreaker) => {
     const sortOrder = -1

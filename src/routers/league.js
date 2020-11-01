@@ -1,7 +1,7 @@
 const express = require('express')
 const metadata = require('../models/metadata')
 const league = require('../models/league')
-const team = require('../utils/combination')
+const { combination } = require('../utils/combination')
 const { accumulate } = require('../utils/team')
 const router = new express.Router()
 router.get('/table/:sn', async (req, res) => {
@@ -17,7 +17,7 @@ router.get('/table/:sn', async (req, res) => {
         const deduction = table.teams[i].deduction
         const current = { team: team, P: 0, W: 0, D: 0, L: 0, GF: 0, GA: 0, GD: 0, Pts: 0 }
         const stats = accumulate(current, table, team)
-        stats.Pts = stats.Pts - deduction
+        stats.Pts = ((stats.W * 3) + stats.D) - deduction
         teamObj.push(stats)
     }
     res.status(200).send(teamObj)
@@ -113,7 +113,7 @@ router.get('/league/start', async (req, res) => {
         for (i=0; i<table.teams.length; i++) {
             arr.push(table.teams[i].team)
         }
-        await combination.combination(arr, (fixture) => {
+        await combination(arr, (fixture) => {
             table.fixtures = table.fixtures.concat(fixture)
         })
         await table.save()

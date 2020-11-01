@@ -84,7 +84,7 @@ router.get('/league/result/delete', async (req, res) => {
         results.result.splice(slotId, 1)
         await results.save()  
         res.status(200).send({
-            feedBack: 'Result Deleted!'
+            feedBack: `${result} Result Deleted!`
         })
     } catch (e) {
         res.status(404).send({
@@ -108,12 +108,12 @@ router.get('/league/result/correct', async (req, res) => {
         await updateFixture(result.ht, hs, as, result.at, result.leg, season, 'correct', async () => { 
 
         })
+        res.status(200).send({
+            feedBack: `(${result.ht} ${result.hs} : ${result.as} ${result.at}) Corrected to (${result.ht} ${hs} : ${as} ${result.at})`
+        })
         results.result[slotId].hs = hs
         results.result[slotId].as = as
         await results.save()  
-        res.status(200).send({
-            feedBack: 'Result Corrected!'
-        })
     } catch (e) {
         res.status(404).send({
             feedBack: e.message
