@@ -91,13 +91,12 @@ router.get('/league/team/remove', async (req, res) => {
 router.get('/league/deduct', async (req, res) => {
     const team = req.query.team, val = req.query.val - 0
     const meta = await metadata.find({}), season = meta[0].league.season
-    const League = await league.findOne({ season })
-    League.teams.find((data) => {
-        if (data.team === team) {
-            data.deduction = val
+    const index = await findIndexByKeyValue(season, 'team', team)
+    await league.updateOne({ season }, {
+        $set: {
+            [`teams.${index}.deduction`]: val 
         }
     })
-    await League.save()
     res.status(201).send({
         feedBack: 'point deducted!'
     })
@@ -144,6 +143,14 @@ router.get('/league/running', async (req, res) => {
         res.send({ feedBack: table.running })
     })
 })
-
+const findIndexByKeyValue = async (season, key, value) => {
+    const League = await league.findOne({ season })
+    for(i=0; i<League.teams.length; i++) {
+        if(League.teams[i][key] === value) {
+            return i
+        }
+    }
+    return -1
+}
 module.exports = router  
     

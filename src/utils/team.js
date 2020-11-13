@@ -34,7 +34,7 @@ const getLeagueTrophies = (team, allLeagues) => {
             teamObj.push(stats)
         }
         teamObj.sort(dynamicSort('Pts', 'GD'))
-        if (teamObj[0].team === team) {
+        if (teamObj[0].team.includes(team)) {
             if (league.running === 'ended') trophies.push(1)
         }
     })
@@ -72,7 +72,7 @@ const getSclTrophies = async (toObj) => {
     const allFIN = await sclFIN.find({})
     allFIN.forEach((FIN) => {
         for ( x in FIN.fixtures[0] ) {
-            if ( x.includes(toObj.name) && FIN.fixtures[0][x].firstLeg.played && FIN.fixtures[0][x].qualified === toObj.name) {
+            if ( x.includes(toObj.name) && FIN.fixtures[0][x].firstLeg.played && FIN.fixtures[0][x].qualified.includes(toObj.name)) {
                 trophies.push(1)
             }
         }
