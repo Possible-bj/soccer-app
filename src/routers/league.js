@@ -91,16 +91,22 @@ router.get('/league/team/remove', async (req, res) => {
 router.get('/league/deduct', async (req, res) => {
     const team = req.query.team, val = req.query.val - 0
     const meta = await metadata.find({}), season = meta[0].league.season
-    const index = await findIndexByKeyValue(season, 'team', team)
-    await league.updateOne({ season }, {
-        $set: {
-            [`teams.${index}.deduction`]: val 
-        }
+    try {
+        const index = await findIndexByKeyValue(season, 'team', team)
+            await league.updateOne({ season }, {
+                $set: {
+                    [`teams.${index}.deduction`]: val 
+                }
+            })
+            res.status(201).send({
+                feedBack: 'point deducted!'
+            })
+    } catch (e) {
+        res.status(400).send({
+            feedBack: e.message
+        })
+    }
     })
-    res.status(201).send({
-        feedBack: 'point deducted!'
-    })
-})
 router.get('/league/start', async (req, res) => {
     await metadata.find({}, async (e, meta) => {
         const season = meta[0].league.season, arr = []
@@ -145,7 +151,10 @@ router.get('/league/running', async (req, res) => {
 })
 const findIndexByKeyValue = async (season, key, value) => {
     const League = await league.findOne({ season })
-    for(i=0; i<League.teams.length; i++) {
+    if ( League.running === 'ended') {
+        throw new Error('League has Ended!')
+    }
+    for (i=0; i<League.teams.length; i++) {
         if(League.teams[i][key] === value) {
             return i
         }
