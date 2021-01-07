@@ -22,7 +22,7 @@ const sclResultUpdate = document.querySelector('.fix-res-sub')
 const resInfo = document.querySelector('.res-info')
 const correctPaneInfo = document.querySelector('.correct-pane-info')
 window.addEventListener('DOMContentLoaded', () => {
-    leagueIsRunning(); sclIsRunning();
+    leagueIsRunning(); sclIsRunning(); loadCurrentLeagueTeams();
     fetch('/scl/running').then((response) => {
         response.json().then((data) => {
             switch (data.code) {
@@ -72,6 +72,20 @@ const sclIsRunning = () => {
             }
         })
     })
+}
+const loadCurrentLeagueTeams = () => {
+    fetch('/current/league/teams').then((response) => {
+        response.json().then((data) => {
+            for (let i = 0; i<data.length; i++) {
+                const homeTeam = document.createElement('option'), awayTeam = document.createElement('option')
+                const homeScore = document.createElement('option'), awayScore = document.createElement('option')
+                homeTeam.textContent = data[i]; awayTeam.textContent = data[i]
+                homeScore.textContent = i; awayScore.textContent = i
+                document.querySelector('#h').append(homeTeam); document.querySelector('#a').append(awayTeam)
+                document.querySelector('#h-s').append(homeScore); document.querySelector('#a-s').append(awayScore)
+            }
+        })
+    })    
 }
 // const adminBuilder = () => {
 //     fetch('/admin/check').then((response) => {
@@ -147,12 +161,12 @@ const deleteTeam = (team) => {
 }
 leageResBtn.addEventListener('click', (e) => {            
             resInfo.textContent = ''
-            const ht = document.querySelector('#h').value.toLowerCase().trim()
+            const ht = document.querySelector('#h').value
             const hs = document.querySelector('#h-s').value
             const as = document.querySelector('#a-s').value
-            const at = document.querySelector('#a').value.toLowerCase().trim()      
-            if (ht === '' || hs === '' || as === '' || at === '') {
-                return resInfo.textContent = ('Please provide all result data')
+            const at = document.querySelector('#a').value
+            if (ht === at) {
+                return resInfo.textContent = ('You can not record duplicate teams')
             }
             let leagueLeg = document.querySelector('input[name="league-leg"]')
             let leg = leagueLeg.checked? 'secondLeg' : 'firstLeg'

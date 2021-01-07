@@ -4,6 +4,10 @@ const multer = require('multer')
 const team = require('../models/team')
 const metadata = require('../models/metadata')
 const league = require('../models/league')
+const sclGS = require('../models/sclGS')
+const sclQF = require('../models/sclQF')
+const sclSF = require('../models/sclSF')
+const sclFIN = require('../models/sclFIN')
 const { getCurrentLeagueStats, getOverallLeagueStats, getLeagueTrophies,
 getOverallSclStats, getCurrentSclStats, getSclTrophies } = require('../utils/team')
 const router = new express.Router()
@@ -99,6 +103,19 @@ router.get('/team/logo', async (req, res) => {
     }
     res.send(teamsObj)
 })
-
-
+router.get('/current/league/teams', async (req, res) => {
+    const teamArray = []
+    const meta = await metadata.find({}), season = meta[0].league.season
+    const currentLeague = await league.findOne({ season })
+    currentLeague.teams.forEach(element => {
+        teamArray.push(element.team)
+    });
+    res.send(teamArray)
+})
+router.get('/current/scl/teams', async (req, res) => {
+    const teamArray = []
+    const meta = await metadata.find({}), season = meta[0].scl.season
+    
+    const currentStage = await league.findOne({ season })
+})
 module.exports = router
