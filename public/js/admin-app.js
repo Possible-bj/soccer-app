@@ -1,5 +1,5 @@
 // import { fix } from './fa-draw.js'
-// Variable Declaration
+// Variable Declaration scl-stage-ind
 const stageChanger = document.querySelector('.stage-chn-btn')
 const fixctrl = document.querySelector('.scl-fixture-controls')
 const stageIndicator = document.querySelector('.scl-stage-ind')
@@ -30,17 +30,21 @@ window.addEventListener('DOMContentLoaded', () => {
                     fixctrl.style.display = 'flex'
                     stageIndicator.textContent = 'Group Stage'
                     stageChanger.textContent = 'End Group Stage'
+                    addGroupEventListener()
                     break;
                 case 'QF':
-                    modify('Quarter finals')
+                    modify('Quarter Finals')
+                    loadCurrentKOTeams(data.code)
                     stageChanger.textContent = 'End Qarter Finals'
                     break;
                 case 'SF':
                     modify('Semi Finals')
+                    loadCurrentKOTeams(data.code)
                     stageChanger.textContent = 'End Semi Finals'
                     break;
                 case 'FIN':                    
                     modify('Final', document.querySelectorAll('.scl-leg-chn-btn'))
+                    loadCurrentKOTeams(data.code)
                     stageChanger.textContent = 'End Finals'
                     break;
                 case 'END':                    
@@ -73,19 +77,71 @@ const sclIsRunning = () => {
         })
     })
 }
+const addGroupEventListener = () => {
+    const groupBtns =  document.querySelectorAll('input[name="group"]')
+    for (let i = 0; i < groupBtns.length; i++) {
+        groupBtns[i].addEventListener('click', (e) => {
+            clearSelectOption(document.querySelector('.home-draw'), document.querySelector('.away-draw'))
+            loadCurrentGroupTeams(e.target.value)
+        })
+    }
+}
 const loadCurrentLeagueTeams = () => {
     fetch('/current/league/teams').then((response) => {
         response.json().then((data) => {
             for (let i = 0; i<data.length; i++) {
-                const homeTeam = document.createElement('option'), awayTeam = document.createElement('option')
-                const homeScore = document.createElement('option'), awayScore = document.createElement('option')
+                const homeTeam = document.createElement('option'), awayTeam = document.createElement('option')                
                 homeTeam.textContent = data[i]; awayTeam.textContent = data[i]
-                homeScore.textContent = i; awayScore.textContent = i
-                document.querySelector('#h').append(homeTeam); document.querySelector('#a').append(awayTeam)
-                document.querySelector('#h-s').append(homeScore); document.querySelector('#a-s').append(awayScore)
+                document.querySelector('#h').append(homeTeam); document.querySelector('#a').append(awayTeam)                
             }
         })
     })    
+}
+const loadCurrentGroupTeams = (group) => {
+    const url = `/current/scl/group/teams?group=${group}`
+    fetch(url).then((response) => {
+        response.json().then((data) => {
+            for (let i = 0; i<data.length; i++) {
+                const homeTeam = document.createElement('option'), awayTeam = document.createElement('option')
+                homeTeam.textContent = data[i]; awayTeam.textContent = data[i]
+                document.querySelector('.home-draw').append(homeTeam); document.querySelector('.away-draw').append(awayTeam)
+            }
+        })
+    })
+}
+const loadCurrentKOTeams = (stage) => {
+    const url = `/current/scl/ko/teams?stage=${stage}`
+    fetch(url).then((response) => {
+        response.json().then((data) => {
+            const len = data.home.length
+            for (let i = 0; i < len; i++) {
+                const homeTeam = document.createElement('option'), awayTeam = document.createElement('option')
+                homeTeam.textContent = data.home[i]; awayTeam.textContent = data.away[i]
+                document.querySelector('.home-draw').append(homeTeam); document.querySelector('.away-draw').append(awayTeam)
+            }
+        })
+    })
+}
+const selectNum = () => {
+    for (let i = 0; i <=30; i++ ) {
+        const homeScore = document.createElement('option'), awayScore = document.createElement('option')
+        const sclHomeScore = document.createElement('option'), sclAwayScore = document.createElement('option')
+        homeScore.textContent = i; awayScore.textContent = i
+        sclHomeScore.textContent = i; sclAwayScore.textContent = i
+        document.querySelector('#h-s').append(homeScore); document.querySelector('#a-s').append(awayScore)
+        document.querySelector('.home-score').append(sclHomeScore); document.querySelector('.away-score').append(sclAwayScore)
+    }
+}; selectNum() 
+
+const clearSelectOption = (homeOpt, awayOpt) => {
+    const len = homeOpt.children.length
+    let i = len
+    if (len === 1) return 0
+    do {
+        homeOpt.removeChild(homeOpt.children[i - 1])
+        awayOpt.removeChild(awayOpt.children[i - 1])
+        i--
+    } while ( i > 1)
 }
 // const adminBuilder = () => {
 //     fetch('/admin/check').then((response) => {
@@ -166,8 +222,11 @@ leageResBtn.addEventListener('click', (e) => {
             const as = document.querySelector('#a-s').value
             const at = document.querySelector('#a').value
             if (ht === at) {
-                return resInfo.textContent = ('You can not record duplicate teams')
+                return resInfo.textContent = ('You can not record duplicate teams!')
             }
+            if (hs === '' || as === '') {
+                return resInfo.textContent = ('Please select the scores to record!')
+            }            
             let leagueLeg = document.querySelector('input[name="league-leg"]')
             let leg = leagueLeg.checked? 'secondLeg' : 'firstLeg'
             updateResult(ht, hs, as, at, leg, resInfo)
@@ -247,8 +306,14 @@ sclResultUpdate.addEventListener('click', () => {
     const g = gs.length>0? gs[0].value: null
     if (g && leg) url = `/scl/result/add?h=${h}&hs=${hs}&a=${a}&as=${as}&leg=${leg}&g=${g}`
     else if (leg) url = `/scl/result/add?&h=${h}&hs=${hs}&a=${a}&as=${as}&leg=${leg}`
-    else url = `/scl/result/add?h=${h}&hs=${hs}&a=${a}&as=${as}&leg=firstLeg`
-    if (h === '' || hs === '' || a === '' || as === '') return entryFb.textContent = "Please provide all data"
+    else {
+        if (stageIndicator.textContent === 'Group Stage' || stageIndicator.textContent === 'Quarter Finals' || stageIndicator.textContent === 'Semi Finals') {
+            return entryFb.textContent = "Please select the Leg to record!"
+        } 
+        url = `/scl/result/add?h=${h}&hs=${hs}&a=${a}&as=${as}&leg=firstLeg`
+    }
+    if (h === a) return entryFb.textContent = "You can not record duplicate teams!"
+    if (hs === '' || as === '') return entryFb.textContent = "Please select the scores to record!"
     sclFixtureUpdate(url)
 })
 const sclFixtureUpdate = (url) => {
@@ -258,6 +323,7 @@ const sclFixtureUpdate = (url) => {
         })
     })
 }
+
 stageChanger.addEventListener('click', (e) => {
     switch (e.target.textContent) {
         case 'Start Scl':
@@ -266,21 +332,21 @@ stageChanger.addEventListener('click', (e) => {
         case 'End Group Stage':
             const GsEndConsent = confirm('Group Stage is running, do you wish to end however?')
             if ( !GsEndConsent ) return 0 
-            modify('Quarter finals')
+            modify('Quarter Finals')
             e.target.textContent = 'End Qarter Finals'
             sclProgress('/scl/start/QF')
             break;
         case 'End Qarter Finals':
             const QfEndConsent = confirm('Quarter Finals is running, do you wish to end however?')
             if (!QfEndConsent) return 0
-            modify('Semi finals')
+            modify('Semi Finals')
             e.target.textContent = 'End Semi Finals'
             sclProgress('/scl/start/SF')
             break;
         case 'End Semi Finals':
             const SfEndConsent = confirm('Semi Finals is running, do you wish to end however?')
             if (!SfEndConsent) return 0
-            modify('finals', document.querySelectorAll('.scl-leg-chn-btn'))
+            modify('Final', document.querySelectorAll('.scl-leg-chn-btn'))
             e.target.textContent = 'End Finals'
             sclProgress('/scl/start/FIN')
             break;

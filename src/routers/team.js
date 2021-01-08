@@ -112,10 +112,28 @@ router.get('/current/league/teams', async (req, res) => {
     });
     res.send(teamArray)
 })
-router.get('/current/scl/teams', async (req, res) => {
-    const teamArray = []
+router.get('/current/scl/group/teams', async (req, res) => {
+    const teamArray = [], g = req.query.group
     const meta = await metadata.find({}), season = meta[0].scl.season
-    
-    const currentStage = await league.findOne({ season })
+    const currentGS = await sclGS.findOne({ season })
+    currentGS.groups[g][0].teams.forEach(element => {
+        teamArray.push(element.team)
+    })
+    res.send(teamArray)
 })
+router.get('/current/scl/ko/teams', async (req, res) => {
+    const teamsObj = {home: [], away: []}, stage = req.query.stage
+    const meta = await metadata.find({}), season = meta[0].scl.season
+    let currentKO 
+    if ( stage === 'QF') currentKO = await sclQF.findOne({ season })
+    if ( stage === 'SF') currentKO = await sclSF.findOne({ season })
+    if ( stage === 'FIN') currentKO = await sclFIN.findOne({ season })
+    for ( x in currentKO.fixtures[0] ) {
+        // console.log(currentKO.fixtures[0][x])
+        teamsObj.home.push(currentKO.fixtures[0][x].firstLeg.home)
+        teamsObj.away.push(currentKO.fixtures[0][x].firstLeg.away)
+    }
+    res.send(teamsObj)
+})
+
 module.exports = router
