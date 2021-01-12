@@ -323,3 +323,9 @@ hr {
 .align-self-center {
     align-self: center;
 }
+.admin-board {
+    text-transform: uppercase;
+    font-size: 64px;
+    color: #010211;
+    text-align: center
+}

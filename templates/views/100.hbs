@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/main.css" type="text/css"/>
+    <link rel="stylesheet" href="/css/lgscreen.css" type="text/css"/>
+    {{!-- <link rel="stylesheet" href="/css/admin-style.css" type="text/css"/> --}}
+    <title>Supreme | Back Office</title>
+    <style>
+
+.admin-pane {
+    width: 70%;
+    height: 500px;
+    padding: 15px;
+}
+/*.admin-pane-input {
+    width: 47%;
+} */
+.admin-pane-btn {
+    margin-top: 10px;
+}
+.admin-pane {
+    box-shadow: -.5px -.5px 1px 1px #333;    
+    overflow: auto;
+    background: linear-gradient(-45deg, rgb(5, 90, 16), rgb(10, 167, 31));
+    /* linear-gradient(-45deg, rgb(6, 82, 6), rgb(60, 241, 60)); */
+    margin-top: 10px;
+} 
+span {
+    margin: 15px 0;
+}
+.admin-info {
+    color: black;
+}
+input[type="checkbox"] {
+    margin: 10px auto;
+}
+    </style>
+</head>
+<body>
+    <div class="body-content">
+      <h1 class="admin-board">{{title}}</h1>
+         {{!-- admin creator section --}}
+    <div class="admin-pane flex flex-column rel margin-auto">
+        <div class="admin-pane-form max-percent flex flex-column rel margin-auto curved-edges">
+            <h1 class="rel max-percent margin-auto"> Create, Update and Delete Admins </h1>
+            <div class="admin-pane-input-row flex flex-column max-percent">
+                <span> Username: </span>
+                <input type="text" class="admin-pane-input admin-username no-shrink rel margin-auto curved-edges max-percent" placeholder="Admin Username">
+                <span> Password: </span>
+                <input type="password" class="admin-pane-input admin-password no-shrink rel margin-auto curved-edges max-percent" placeholder="Admin Password">
+            </div>
+            <label><input type="checkbox" onclick="viewPassword()"> <span>Show Password</span></label> 
+            <div class="admin-info"></div>
+            <div class="admin-pane-btn-row flex flex-column max-percent">
+                <button class="admin-pane-btn no-shrink rel margin-auto max-percent">create</button>
+                <button class="admin-pane-btn no-shrink rel margin-auto max-percent">update</button>
+                <button class="admin-pane-btn no-shrink rel margin-auto max-percent">delete</button>
+            </div>
+        </div>
+    </div>
+    {{!-- admin creator ends here --}}
+    </div>
+    {{>footer}}
+    <script>
+        function viewPassword() {
+            let field = document.querySelector('.admin-password')
+            if (field.type === 'password') field.type = 'text'
+                else field.type = 'password'
+        }
+
+        const adminInfo = document.querySelector('.admin-info')
+        const adminPaneBtn = document.querySelector('.admin-pane-btn-row')
+adminPaneBtn.addEventListener('click', (e) => {
+    const username = (document.querySelector('.admin-username').value).toLowerCase().trim()
+    const password = (document.querySelector('.admin-password').value).toLowerCase().trim()
+    switch (e.target.textContent) {
+        case 'create':
+            if (username === '' || password === '') {
+                return adminInfo.textContent = 'please provide the username and password!'
+            }
+            adminFunc('/admin/add', username, password)
+            break;
+        case 'update':
+            if (username === '' || password === '') {
+                return adminInfo.textContent = 'please provide the username and password!'
+            }
+            adminFunc('/admin/update', username, password)
+            break;
+        case 'delete':
+            if (username === '') {
+                return adminInfo.textContent = 'please provide the admin username to delete!'
+            }
+            adminFunc('/admin/remove', username)
+    }
+})
+const adminFunc = (command, username, password) => {
+    const url = `${command}?username=${username}&password=${password}`
+    fetch(url).then((response) => {
+        response.json().then((data) => {
+            adminInfo.textContent = data.feedBack
+        })
+    })
+}
+
+    </script>
+</body>
+</html>

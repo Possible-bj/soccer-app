@@ -8,6 +8,7 @@ const updateGS = require('../utils/updateGS')
 const updateQF = require('../utils/updateQF')
 const updateSF = require('../utils/updateSF')
 const updateFIN = require('../utils/updateFIN')
+const auth = require('../middleware/auth')
 const router = new express.Router()
 
 router.get('/league/result', async (req, res) => {

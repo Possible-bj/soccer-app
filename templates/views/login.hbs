@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=.75">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" href="/css/main.css" type="text/css"/>
+    <link rel="stylesheet" href="/css/lgscreen.css" type="text/css"/>   
+    <link rel="stylesheet" href="/css/admin-style.css" type="text/css"/>
+    <title>Admin Login</title>
+
+    <style>
+        .login-box {
+            height: 500px;
+        }
+        #auth-form-pane {
+            width: 70%;
+            height: 100%;
+            background: linear-gradient(-45deg, rgb(5, 90, 16), rgb(10, 167, 31));
+            /*background: #fff;*/
+            border-radius: 3px;
+            box-shadow: 0 0 5px #000;
+            padding: 10px;
+            color: #fff;
+            text-shadow: 1px 1px 1px #000;
+            } 
+        input {
+            margin: 15px auto; 
+        }
+        span {
+            font-size: 20px;
+            font-weight: 600;
+            font-family: serif;
+
+        }
+
+    </style>
+</head>
+<body>
+    <div class="body-content">
+
+        <h1 class="admin-board">{{title}}</h1>
+
+        <div class="rel login-box margin-auto centered">
+
+        <form action="/admin/login/auth" method="POST" enctype="application/x-www-form-urlencoded" id="auth-form-pane" class="abs margin-auto centered">
+            <h1 align="center">Log In</h1>
+            <label> <span>Username: </span> 
+                <input required name="username" type="text" id="admin-username" class="rel max-percent" placeholder="username">
+            </label> <br/>
+            <label> <span>Password:</span>
+               <input required name="password" type="password" id="admin-password" class="rel max-percent" placeholder="password">
+            </label>
+                <br/>
+                <span style="color:red">{{feedback}}</span> <br/>
+            <label><input type="checkbox" onclick="viewPassword()"> <span>Show Password</span></label> 
+            <input type="submit" class="rel max-percent" value="Login">
+
+        </form>
+    </div>  
+
+    </div>
+    {{>footer}}
+    <script>
+        function viewPassword() {
+            let field = document.querySelector('#admin-password')
+            if (field.type === 'password') field.type = 'text'
+                else field.type = 'password'
+        }
+        
+        //document.querySelector('#auth-form-pane').addEventListener('submit', (e) => {
+          //  e.preventDefault()   
+        //})
+    </script>
+</body>
+</html>

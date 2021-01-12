@@ -11,7 +11,7 @@ const gsRouter = require('./routers/sclGS')
 const qfRouter = require('./routers/sclQF')
 const sfRouter = require('./routers/sclSF')
 const finRouter = require('./routers/sclFIN')
-const authRouter = require('./routers/auth')
+const authRouter = require('./routers/admin')
 const teamRouter = require('./routers/team')
 
 const app = express()  

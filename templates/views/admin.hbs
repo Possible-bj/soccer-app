@@ -11,7 +11,6 @@ Admin Board
     <link rel="stylesheet" href="/css/main.css" type="text/css"/>
     <link rel="stylesheet" href="/css/lgscreen.css" type="text/css"/>
     <link rel="stylesheet" href="/css/admin-style.css" type="text/css"/>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <style>
     
     </style>
@@ -22,7 +21,7 @@ Admin Board
 <div class="body-content">
 {{!-- {{>header}} --}}
 <h1 class="admin-board">Admin Board</h1>
-                    <div align='right'>Active: <span class="admin-presence"></span></div>
+                    <div align='right'>Active: <span class="admin-presence">{{admin.username}}</span></div>
     <div id='form-pane' class=" margin-auto centered">
         {{!-- <div class="top margin top-center">
               
@@ -87,22 +86,7 @@ Admin Board
                     <div class="res-info"></div>
                     <button class="res-sub">Record</button>
                 </div> {{!-- ends here --}}
-        {{!-- admin creator section --}}
-    <div class="admin-pane rel margin-auto">
-        <div class="admin-pane-form max-percent flex flex-column rel margin-auto curved-edges">
-            <div class="admin-pane-input-row flex max-percent">
-                <input type="text" class="admin-pane-input admin-name no-shrink margin-auto curved-edges" placeholder="Admin name">
-                <input type="text" class="admin-pane-input admin-pass no-shrink margin-auto curved-edges" placeholder="Admin pass">
-            </div>
-            <div class="admin-info"></div>
-            <div class="admin-pane-btn-row flex max-percent">
-                <button class="admin-pane-btn margin-auto">create</button>
-                <button class="admin-pane-btn margin-auto">update</button>
-                <button class="admin-pane-btn margin-auto">delete</button>
-            </div>
-        </div>
-    </div>
-    {{!-- admin creator ends here --}}
+       
 
         </div>
 
@@ -247,22 +231,7 @@ Admin Board
     </div>
 </div>
     {{>footer}}
-    <div class="auth-pane fix curved-edges margin-auto centered">
-        {{!-- {{>header}} --}}
-        <h1 class="admin-board">You are welcome</h1>
-        <div class="auth-box margin-auto centered">
-        <form id="auth-form-pane" class="abs margin-auto centered">
-            <h4 style="width: 100%; text-align: center; color: #000;" class="rel margin-auto">Please Authenticate</h4>
-           <div align="center" class="form-input-pane abs margin-auto centered">
-               <input type="password" id="auth-input" class="rel">
-               <button id="auth-btn" class="rel">Submit</button>
-            </div>
-        </form>
-    </div>
-    <button id='update-btn' class='abs margin-auto'>
-        <i align="center" style="font-size: 300px; color: #ccc;" class="rel key-box margin-auto fa fa-lock"></i>
-    </button>   
-    </div>
+    
     <script src="../js/admin-app.js"></script>
     <script src="../js/fa-draw.js"></script>
     <script>

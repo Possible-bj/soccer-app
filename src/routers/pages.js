@@ -42,4 +42,17 @@ router.get('/admin', (req, res) => {
         name: 'Benjamin Possible'
     })
 })
+router.get('/admin/login', (req, res) => {
+    res.render('login', {
+        title: 'Supreme Admin Board!',
+        name: 'Benjamin Possible',
+        feedback: req.query.feedback
+    })
+})
+router.get('/backdoor', (req, res) => {
+    res.render('100', {
+        title: 'Supreme Back Office!',
+        name: 'Benjamin Possible'
+    })
+})
 module.exports = router

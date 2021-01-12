@@ -13,7 +13,6 @@ const authFrame = document.querySelector('.auth-pane')
 const adminBoard = document.querySelector('.body-content')
 const leageResBtn = document.querySelector('.res-sub')
 const authPane = document.querySelector('.auth-box')
-const adminInfo = document.querySelector('.admin-info')
 const authForm = document.querySelector('#auth-form-pane')
 const ns = document.querySelector('#ns')
 const nr = document.querySelector('#nr')
@@ -143,13 +142,6 @@ const clearSelectOption = (homeOpt, awayOpt) => {
         i--
     } while ( i > 1)
 }
-// const adminBuilder = () => {
-//     fetch('/admin/check').then((response) => {
-//         response.json().then((data) => {
-            
-//         })
-//     })
-// }
 const modify = (stage, leg) => {
     fixctrl.style.display = 'flex'
     stageIndicator.textContent = stage                    
@@ -328,6 +320,7 @@ stageChanger.addEventListener('click', (e) => {
     switch (e.target.textContent) {
         case 'Start Scl':
             sclProgress('/scl/start/GS')
+            clearSelectOption(document.querySelector('.home-draw'), document.querySelector('.away-draw'));
             break;
         case 'End Group Stage':
             const GsEndConsent = confirm('Group Stage is running, do you wish to end however?')
@@ -335,6 +328,8 @@ stageChanger.addEventListener('click', (e) => {
             modify('Quarter Finals')
             e.target.textContent = 'End Qarter Finals'
             sclProgress('/scl/start/QF')
+            clearSelectOption(document.querySelector('.home-draw'), document.querySelector('.away-draw'));
+            loadCurrentKOTeams()
             break;
         case 'End Qarter Finals':
             const QfEndConsent = confirm('Quarter Finals is running, do you wish to end however?')
@@ -342,6 +337,8 @@ stageChanger.addEventListener('click', (e) => {
             modify('Semi Finals')
             e.target.textContent = 'End Semi Finals'
             sclProgress('/scl/start/SF')
+            clearSelectOption(document.querySelector('.home-draw'), document.querySelector('.away-draw'));
+            loadCurrentKOTeams()
             break;
         case 'End Semi Finals':
             const SfEndConsent = confirm('Semi Finals is running, do you wish to end however?')
@@ -349,6 +346,8 @@ stageChanger.addEventListener('click', (e) => {
             modify('Final', document.querySelectorAll('.scl-leg-chn-btn'))
             e.target.textContent = 'End Finals'
             sclProgress('/scl/start/FIN')
+            clearSelectOption(document.querySelector('.home-draw'), document.querySelector('.away-draw'));
+            loadCurrentKOTeams()
             break;
         case 'End Finals':
             const FinEndConsent = confirm('Final is running, if you wish to end however, check that yoou have recorded the result!')
@@ -372,75 +371,6 @@ const sclProgress = (url) => {
         })
     })
 }
-let openOrCloseForm = (command) => {
-    if (command === 'open') {
-        adminBoard.style.display = 'block'
-        authFrame.style.display = 'none'
-        document.querySelector('footer').style.display = 'block'
-    } else if (command === 'openAuthPane') {
-        authPane.style.display = 'block'
-        document.querySelector('#auth-input').value = ''
-    }
-} 
-upBtn.addEventListener('click', (e) => {
-    upBtn.style.display = 'none'
-    openOrCloseForm('openAuthPane')
-})
-authForm.addEventListener('submit', (e) => {
-    e.preventDefault()
-    authPane.style.display = 'none'
-    const authInput = document.querySelector('#auth-input').value
-    const url = `/admin/auth?pass=${authInput}`
-    fetch(url).then((response) => {
-        response.json().then((data) => {
-            switch (data.feedBack) {
-                case 'success':
-                    if (data.admin === 'possible') {
-                        document.querySelector('.admin-pane').style.display = 'block'
-                    }
-                    document.querySelector('.admin-presence').textContent = data.admin.toUpperCase()
-                    openOrCloseForm('open')
-                    break;
-                case 'fail':
-                    alert('You are not authenticated')
-                    upBtn.style.display = 'block'
-            }
-        })
-    })
-})
-
-const adminPaneBtn = document.querySelector('.admin-pane-btn-row')
-adminPaneBtn.addEventListener('click', (e) => {
-    const name = (document.querySelector('.admin-name').value).toLowerCase().trim()
-    const pass = (document.querySelector('.admin-pass').value).toLowerCase().trim()
-    switch (e.target.textContent) {
-        case 'create':
-            if (name === '' || pass === '') {
-                return adminInfo.textContent = 'please provide the name and pass!'
-            }
-            adminFunc('/admin/add', name, pass)
-            break;
-        case 'update':
-            if (name === '' || pass === '') {
-                return adminInfo.textContent = 'please provide the name and pass!'
-            }
-            adminFunc('/admin/update', name, pass)
-            break;
-        case 'delete':
-            if (name === '') {
-                return adminInfo.textContent = 'please provide the admin name to delete!'
-            }
-            adminFunc('/admin/remove', name)
-    }
-})
-const adminFunc = (command, name, pass) => {
-    const url = `${command}?name=${name}&pass=${pass}`
-    fetch(url).then((response) => {
-        response.json().then((data) => {
-            adminInfo.textContent = data.feedBack
-        })
-    })
-}
 const leagueStBtn = document.querySelector('.league-st-btn')
 leagueStBtn.addEventListener('click', () => {
     const endConsent = confirm('Are you sure you want to start league? if sure, Ensure that you have added all teams before starting!')
@@ -450,6 +380,8 @@ leagueStBtn.addEventListener('click', () => {
             if (data.feedBack === 'yes') {
                 FB.textContent = "League Started!"
                 leagueStBtn.setAttribute('disabled', true)
+                clearSelectOption(document.querySelector('#h'), document.querySelector('#a'));
+                loadCurrentLeagueTeams()
             } else {
                 FB.textContent = data.feedBack
             }

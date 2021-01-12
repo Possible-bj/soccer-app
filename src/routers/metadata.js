@@ -183,7 +183,7 @@ router.get('/scl/running', async (req, res) => {
     const meta = await metadata.find({})
     const code = meta[0].scl.shortCode
     if (code === 'GS' || code === 'QF' || code === 'SF' || code === 'FIN' || code === 'END') {
-        res.status(400).send({
+        res.status(200).send({
             feedBack: 'yes',
             code
         })

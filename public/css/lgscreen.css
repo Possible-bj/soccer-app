@@ -79,4 +79,8 @@
     .team-logos {
         width: 120px;
     }
+    #auth-form-pane,
+    .admin-pane {
+        width: 25% !important;
+    } 
 }
