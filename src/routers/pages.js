@@ -36,23 +36,16 @@ router.get('/logo', (req, res) => {
     })
 })
 
-router.get('/admin', (req, res) => {
-    res.render('404', {
-        title: 'Page Not Found!',
-        name: 'Benjamin Possible'
-    })
-})
-router.get('/admin/login', (req, res) => {
-    res.render('login', {
-        title: 'Supreme Admin Board!',
-        name: 'Benjamin Possible',
-        feedback: req.query.feedback
-    })
-})
 router.get('/backdoor', (req, res) => {
     res.render('100', {
         title: 'Supreme Back Office!',
         name: 'Benjamin Possible'
     })
 })
+// router.get('*', (req, res) => {
+//     res.render('404', {
+//         title: 'Page Not Found!',
+//         name: 'Benjamin Possible'
+//     })
+// })
 module.exports = router

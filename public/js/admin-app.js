@@ -452,7 +452,22 @@ correctBtn.addEventListener('click', () => {
         })
     })
 })
-
+const logOut = () => {
+    const token = document.querySelector('#token').textContent
+    fetch(`/admin/logout?token=${token}`).then((response) => {
+        response.json().then((data) => {
+            if (data) return window.location.replace('/admin/login')
+            console.log(data)
+        })
+    })
+}
+document.querySelector('#log-out-btn').addEventListener('click', logOut)
+// const xhr = new XMLHttpRequest()
+// xhr.open('GET', '/admin/login/auth', false)
+// xhr.setRequestHeader('Authorization', 'Basic ' + token)
+// xhr.send(null)
+// const headers = xhr.getAllResponseHeaders()
+// alert(headers)
 // const faDrawBtn = document.querySelector('.fa-draw-btn')
 // faDrawBtn.addEventListener('click', () => {
 //     alert('clicked')

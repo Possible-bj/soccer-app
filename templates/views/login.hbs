@@ -7,6 +7,7 @@
         <link rel="stylesheet" href="/css/main.css" type="text/css"/>
     <link rel="stylesheet" href="/css/lgscreen.css" type="text/css"/>   
     <link rel="stylesheet" href="/css/admin-style.css" type="text/css"/>
+    <link rel="icon" href="/img/spm-logo.png" type="image/png"/>
     <title>Admin Login</title>
 
     <style>
@@ -15,12 +16,11 @@
         }
         #auth-form-pane {
             width: 70%;
-            height: 100%;
             background: linear-gradient(-45deg, rgb(5, 90, 16), rgb(10, 167, 31));
             /*background: #fff;*/
             border-radius: 3px;
             box-shadow: 0 0 5px #000;
-            padding: 10px;
+            padding: 10px 10px 50px;
             color: #fff;
             text-shadow: 1px 1px 1px #000;
             } 
@@ -33,31 +33,37 @@
             font-family: serif;
 
         }
-
+        .body-content {
+            margin-top: 0;
+        }
     </style>
 </head>
 <body>
     <div class="body-content">
 
-        <h1 class="admin-board">{{title}}</h1>
+        <h1 style="
+    text-transform: uppercase;
+    color: #010211;
+    text-align: center;
+    font-size: 50px;">{{title}}</h1>
 
-        <div class="rel login-box margin-auto centered">
+        {{!-- <div class="rel login-box margin-auto centered"> --}}
 
-        <form action="/admin/login/auth" method="POST" enctype="application/x-www-form-urlencoded" id="auth-form-pane" class="abs margin-auto centered">
+        <form method="POST" action="/admin/login/auth" enctype="application/x-www-form-urlencoded" id="auth-form-pane" class="rel margin-auto">
             <h1 align="center">Log In</h1>
             <label> <span>Username: </span> 
-                <input required name="username" type="text" id="admin-username" class="rel max-percent" placeholder="username">
+                <input required autocomplete="username" name="username" type="text" id="admin-username" class="rel max-percent" placeholder="username">
             </label> <br/>
             <label> <span>Password:</span>
-               <input required name="password" type="password" id="admin-password" class="rel max-percent" placeholder="password">
+               <input required autocomplete="current-password" name="password" type="password" id="admin-password" class="rel max-percent" placeholder="password">
             </label>
-                <br/>
-                <span style="color:red">{{feedback}}</span> <br/>
+                <br/>        
             <label><input type="checkbox" onclick="viewPassword()"> <span>Show Password</span></label> 
+            <div style="color:red">{{feedback}}</div> <br/>
             <input type="submit" class="rel max-percent" value="Login">
 
         </form>
-    </div>  
+    {{!-- </div>   --}}
 
     </div>
     {{>footer}}
@@ -67,10 +73,6 @@
             if (field.type === 'password') field.type = 'text'
                 else field.type = 'password'
         }
-        
-        //document.querySelector('#auth-form-pane').addEventListener('submit', (e) => {
-          //  e.preventDefault()   
-        //})
     </script>
 </body>
 </html>

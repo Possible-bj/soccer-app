@@ -2,35 +2,65 @@ const express = require('express')
 const url = require('url')
 const Admin = require('../models/admin')
 const auth = require('../middleware/auth')
-const bodyParser = require('body-parser') 
+// const bodyParser = require('body-parser') 
+const path = require('path')
+const cookieParser = require('cookie-parser')
 const router = new express.Router()
 
-router.use(bodyParser.urlencoded({ extended: false }))
+router.use(express.urlencoded({ extended: false }))
+router.use(cookieParser())
+// router.use(bodyParser.urlencoded({ extended: false }))
+// login page
+router.get('/admin/login', (req, res) => {
+    res.render('login', {
+        title: 'Supreme Admin Board!',
+        name: 'Benjamin Possible',
+        feedback: req.query.feedback
+    })
+})
+// login router
 router.post('/admin/login/auth', async (req, res) => {
-    // const password = req.query.password
-    try {
+    try { 
         const admin = await Admin.findByCredentials(req.body.username, req.body.password)
         const token = await admin.generateAuthToken()
-        // req.headers.authorization
-        res.redirect(url.format({
+        res.cookie('auth_token', token)
+        res.sendFile(path.resolve(__dirname, '../templates/views/admin.hbs'))
+        res.status(200).redirect(url.format({
             pathname: '/admin/board',
             query: {
                 username: admin.username,
-                _id: admin._id.toString(),
+                _id: admin._id,
                 token
             }
         }))
-    } catch (e) {
-        res.redirect(url.format({
+    } catch (e) { 
+        res.status(400).redirect(url.format({
             pathname: '/admin/login',
             query: {
                 feedback: e.message
             }
         }))
-    
     }
-    // console.log(req.body)
-    // res.redirect('/admin/login')
+})
+// logout router sitting behind authentication
+router.get('/admin/logout', auth, async (req, res) => {
+        try {
+            req.admin.tokens = req.admin.tokens.filter((token) => {
+                return token.token !== req.token
+            })
+            await req.admin.save()
+            res.status(200).send({feedback: 'logged out'})
+        } catch (e) {
+            res.status(500).send()
+        }
+})
+// the admin board also sitting behind authentication
+router.get('/admin/board', auth, (req, res) => {
+    res.render('admin', {
+        title: 'Admin Board',
+        name: 'Benjamin Possible',
+        username: req.query.username
+    })
 })
 router.get('/admin/add', async (req, res) => {
     const username = req.query.username, password = req.query.password
@@ -85,11 +115,5 @@ router.get('/admin/get/all', async (req, res) => {
         res.send({feedBack: e.message})
     })
 })
-router.get('/admin/board', auth, (req, res) => {
-        res.render('admin', {
-            title:  'Admin Board',
-            name: 'Benjamin Possible',
-            admin: req.query
-        }) 
-})
+
 module.exports = router

@@ -464,3 +464,16 @@ footer {
     color: #fff;
     letter-spacing: 1px;
 }
+#log-out-btn {
+    margin: auto 15px;
+    border: transparent;
+    color: #fff;
+    background: linear-gradient(rgb(255, 0, 0), rgb(146, 12, 12));
+    outline: none;
+    border-radius: 35px;
+    transition: all .2s ease;
+    /* box-shadow: none; */
+}
+#log-out-btn:focus {
+    transform: scale(.95)
+}

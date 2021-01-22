@@ -12,14 +12,18 @@ Supreme Champions League
     <link rel="stylesheet" href="/css/main.css" type="text/css"/>
     <link rel="stylesheet" href="/css/lgscreen.css" type="text/css"/>
     <link rel="stylesheet" href="/css/scl-style.css" type="text/css"/>
+    <link rel="icon" href="/img/spm-logo.png" type="image/png"/>
     <style>
     
     </style>
 </head>
 
 <body>
+   {{>header}}
     <div class="body-content">
-        {{>header}} 
+    <h1 align="center">
+        {{title}}
+    </h1> 
         <div class="switch">
             <div class="switch-left rel">Season</div>
             <div class="switch-right rel">
@@ -27,7 +31,7 @@ Supreme Champions League
             </div>
         </div>
     <div class="scl-main-section rel" id="scl-ms">
-            <h2>Season <span id="scl-id"></span> <span class="sn-avail-info"></span></h2>
+            <h2 class="season">Season <span id="scl-id"></span> <span class="sn-avail-info"></span></h2>
             <div class="stages">
                 <button class="st-btn" id="1"> Group Stage </button>
                 <button class="st-btn" id="2"> Quarter Finals </button>

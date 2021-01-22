@@ -83,4 +83,29 @@
     .admin-pane {
         width: 25% !important;
     } 
+    .nav-icon {
+        display: none
+    }
+    header {
+        display: flex;
+    }
+    header div {
+        width: 30% !important;
+    }
+    .nav {
+        width: 70%;
+        max-height: inherit;
+        display: flex;
+    }
+    .nav div {
+        display: flex;
+        flex-direction: row;
+        width: 100% !important;
+        height: inherit;
+        padding: 0;
+        margin-top: 0;
+    }
+    .nav a {
+        margin: 0 auto !important;
+    }
 }

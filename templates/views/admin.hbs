@@ -11,8 +11,11 @@ Admin Board
     <link rel="stylesheet" href="/css/main.css" type="text/css"/>
     <link rel="stylesheet" href="/css/lgscreen.css" type="text/css"/>
     <link rel="stylesheet" href="/css/admin-style.css" type="text/css"/>
+    <link rel="icon" href="/img/spm-logo.png" type="image/png"/>
     <style>
-    
+    .body-content {
+        margin-top: 0;
+    }
     </style>
 </head>
 
@@ -21,7 +24,7 @@ Admin Board
 <div class="body-content">
 {{!-- {{>header}} --}}
 <h1 class="admin-board">Admin Board</h1>
-                    <div align='right'>Active: <span class="admin-presence">{{admin.username}}</span></div>
+                    <div align='right' style="color: white;" class="text-shadow">Active: <span style="text-transform: capitalize;" class="admin-presence">{{username}}</span><span><button id="log-out-btn">Log Out</button></span></div>
     <div id='form-pane' class=" margin-auto centered">
         {{!-- <div class="top margin top-center">
               
@@ -229,6 +232,7 @@ Admin Board
     <iframe class="frame rel" src="/logo"> </iframe>
     {{!-- </frameset> --}}
     </div>
+    <div style="display: none" id="token">{{token}}</div>
 </div>
     {{>footer}}
     

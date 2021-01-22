@@ -1,10 +1,60 @@
-<header>
-    <h1>
-        {{title}}
+<header class="hd max-percent fix">
+    <div class="flex margin-auto max-percent no-shrink">
+    <h1 class="text-shadow">
+              <a href="/">Supreme</a>
     </h1>
+    <div class="nav-icon no-shrink flex flex-column curved-edges">
+        <div class="rotate-icon rel max-percent flex flex-column">
+        <hr class="icon curved-edges no-shrink" size="6%">
+        <hr class="icon curved-edges no-shrink" size="6%">
+        <hr class="icon curved-edges no-shrink" size="6%">
+        </div>
+        
+    </div>
+    </div>
+    
+ <nav class="nav">
+    <div class="rel curved-edges margin-auto">  
+        <a href="/league">League</a>
+        <a href="/scl">SCL</a>
+        <a href="/teams">Teams</a>         
+    </div>
 
-    <a href="/">Home</a>    
-    <a href="/league">League</a>
-    <a href="/scl">SCL</a>
-    <a href="/teams">Teams</a>
+ </nav>
 </header>
+ <script>
+     const ctr = document.querySelector('.nav-icon')
+     const navbar = document.querySelector('.nav')
+     const icon = document.querySelectorAll('.icon')
+     const ri = document.querySelector('.rotate-icon')
+     const navBarSlide = () => {
+         if (navbar.style.maxHeight) {
+            navbar.style.maxHeight = null
+            icon[0].style.transform = 'translate(0, 0)'
+            icon[1].style.transform = 'rotate(-0deg)'
+            icon[2].style.opacity = 1
+            ri.style.transform = 'rotate(0)'
+
+         }
+            else {
+                navbar.style.maxHeight = navbar.scrollHeight + 'px'
+                icon[0].style.transform = 'translate(0, 10px)'
+                icon[1].style.transform = 'rotate(90deg)'
+                icon[2].style.opacity = 0
+                ri.style.transform = 'rotate(45deg)'
+            }
+     }
+     ctr.addEventListener('click', navBarSlide)
+     const hd = document.querySelector('.hd')
+     window.addEventListener('scroll', () => {
+         if ( navbar.style.maxHeight ) navBarSlide()
+         if (window.pageYOffset) {
+         hd.classList.add('header-bg') 
+         for (i=0;i<3;i++) icon[i].classList.add('icon-white')
+         }
+            else {
+            hd.classList.remove('header-bg')
+            for (i=0;i<3;i++) icon[i].classList.remove('icon-white')
+            }
+     })
+ </script>

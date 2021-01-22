@@ -11,6 +11,7 @@
     </title>
     <link rel="stylesheet" href="/css/main.css" type="text/css"/>
     <link rel="stylesheet" href="/css/lgscreen.css" type="text/css"/>
+    <link rel="icon" href="/img/spm-logo.png" type="image/png"/>
     <style>
     .no-result {
     height: 100%;
@@ -26,13 +27,21 @@
 </head>
 
 <body>
+       {{>header}}
     <div class="body-content">
-        {{>header}}
-        <h2>Season <span id="sn-display"></span> </h2>
-<div class="home-tab">
-    <div class="table-tab">
-    <table id='table' >
-        <thead>
+    <h1 align="center">
+        {{title}}
+    </h1> 
+        
+<div class="home-tab rel">
+    <div class="table-tab rel max-percent">
+    <table id='table' class="centered max-percent curved-edges box-shadow">
+        <thead class="curved-edges">
+            <tr class="curved-edges">
+                <td colspan="10">
+                    <h2 class="season">Season <span id="sn-display"></span> </h2>
+                </td>
+            </tr>
             <tr>
                 <td>P</td>
                 <td>Team</td>
@@ -51,11 +60,11 @@
         </tbody>
     </table>
     </div>
-    <div class="image"></div>
-<hr/>
-    <div class="result-tab">
-<div id="result-pane">
-    <div id="result-head">Results | Match day <span class="match-day"></span></div>
+    {{!-- <div class="image"></div> --}}
+<hr>
+    <div class="result-tab rel max-percent no-shrink box-shadow curved-edges">
+<div id="result-pane" class="rel flex flex-column margin-auto curved-edges">
+    <div id="result-head" class="max-percent">Results | Match day <span class="match-day"></span></div>
     <div id="results">
  {{!-- <div class="match">
             <button class="home-team">home-team</button>
@@ -65,7 +74,7 @@
      </div> --}}
      {{!-- 441130 --}}
     </div>
-    <div id="result-foot">Supreme League</div>
+    <div id="result-foot" class="max-percent">Supreme League</div>
 </div>
     </div>
 

@@ -151,9 +151,11 @@ tbody td:nth-child(2) {
     color: #000;
 }
 .coronation-title {
-    color: goldenrod    ;
     text-transform: uppercase;
     font-family: serif;
     font-weight: 600;
     text-shadow: .5px .5px 2px #000; 
+}
+.coronation-title h1 {
+    color: #daa520;
 }

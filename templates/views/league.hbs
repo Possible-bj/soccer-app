@@ -6,6 +6,7 @@
     <meta name="author" content="Benjamin Possible">
     <meta name="keywords" content="Supreme, supreme league, ftg, fun games, Dlo, Dls, League, dream league, soccer, virtual games, games, football, nigerian leagues, nigerian dream league online, online games">
     <meta name="viewport" content="width=device-width, initial-scale=.75"/>
+    <link rel="icon" href="/img/spm-logo.png" type="image/png"/>
     <title>
         Supreme League
     </title>
@@ -18,20 +19,27 @@
 </head>
 
 <body>
+   {{>header}}
     <div class="body-content">
-        {{>header}}
+    <h1 align="center">
+        {{title}}
+    </h1> 
          <div class="switch">
             <div class="switch-left rel">Season</div>
             <div class="switch-right rel">
                
             </div>
         </div>
-         <h2>Season <span id="sn-display"></span></h2>
-       <div class="league-main-section" id="league-ms">
+       <div class="league-main-section flex" id="league-ms">
            
     <div>
     <table id='table' >
         <thead>
+            <tr>
+                <td colspan="10">
+                    <h2 class="season">Season <span id="sn-display"></span> </h2>
+                </td>
+            </tr>
             <tr>
                 <td>P</td>
                 <td>Team</td>
