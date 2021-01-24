@@ -89,44 +89,50 @@ let addRows = (table) => {
     }
 } 
   let addColumns = (table, rowCount, teams) => {
-      let cellCount = table.rows[0].cells.length
-      let cell = []
-      for(i=0; i<rowCount; i++) {
-      cell[cellCount] = table.rows[i].insertCell(cellCount) 
-          switch ( cellCount ) {
-            case 0:
-                  cell[cellCount].textContent = i + 1
-                  positionIndicator(table, i)
-                  break;
-            case 1:                
-                cell[cellCount].innerHTML = `<img class='logo-thumb' src='/team/logo/${teams[i].team}'> <span> ${teams[i].team}</span>`
+    let cell = [], i = 0;  
+    let setInt = setInterval(setCols, 50)
+    function setCols() {
+      let cellCount = table.rows[i].cells.length
+        cell[cellCount] = table.rows[i].insertCell() 
+        switch ( cellCount ) {
+          case 0:
+                cell[cellCount].innerHTML = `<div class="abs max-percent margin-auto centered">${i + 1}</div>`
+                positionIndicator(table, i)
                 break;
-            case 2:
-                cell[cellCount].textContent = teams[i].P
-                break;
-            case 3:
-                cell[cellCount].textContent = teams[i].W
-                break;
-            case 4:
-                cell[cellCount].textContent = teams[i].D
-                break;
-            case 5:
-                cell[cellCount].textContent = teams[i].L
-                break;
-            case 6:
-                cell[cellCount].textContent = teams[i].GF
-                break;
-            case 7:
-                cell[cellCount].textContent = teams[i].GA
-                break;
-            case 8:
-                cell[cellCount].textContent = teams[i].GD
-                break;
-            case 9:
-                cell[cellCount].textContent = teams[i].Pts               
-          }
-
+          case 1:
+              cell[cellCount].innerHTML = `<img class='logo-thumb' src='/team/logo/${teams[i].team}'> <span> ${teams[i].team}</span>`
+              break;
+          case 2:
+              cell[cellCount].textContent = teams[i].P
+              break;
+          case 3:
+              cell[cellCount].textContent = teams[i].W
+              break;
+          case 4:
+              cell[cellCount].textContent = teams[i].D
+              break;
+          case 5:
+              cell[cellCount].textContent = teams[i].L
+              break;
+          case 6:
+              cell[cellCount].textContent = teams[i].GF
+              break;
+          case 7:
+              cell[cellCount].textContent = teams[i].GA
+              break;
+          case 8:
+              cell[cellCount].textContent = teams[i].GD
+              break;
+          case 9:
+              cell[cellCount].textContent = teams[i].Pts               
+        }
+  
+        i++
+        if ( i === rowCount ) {
+          clearInterval(setInt); i = 0;
       }
+      
+}
   }
 
   let dynamicSort = (prop, tieBreaker) => {

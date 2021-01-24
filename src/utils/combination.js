@@ -15,20 +15,28 @@ const combination = (arr, callback) => {
     callback(fixture)
 }
 const createQF = async (season, teams, callback) => {
-    const arr = []
+    const topTeam = [], runnerUPTeams = [], fixed = {}
     for (x in teams) {
         teams[x].sort(dynamicSort('Pts', 'GD'))
-        arr.push(teams[x][0].team)
-        arr.push(teams[x][1].team)
+        topTeam.push(teams[x][0].team)
+        runnerUPTeams.push(teams[x][1].team)
     }
-    await fix(arr, async (fixture) => {
-        const QF = await sclQF.findOne({ season })        
-        QF.fixtures.push(fixture[0])
-        QF.running = 'YES'
-        await QF.save()
-        callback({
-            feedBack: 'Groups stage ended and Quarter finals begins!'
-        })
+    await fix(topTeam, async (fixture) => {
+        for (x in fixture[0]) {
+            fixed[x] = fixture[0][x]
+        }
+    })
+    await fix(runnerUPTeams, async (fixture) => {
+        for (x in fixture[0]) {
+            fixed[x] = fixture[0][x]
+        }
+    })
+    const QF = await sclQF.findOne({ season })        
+    QF.fixtures.push(fixed)
+    QF.running = 'YES'
+    await QF.save()
+    callback({
+        feedBack: 'Groups stage ended and Quarter Finals begins!'
     })
 }
 const createSF = async (season, teams, callback) => {
@@ -71,7 +79,7 @@ const dynamicSort = (prop, tieBreaker) => {
                         return 0 * sortOrder
     }
 }
-const fix = (arr, callback) => {
+const fix = async (arr, callback) => {
     const tm = arr, draw = {}, fixture = []
     while(tm.length>0) {
         let num = Math.floor(Math.random()*tm.length)        

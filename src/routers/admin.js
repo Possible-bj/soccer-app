@@ -24,15 +24,10 @@ router.post('/admin/login/auth', async (req, res) => {
         const admin = await Admin.findByCredentials(req.body.username, req.body.password)
         const token = await admin.generateAuthToken()
         res.cookie('auth_token', token)
+        res.cookie('username', admin.username)
+        res.cookie('_id', admin._id.toString())
         res.sendFile(path.resolve(__dirname, '../templates/views/admin.hbs'))
-        res.status(200).redirect(url.format({
-            pathname: '/admin/board',
-            query: {
-                username: admin.username,
-                _id: admin._id,
-                token
-            }
-        }))
+        res.status(200).redirect(url.format( { pathname: '/admin/board' } ))
     } catch (e) { 
         res.status(400).redirect(url.format({
             pathname: '/admin/login',

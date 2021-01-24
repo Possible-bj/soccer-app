@@ -329,7 +329,6 @@ stageChanger.addEventListener('click', (e) => {
             e.target.textContent = 'End Qarter Finals'
             sclProgress('/scl/start/QF')
             clearSelectOption(document.querySelector('.home-draw'), document.querySelector('.away-draw'));
-            loadCurrentKOTeams()
             break;
         case 'End Qarter Finals':
             const QfEndConsent = confirm('Quarter Finals is running, do you wish to end however?')
@@ -338,7 +337,6 @@ stageChanger.addEventListener('click', (e) => {
             e.target.textContent = 'End Semi Finals'
             sclProgress('/scl/start/SF')
             clearSelectOption(document.querySelector('.home-draw'), document.querySelector('.away-draw'));
-            loadCurrentKOTeams()
             break;
         case 'End Semi Finals':
             const SfEndConsent = confirm('Semi Finals is running, do you wish to end however?')
@@ -347,7 +345,6 @@ stageChanger.addEventListener('click', (e) => {
             e.target.textContent = 'End Finals'
             sclProgress('/scl/start/FIN')
             clearSelectOption(document.querySelector('.home-draw'), document.querySelector('.away-draw'));
-            loadCurrentKOTeams()
             break;
         case 'End Finals':
             const FinEndConsent = confirm('Final is running, if you wish to end however, check that yoou have recorded the result!')
@@ -366,7 +363,9 @@ const sclProgress = (url) => {
                 stageChanger.textContent = 'End Group Stage'
                 document.querySelector('.scl-fixture-controls').style.display = 'flex'
                 document.querySelector('.scl-stage-ind').textContent = 'Group Stage'
-            }
+            } else if (data.feedBack.includes('Quarter Finals')) loadCurrentKOTeams('QF')
+                else if (data.feedBack.includes('Semi Finals')) loadCurrentKOTeams('SF')
+                    else if (data.feedBack.includes('Final')) loadCurrentKOTeams('FIN')
             entryFb.textContent = data.feedBack
         })
     })
@@ -454,7 +453,7 @@ correctBtn.addEventListener('click', () => {
 })
 const logOut = () => {
     const token = document.querySelector('#token').textContent
-    fetch(`/admin/logout?token=${token}`).then((response) => {
+    fetch(`/admin/logout`).then((response) => {
         response.json().then((data) => {
             if (data) return window.location.replace('/admin/login')
             console.log(data)
@@ -462,19 +461,18 @@ const logOut = () => {
     })
 }
 document.querySelector('#log-out-btn').addEventListener('click', logOut)
-// const xhr = new XMLHttpRequest()
-// xhr.open('GET', '/admin/login/auth', false)
-// xhr.setRequestHeader('Authorization', 'Basic ' + token)
-// xhr.send(null)
-// const headers = xhr.getAllResponseHeaders()
-// alert(headers)
-// const faDrawBtn = document.querySelector('.fa-draw-btn')
-// faDrawBtn.addEventListener('click', () => {
-//     alert('clicked')
-//     const teams = document.querySelector('.fa-teams').value.trim()
-//     const arr = teams.split(' ')
-//     fix(arr, (fixtures) => {
-//         alert(fixtures[0])
-//     })
-// })
-
+const getCookie = (cname) => {
+    var name = `${cname}=`
+    const ca = document.cookie.split(';')
+    for (i=0;i<ca.length;i++) {
+        let c = ca[i]
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1)
+        } 
+        if (c.indexOf(name) == 0) {
+            return (c.substring(name.length, c.length))
+        }
+    }
+    return ''
+}
+document.querySelector('.admin-presence').textContent = getCookie('username');

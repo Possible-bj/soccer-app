@@ -83,13 +83,14 @@ let addRows = (table) => {
     }
 } 
   let addColumns = (table, rowCount, teams) => {
-      let cellCount = table.rows[0].cells.length
-      let cell = []
-      for(i=0; i<rowCount; i++) {
-      cell[cellCount] = table.rows[i].insertCell(cellCount) 
+      let cell = [], i = 0;  
+      let setInt = setInterval(setCols, 50)
+      function setCols() {
+        let cellCount = table.rows[i].cells.length
+          cell[cellCount] = table.rows[i].insertCell() 
           switch ( cellCount ) {
             case 0:
-                  cell[cellCount].textContent = i + 1
+                  cell[cellCount].innerHTML = `<div class="abs max-percent margin-auto centered">${i + 1}</div>`
                   positionIndicator(table, i)
                   break;
             case 1:
@@ -120,9 +121,14 @@ let addRows = (table) => {
             case 9:
                 cell[cellCount].textContent = teams[i].Pts               
           }
-
-      }
+    
+          i++
+          if ( i === rowCount ) {
+            clearInterval(setInt); i = 0;
+        }
+        
   }
+}
 let createSeasonSwitch = (season, day) => {
     let panel = document.querySelector('.switch-right')
     let dayPanel = document.querySelector('.switch-right-result')

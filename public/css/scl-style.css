@@ -27,13 +27,13 @@
     width: 100%;
     align-self: center;
 }
-tbody tr:nth-child(1) td:nth-child(1),
+/* tbody tr:nth-child(1) td:nth-child(1),
 tbody tr:nth-child(2) td:nth-child(1) {
  background: rgb(107, 212, 107);
 }
 tbody tr:nth-child(3) td:nth-child(1) {
  background: rgb(231, 231, 137);
- }
+ } */
 
 tbody td:nth-child(2) {
     width: 200px !important;
