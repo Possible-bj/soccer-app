@@ -1,5 +1,7 @@
 const fix = (arr, cb) => {
-    const tm = arr, fixtures = []
+    const sortOrder = [0, 1, -1]
+    const order = sortOrder[Math.floor(Math.random() * sortOrder.length)]
+    const tm = arr.sort(deepSort(order)), fixtures = []
     while(tm.length>0) {
         let num = Math.floor(Math.random()*tm.length)        
         if (num === 0) num++
@@ -41,3 +43,10 @@ const clearBoard = (pane) => {
         i++
     } while(i < childCount)
 }
+const deepSort = (sortOrder) => {
+    return function(a, b) {
+        if ( a < b ) return -1 * sortOrder
+           else if ( a > b ) return 1 * sortOrder
+               return 0 * sortOrder
+    }
+   }

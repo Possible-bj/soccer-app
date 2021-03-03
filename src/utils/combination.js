@@ -2,7 +2,7 @@ const sclQF = require('../models/sclQF')
 const sclSF = require('../models/sclSF')
 const sclFIN = require('../models/sclFIN')
 const G = require('generatorics')
-const combination = (arr, callback) => {
+const combination = async (arr, callback) => {
     const fixture = [], draw = {};
     for (perm of G.combination(arr, 2)) {
         const firstTeam = perm[0], secondTeam = perm[1] 
