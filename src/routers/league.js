@@ -44,7 +44,7 @@ router.get('/league/team/add', async (req, res) => {
         })
         const duplicateTeam = table.teams.find((t) => t.team === team )
         if (!duplicateTeam) {        
-            table.teams = table.teams.concat({ team }) 
+            table.teams = table.teams.concat({ team, deduction: 0 }) 
             await table.save()
             res.send({
                 feedBack: 'New team added',
