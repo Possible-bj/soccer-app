@@ -94,11 +94,12 @@ router.get('/league/deduct', async (req, res) => {
     try {
         const League = await league.findOne({ season })
         const index = await findIndexByKeyValue(League, 'team', team)
-            League.teams[index].deduction = val
-            await League.save()
-            res.status(201).send({
-                feedBack: 'point deducted!'
-            })
+        League.teams.splice(index, 1)
+        League.teams = League.teams.concat({ team, deduction: val })
+        await League.save()
+        res.status(201).send({
+            feedBack: 'point deducted!'
+        })
     } catch (e) {
         res.status(400).send({
             feedBack: e.message
@@ -156,7 +157,7 @@ const findIndexByKeyValue = async (League, key, value) => {
             return i
         }
     }
-    return -1
+    throw new Error("Team Does not Exist!")
 }
 module.exports = router  
     

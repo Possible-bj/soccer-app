@@ -150,7 +150,7 @@ router.get('/newscl/:inc', async (req, res) => {
                 feedBack: 'Current SCL has started!'
             })
         } 
-        if ( isPreviousEnded( (sn - 1) ) ) {
+        if ( isPreviousNotEnded( (sn - 1) ) ) {
             return res.send({
                 feedBack: 'Previous SCL has Ended, cannot delete current!'
             })
@@ -166,7 +166,7 @@ router.get('/newscl/:inc', async (req, res) => {
         await sclFIN.deleteOne({ season: sn })        
     }
     if (inc.charCodeAt(0) === 43) {
-        if ( !isPreviousEnded(sn)) {
+        if ( isPreviousNotEnded(sn) ) {
             return res.status(400).send({
                 feedBack: 'Current SCL has not Ended!'
             })
@@ -289,10 +289,10 @@ const isCurrentGroupStageEndedOrRunning = async ( season ) => {
         return false
     }
 }
-const isPreviousEnded = async (season) => {
+const isPreviousNotEnded = async (season) => {
     const FIN = await sclFIN.findOne({ season })
     const running =  FIN.running
-    if (running === 'Ended') {
+    if (running !== 'Ended') {
         return true
     } else {
         return false
