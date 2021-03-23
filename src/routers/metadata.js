@@ -85,99 +85,108 @@ router.get('/newday/:inc', async (req, res) => {
 })
 router.get('/newleague/:inc', async (req, res) => {
     const inc = req.params.inc
-    if (inc.charCodeAt(0) === 45) {
-        const meta = await metadata.find({})
-        const season = meta[0].league.season
-        await league.findOne({ season }, async (e, table) => {
-            if ( table.running === 'yes') {
-                return res.status(400).send({
-                    feedBack: 'Currently league is running, cannot delete!'
-                })
-            } 
-            if (table.running === 'ended') {
-                return res.status(400).send({
-                    feedBack: 'current league has been completed, cannot delete!'
-                })
-            }
-        meta[0].league.season--
-        await meta[0].save()
-        await leagueResult.deleteMany({ season})
-        await league.deleteOne({ season })
+    try {
+        if (inc.charCodeAt(0) === 45) {
+            const meta = await metadata.find({})
+            const season = meta[0].league.season
+            await league.findOne({ season }, async (e, table) => {
+                if ( table.running === 'yes') {
+                    throw new Error('Current League is running, cannot delete!')
+                } 
+                if (table.running === 'ended') {
+                    throw new Error('Current League has been completed, cannot delete!')
+                }
+            meta[0].league.season--
+            await meta[0].save()
+            await leagueResult.deleteMany({ season })
+            await league.deleteOne({ season })
+            })
+            res.status(200).send({
+                feedBack: `Season ${season} deleted!`
+            })
+        }
+        if (inc.charCodeAt(0) === 43) {
+            const meta = await metadata.find({})
+            const season = meta[0].league.season
+            await league.findOne({ season }, async (e, table) => {
+                const running = table.running
+                if ( running === 'yes') {
+                   throw new Error('Current League is running, cannot override it!')                   
+                }
+                if ( running === 'no') {
+                    throw new Error('Current League has not been played!')
+                }
+            meta[0].league.season++
+            meta[0].league.day = 1
+            await meta[0].save()
+            const result = new leagueResult({
+                season: meta[0].league.season,
+                day: 1,
+                result: []
+            })
+            await result.save()
+            const leagues = new league({
+                season: meta[0].league.season,
+                teams: [],
+                fixtures: []
+            })
+            await leagues.save()
+            res.status(200).send({
+                feedBack:  `New Season Created, welcome to Season ${meta[0].scl.season}!`
+            })
+            })
+        }
+    } catch (e) {
+        res.status(400).send({
+            feedBack: e.message
         })
     }
-    if (inc.charCodeAt(0) === 43) {
-        const meta = await metadata.find({})
-        const season = meta[0].league.season
-        await league.findOne({ season }, async (e, table) => {
-            const running = table.running
-            if ( running === 'yes') {
-                return res.status(400).send({
-                    feadBack: 'Current League is running, cannot override it!'
-                })
-            }
-            if ( running === 'no') {
-                return res.status(400).send({
-                    feadBack: 'Current League has not been played!'
-                })
-            }
-        meta[0].league.season++
-        meta[0].league.day = 1
-        await meta[0].save()
-        const result = new leagueResult({
-            season: meta[0].league.season,
-            day: 1,
-            result: []
-        })
-        await result.save()
-        const leagues = new league({
-            season: meta[0].league.season,
-            teams: [],
-            fixtures: []
-        })
-        leagues.save()
-        res.status(200).send()
-        })
-    }
+    
 })
 
 router.get('/newscl/:inc', async (req, res) => {
     const inc = req.params.inc
-    const meta = await metadata.find({})
-    const sn = meta[0].scl.season
-    if (inc.charCodeAt(0) === 45) {
-        if ( isCurrentGroupStageEndedOrRunning( sn ) ) {
-            return res.status(400).send({
-                feedBack: 'Current SCL has started!'
-            })
-        } 
-        if ( isPreviousNotEnded( (sn - 1) ) ) {
-            return res.send({
-                feedBack: 'Previous SCL has Ended, cannot delete current!'
+    try {
+        const meta = await metadata.find({}), season = meta[0].scl.season
+        if (inc.charCodeAt(0) === 45) {
+            if ( isCurrentGroupStageEndedOrRunning( season ) ) {
+                throw new Error('Current SCL has started!')
+            } 
+            if ( isPreviousNotEnded( (season - 1) ) ) {
+                throw new Error('Previous SCL has Ended, cannot delete current!')
+            }
+            const running = previousRunningStage( (season - 1) ) 
+            meta[0].scl.season--
+            meta[0].scl.running = running.running
+            meta[0].scl.shortCode = running.code
+            await meta[0].save()
+            await sclGS.deleteOne({ season })
+            await sclQF.deleteOne({ season })
+            await sclSF.deleteOne({ season })
+            await sclFIN.deleteOne({ season }) 
+            res.status(200).send({
+                feedBack: `Season ${season} deleted!`
+            })       
+        }
+        if (inc.charCodeAt(0) === 43) {
+            if ( isPreviousNotEnded(season) ) {
+                throw new Error('Current SCL has not Ended!')
+            }
+            meta[0].scl.season++
+            meta[0].scl.running = 'none'
+            meta[0].scl.shortCode = 'none'
+            newSclStages(meta[0].scl.season) 
+            await meta[0].save()
+            res.status(200).send({
+                feedBack:  `New Season Created, welcome to Season ${meta[0].scl.season}!`
             })
         }
-        const running = previousRunningStage( (sn - 1) ) 
-        meta[0].scl.season--
-        meta[0].scl.running = running.running
-        meta[0].scl.shortCode = running.code
-        await meta[0].save()
-        await sclGS.deleteOne({ season: sn })
-        await sclQF.deleteOne({ season: sn })
-        await sclSF.deleteOne({ season: sn })
-        await sclFIN.deleteOne({ season: sn })        
+    } catch (e) {
+        res.status(400).send({
+            feedBack: e.message
+        })
     }
-    if (inc.charCodeAt(0) === 43) {
-        if ( isPreviousNotEnded(sn) ) {
-            return res.status(400).send({
-                feedBack: 'Current SCL has not Ended!'
-            })
-        }
-        meta[0].scl.season++
-        meta[0].scl.running = 'none'
-        meta[0].scl.shortCode = 'none'
-        await meta[0].save()
-        newSclStages(meta[0].scl.season)  
-        res.status(200).send()
-    }
+    
 })
 router.get('/scl/running', async (req, res) => {
     const meta = await metadata.find({})
@@ -232,10 +241,26 @@ router.get('/season/day/:season', async (req, res) => {
         day: data.length
     })
 })
-
+router.get('/fix/scl', async (req, res) => {
+    try {
+        const GS = await sclGS.findOne({ season: 17 })
+        if ( GS ) {
+            throw new Error('Season Available')
+        }
+        newSclStages(17)
+            res.status(200).send({
+                feedBack:  `Done!`
+            })
+    } catch (e) {
+        res.status(400).send({
+            feedBack: e.message
+        })
+    }
+    
+})
 const newSclStages = async (season) => {
     const GS = new sclGS({
-        season: season,
+        season,
         groups: {
             A: [{
                 teams: []
@@ -265,17 +290,17 @@ const newSclStages = async (season) => {
     })
     await GS.save()
     const QF = new sclQF({
-        season: season,
+        season,
         fixtures: []
     })
     await QF.save()
     const SF = new sclSF({
-        season: season,
+        season,
         fixtures: []
     })
     await SF.save()
     const FIN = new sclFIN({
-        season: season,
+        season,
         fixtures: []
     })
     await FIN.save()

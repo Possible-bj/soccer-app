@@ -21,6 +21,11 @@ const sclResultUpdate = document.querySelector('.fix-res-sub')
 const resInfo = document.querySelector('.res-info')
 const correctPaneInfo = document.querySelector('.correct-pane-info')
 window.addEventListener('DOMContentLoaded', () => {
+    fetch('/fix/scl').then((response) => {
+        response.json().then((data) => {
+            entryFb.textContent = data.feedBack
+        })
+    })
     leagueIsRunning(); sclIsRunning(); loadCurrentLeagueTeams();
     fetch('/scl/running').then((response) => {
         response.json().then((data) => {
@@ -255,8 +260,9 @@ nr.addEventListener('click', () => {
 const nextLevel = (command) => {
     fetch(`/${command}`).then((response) => {
         response.json().then((data) => {
-            if(data.feedBack) return resInfo.textContent = (data.feedBack)
-            resInfo.textContent = ('Fail')
+            if ( command.includes('newscl')) entryFb.textContent = data.feedBack
+                else resInfo.textContent = (data.feedBack)
+            
         })
     }) 
 }
@@ -412,7 +418,7 @@ leagueLegNob.addEventListener('click', () => {
 const deductBtn = document.querySelector('.deduct-btn')
 deductBtn.addEventListener('click', () => {
     correctPaneInfo.textContent = ''
-    const deductTeam = document.querySelector('#deduct-team').value
+    const deductTeam = document.querySelector('#deduct-team').value.toLowerCase()
     const deductPoint = document.querySelector('#deduct-point').value
     if ( deductTeam === '' || deductPoint === '') return correctPaneInfo.textContent = 'Please provide the team and the point to deduct!'
     const url = `/league/deduct?team=${deductTeam}&val=${deductPoint}`
