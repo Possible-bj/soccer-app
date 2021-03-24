@@ -146,21 +146,24 @@ router.get('/newleague/:inc', async (req, res) => {
 router.get('/fix/fixture', async (req, res) => {
     try {
         const leg = 'firstLeg'
-        const League = await league.findOne({ season: 24 })
-        // if ( GS ) {
-        //     throw new Error('Season Available')
-        // }
-        // delete League.fixtures[0]["zeus vs the o.g"][leg].play
-        League.fixtures[0]["zeus vs the o.g"][leg] = {
-            home: 'zeus', hs: 1, away: 'the o.g', as: 5, played: true
-        }
-        League.fixtures[0]["tooboy vs the o.g"][leg] = {
-            home: 'tooboy', hs: 3, away: 'the o.g', as: 4, played: true
-        }
-        League.fixtures[0]["super gallant vs the o.g"][leg] = {
-            home: 'super gallant', hs: 3, away: 'the o.g', as: 2, played: true
-        }
-        await League.save()
+        await league.updateOne({ season: 24 },
+            {
+                $set: {
+                    [`fixtures.0.zeus vs the o\.g.${leg}.played`]: true
+                }
+            })
+            await league.updateOne({ season: 24 },
+                {
+                    $set: {
+                        [`fixtures.0.tooboy vs the o\.g.${leg}.played`]: true
+                    }
+                })
+                await league.updateOne({ season: 24 },
+                    {
+                        $set: {
+                            [`fixtures.0.super gallant vs the o\.g.${leg}.played`]: true
+                        }
+                    })
             res.status(200).send({
                 feedBack:  `Done!`
             })
