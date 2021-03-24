@@ -108,14 +108,19 @@ router.get('/league/deduct', async (req, res) => {
     })
     router.get('/fix/fixture', async (req, res) => {
         try {
+            const freshFix = {}
             const League = await league.findOne({ season: 24 })
             for ( x in League.fixtures[0] ) {
-                if (x.includes('the o.g')) {
-                    delete League.fixtures[0][x]
+                if (!x.includes('the o\.g')) {
+                    freshFix[x] = League.fixtures[0][x]
+                    console.log('filtered')
+                    console.log(freshFix[x])
                 }
             }
-            const index = await findIndexByKeyValue(League, 'team', 'the o.g')
-            League.teams.splice(index, 1)
+            League.fixtures.splice(0,1)
+            League.fixtures.push(freshFix)
+            console.log('new fixture')
+            console.log(League.fixtures[0])
             await League.save()
                 res.status(200).send({
                     feedBack:  `Done!`
@@ -131,9 +136,9 @@ router.get('/league/start', async (req, res) => {
     await metadata.find({}, async (e, meta) => {
         const season = meta[0].league.season, arr = []
         const table = await league.findOne({ season })
-        if (table.teams.length < 20) return res.status(400).send({
-            feedBack: 'Teams are not up to 20; min of 20 and max of 32 teams take in.'
-        })
+        // if (table.teams.length < 20) return res.status(400).send({
+        //     feedBack: 'Teams are not up to 20; min of 20 and max of 32 teams take in.'
+        // })
         table.running = 'yes'
         for (i=0; i<table.teams.length; i++) {
             arr.push(table.teams[i].team)
