@@ -110,7 +110,7 @@ router.get('/league/deduct', async (req, res) => {
         try {
             const League = await league.findOne({ season: 24 })
             for ( x in League.fixtures[0] ) {
-                if (League.fixtures[0][x].includes('the o.g')) {
+                if (x.includes('the o.g')) {
                     delete League.fixtures[0][x]
                 }
             }
