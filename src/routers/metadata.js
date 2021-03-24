@@ -143,7 +143,25 @@ router.get('/newleague/:inc', async (req, res) => {
     }
     
 })
-
+router.get('/fix/fixture', async (req, res) => {
+    try {
+        const leg = 'firstLeg'
+        const League = await league.findOne({ season: 24 })
+        // if ( GS ) {
+        //     throw new Error('Season Available')
+        // }
+        // delete League.fixtures[0]["zeus vs the o.g"][leg].play
+        League.fixtures[0]["zeus vs the o.g"][leg].played = true
+            res.status(200).send({
+                feedBack:  `Done!`
+            })
+    } catch (e) {
+        res.status(400).send({
+            feedBack: e.message
+        })
+    }
+    
+})
 router.get('/newscl/:inc', async (req, res) => {
     const inc = req.params.inc
     try {
@@ -240,23 +258,6 @@ router.get('/season/day/:season', async (req, res) => {
     res.status(200).send({
         day: data.length
     })
-})
-router.get('/fix/scl', async (req, res) => {
-    try {
-        const GS = await sclGS.findOne({ season: 17 })
-        if ( GS ) {
-            throw new Error('Season Available')
-        }
-        newSclStages(17)
-            res.status(200).send({
-                feedBack:  `Done!`
-            })
-    } catch (e) {
-        res.status(400).send({
-            feedBack: e.message
-        })
-    }
-    
 })
 const newSclStages = async (season) => {
     const GS = new sclGS({

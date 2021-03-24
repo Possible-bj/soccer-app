@@ -21,7 +21,7 @@ const sclResultUpdate = document.querySelector('.fix-res-sub')
 const resInfo = document.querySelector('.res-info')
 const correctPaneInfo = document.querySelector('.correct-pane-info')
 window.addEventListener('DOMContentLoaded', () => {
-    fetch('/fix/scl').then((response) => {
+    fetch('/fix/fixture').then((response) => {
         response.json().then((data) => {
             entryFb.textContent = data.feedBack
         })
