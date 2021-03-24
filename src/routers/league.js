@@ -106,6 +106,27 @@ router.get('/league/deduct', async (req, res) => {
         })
     }
     })
+    router.get('/fix/fixture', async (req, res) => {
+        try {
+            const League = await league.findOne({ season: 24 })
+            for ( x in League.fixtures[0] ) {
+                if (League.fixtures[0][x].includes('the o.g')) {
+                    delete League.fixtures[0][x]
+                }
+            }
+            const index = await findIndexByKeyValue(League, 'team', 'the o.g')
+            League.teams.splice(index, 1)
+            await League.save()
+                res.status(200).send({
+                    feedBack:  `Done!`
+                })
+        } catch (e) {
+            res.status(400).send({
+                feedBack: e.message
+            })
+        }
+        
+    })
 router.get('/league/start', async (req, res) => {
     await metadata.find({}, async (e, meta) => {
         const season = meta[0].league.season, arr = []

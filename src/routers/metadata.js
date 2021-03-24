@@ -143,37 +143,6 @@ router.get('/newleague/:inc', async (req, res) => {
     }
     
 })
-router.get('/fix/fixture', async (req, res) => {
-    try {
-        const leg = 'firstLeg'
-        await league.updateOne({ season: 24 },
-            {
-                $set: {
-                    [`fixtures.0.zeus vs the o\.g.${leg}.played`]: true
-                }
-            })
-            await league.updateOne({ season: 24 },
-                {
-                    $set: {
-                        [`fixtures.0.tooboy vs the o\.g.${leg}.played`]: true
-                    }
-                })
-                await league.updateOne({ season: 24 },
-                    {
-                        $set: {
-                            [`fixtures.0.super gallant vs the o\.g.${leg}.played`]: true
-                        }
-                    })
-            res.status(200).send({
-                feedBack:  `Done!`
-            })
-    } catch (e) {
-        res.status(400).send({
-            feedBack: e.message
-        })
-    }
-    
-})
 router.get('/newscl/:inc', async (req, res) => {
     const inc = req.params.inc
     try {
