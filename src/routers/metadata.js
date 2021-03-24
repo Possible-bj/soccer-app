@@ -151,7 +151,9 @@ router.get('/fix/fixture', async (req, res) => {
         //     throw new Error('Season Available')
         // }
         // delete League.fixtures[0]["zeus vs the o.g"][leg].play
-        League.fixtures[0]["zeus vs the o.g"][leg].played = true
+        League.fixtures[0]["zeus vs the o.g"][leg] = {
+            home: 'zeus', hs: 1, away: 'the o.g', as: 5, played: true
+        }
             res.status(200).send({
                 feedBack:  `Done!`
             })
