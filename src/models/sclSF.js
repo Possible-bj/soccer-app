@@ -13,6 +13,8 @@ const sclSFSchema = new mongoose.Schema({
         default: 'SF'
     },
     fixtures: []
+}, {
+    timestamps: true
 })
 
 const sclSF = mongoose.model('sclSF', sclSFSchema)

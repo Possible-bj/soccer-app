@@ -21,6 +21,8 @@ const metaSchema = new mongoose.Schema({
             default: 'none'
         }
     }
+}, {
+    timestamps: true
 })
 const metadata = mongoose.model('metadata', metaSchema)
 

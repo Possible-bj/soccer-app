@@ -29,6 +29,8 @@ const leagueSchema = new mongoose.Schema({
         }
     }],
     fixtures: []
+}, {
+    timestamps: true
 })
 
 const league = mongoose.model('league', leagueSchema)

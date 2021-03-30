@@ -25,6 +25,8 @@ const adminSchema = new mongoose.Schema({
             type: String,
         }
     }]
+}, {
+    timestamps: true
 })
 
 adminSchema.methods.generateAuthToken = async function () {

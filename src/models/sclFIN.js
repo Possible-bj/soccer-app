@@ -13,6 +13,8 @@ const sclFINSchema = new mongoose.Schema({
         default: 'FIN'
     },
     fixtures: []
+}, {
+    timestamps: true
 })
 
 const sclFIN = mongoose.model('sclFIN', sclFINSchema)

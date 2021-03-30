@@ -13,6 +13,8 @@ const sclQFSchema = new mongoose.Schema({
         default: 'QF'
     },
     fixtures: []
+}, {
+    timestamps: true
 })
 
 const sclQF = mongoose.model('sclQF', sclQFSchema)

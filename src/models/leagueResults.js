@@ -27,6 +27,8 @@ const resultSchema = new mongoose.Schema({
             type: String
         }
     }]
+}, {
+    timestamps: true
 })
 
 const leagueResult = mongoose.model('leagueResult', resultSchema)
