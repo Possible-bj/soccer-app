@@ -168,7 +168,7 @@ router.get('/newscl/:inc', async (req, res) => {
             })       
         }
         if (inc.charCodeAt(0) === 43) {
-            if ( isPreviousNotEnded(season) ) {
+            if ( !isPreviousEnded(season) ) {
                 throw new Error('Current SCL has not Ended!')
             }
             meta[0].scl.season++
@@ -190,7 +190,7 @@ router.get('/newscl/:inc', async (req, res) => {
 router.get('/scl/running', async (req, res) => {
     const meta = await metadata.find({})
     const code = meta[0].scl.shortCode
-    if (code === 'GS' || code === 'QF' || code === 'SF' || code === 'FIN' || code === 'END') {
+    if (code === 'GS' || code === 'QF' || code === 'SF' || code === 'FIN') {
         res.status(200).send({
             feedBack: 'yes',
             code
@@ -296,14 +296,11 @@ const isCurrentGroupStageEndedOrRunning = async ( season ) => {
         return false
     }
 }
-const isPreviousNotEnded = async (season) => {
+const isPreviousEnded = async (season) => {
     const FIN = await sclFIN.findOne({ season })
     const running =  FIN.running
-    if (running !== 'Ended') {
-        return true
-    } else {
+    if (running === 'Ended') return true
         return false
-    }
 }
 const previousRunningStage = async ( season ) => {
     const GS = await sclGS.find({ season })
