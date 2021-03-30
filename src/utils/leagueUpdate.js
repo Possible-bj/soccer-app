@@ -7,11 +7,9 @@ const  updateFixture = async (h, hs, as, a, leg, season, operation, callback) =>
         switch (table.fixtures[0][`${h} vs ${a}`][leg].played) {
             case true:
                 if ( operation === 'update' ) {
-                    return callback({
-                    feedBack: `${leg} already recorded! (${table.fixtures[0][`${h} vs ${a}`][leg].home}
+                    return callback(`${leg} already recorded! (${table.fixtures[0][`${h} vs ${a}`][leg].home}
                     ${table.fixtures[0][`${h} vs ${a}`][leg].hs} : ${table.fixtures[0][`${h} vs ${a}`][leg].as}
-                    ${table.fixtures[0][`${h} vs ${a}`][leg].away})`
-                })
+                    ${table.fixtures[0][`${h} vs ${a}`][leg].away})`)
                 } // if else if statement end
                 await set(h, hs, as, a, h, leg, table, season, operation, callback)
                 break;                
@@ -23,11 +21,9 @@ const  updateFixture = async (h, hs, as, a, leg, season, operation, callback) =>
         switch (table.fixtures[0][`${a} vs ${h}`][leg].played) {
             case true:
                 if ( operation === 'update' ) {
-                    return callback({
-                    feedBack: `${leg} already recorded! (${table.fixtures[0][`${a} vs ${h}`][leg].home}
+                    return callback(`${leg} already recorded! (${table.fixtures[0][`${a} vs ${h}`][leg].home}
                     ${table.fixtures[0][`${a} vs ${h}`][leg].hs} : ${table.fixtures[0][`${a} vs ${h}`][leg].as}
-                    ${table.fixtures[0][`${a} vs ${h}`][leg].away})`
-                })
+                    ${table.fixtures[0][`${a} vs ${h}`][leg].away})`)
                 }// if statement end
                 await set(a, hs, as, h, h, leg, table, season, operation, callback) 
                 break;

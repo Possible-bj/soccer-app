@@ -11,7 +11,12 @@ const leagueSchema = new mongoose.Schema({
     teams: [{
         team: {
             type: String,
-            trim: true
+            trim: true,
+            validate(value) {
+                if (value.includes('.')) {
+                    throw new Error('Team name can not contain a dot \"(.)\"')    
+                }
+            }
         },
         deduction: {
             type: Number,

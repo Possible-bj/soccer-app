@@ -30,41 +30,45 @@ router.get('/league/result', async (req, res) => {
         res.status(200).send(pagedResult)
 })
 router.get('/league/result/add', async (req, res) => {
-    const ht = (req.query.ht).trim(), hs = parseInt(req.query.hs), as = parseInt(req.query.as), at = (req.query.at).trim() , leg = req.query.leg
-    const team = [ht, at]
-    const meta = await metadata.find({})
-    const season = meta[0].league.season, day = meta[0].league.day
-    const data = await leagueResult.findOne({ season, day })
-    if (data.result.length === 20) {
-        return res.status(400).send({
-            feedBack: `Match day ${day} result slot is full, create a new match day by clicking on "New Result" above!`
-        })
-    }
-    const table = await league.findOne({ season })
-    if (table.running === 'ended') {
-        return res.status(400).send({
-            feedBack: 'League has ended!'
-        })
-    }
-    for (i = 0; i < 2; i++) {
-        const duplicate = table.teams.find((data) => data.team === team[i])
-        if (!duplicate) {
-            return res.status(400).send({
-                feedBack: 'invalid team entry!'
+    try {
+        const ht = (req.query.ht).trim(), hs = parseInt(req.query.hs), as = parseInt(req.query.as), at = (req.query.at).trim() , leg = req.query.leg
+        const team = [ht, at]
+        const meta = await metadata.find({})
+        const season = meta[0].league.season, day = meta[0].league.day
+        const data = await leagueResult.findOne({ season, day })
+        if (data.result.length === 20) {
+            throw new Error(`Match day ${day} result slot is full, create a new match day by clicking on "New Result" above!`)
+        }
+        const table = await league.findOne({ season })
+        if (table.running === 'no') {
+            throw new Error('League has not started yet!')
+        }
+        if (table.running === 'ended') {
+            throw new Error('League has ended!')
+        }
+        
+        for (i = 0; i < 2; i++) {
+            const duplicate = table.teams.find((data) => data.team === team[i])
+            if (!duplicate) {
+                throw new Error('invalid team entry!')
+            }
+        }
+        await updateFixture(ht, hs, as, at, leg, season, 'update', async (feedBack) => {
+            if (feedBack) {
+                throw new Error(feedBack)
+            }
+            const result = await leagueResult.findOne({ season, day })
+            result.result = result.result.concat({ ht, hs, as, at, leg})
+            await result.save()
+            res.send({
+                feedBack: 'result inserted!'
             })
-        }
-    }
-    await updateFixture(ht, hs, as, at, leg, season, 'update', async (feedBack) => {
-        if (feedBack) {
-            return res.status(400).send(feedBack)
-        }
-        const result = await leagueResult.findOne({ season, day })
-        result.result = result.result.concat({ ht, hs, as, at, leg})
-        await result.save()
-        res.send({
-            feedBack: 'result inserted!'
         })
-    })
+    } catch (e) {
+        res.status(400).send({
+            feedBack: e.message
+        })        
+    }
 })
 router.get('/league/result/delete', async (req, res) => {
     const slotId = req.query.slotId - 1, day = req.query.day - 0

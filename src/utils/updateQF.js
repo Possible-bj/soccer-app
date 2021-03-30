@@ -80,6 +80,7 @@ const Qualified = async (season, h, a) => {
     const _2ndLeg = QF.fixtures[0][`${h} vs ${a}`].secondLeg.played
     if (_1stLeg && _2ndLeg) {
         const qualified = evaluateBothLeg(QF.fixtures[0][`${h} vs ${a}`])
+        // if ( qualified === 'draw' ) 
         await sclQF.updateOne({ season }, {
             $set: {
                 [`fixtures.0.${h} vs ${a}.qualified`]: qualified
@@ -129,7 +130,7 @@ const evaluateBothLeg = (data) => {
         } else if (awayAdv > homeAdv) {
              return data.firstLeg.away
         } else {
-             return `${data.firstLeg.home} vs ${data.firstLeg.away}`
+             return `draw`
         }
     }
 } 
@@ -140,7 +141,7 @@ const evaluateLeg = (data) => {
         return data.home
     } else if (away>home) {
         return data.away
-    } else return `${data.home} vs ${data.away}`
+    } else return `draw`
 }
 
 module.exports = updateQF

@@ -21,11 +21,6 @@ const sclResultUpdate = document.querySelector('.fix-res-sub')
 const resInfo = document.querySelector('.res-info')
 const correctPaneInfo = document.querySelector('.correct-pane-info')
 window.addEventListener('DOMContentLoaded', () => {
-    fetch('/fix/fixture').then((response) => {
-        response.json().then((data) => {
-            entryFb.textContent = data.feedBack
-        })
-    })
     leagueIsRunning(); sclIsRunning(); loadCurrentLeagueTeams();
     fetch('/scl/running').then((response) => {
         response.json().then((data) => {
@@ -169,16 +164,23 @@ btnPane.addEventListener('click', (e) => {
              const team = document.querySelector('#team').value
              if (team === '' ) {
                  FB.style.color = 'blue'
-                FB.textContent = 'Please Provide the team name!'
-             } else {                
-                addTeam(team)
+                return FB.textContent = 'Please Provide the team name!'
              }
+             if (team.match(/[\`\~\!\$\@\#\%\^\&\*\(\)\_\-\=\{\}\[\]\|\/\'\?\>\<\,\.\\"\;\:]/)) {
+                FB.style.color = 'red'
+                return FB.textContent = 'Team Name cannot contain symbols!'
+            }               
+            addTeam(team)
             break;         
         case 'Remove':
             const remTeam = document.querySelector('#team').value
             if (remTeam === '') {
                 FB.style.color = 'blue'
                 return FB.textContent = 'Please provide team to delete!'
+            }
+            if (remTeam.match(/[\`\~\!\$\@\#\%\^\&\*\(\)\_\-\=\{\}\[\]\|\/\'\?\>\<\,\.\\"\;\:]/)) {
+                FB.style.color = 'red'
+                return FB.textContent = 'Team Name cannot contain symbols!'
             }
             deleteTeam(remTeam, FB)
     }
@@ -270,6 +272,9 @@ sclTeamAddBtn.addEventListener('click', () => {
     entryFb.textContent = ''
     const team = document.querySelector('.group-action-input').value.toLowerCase().trim()
     if (team === '') return entryFb.textContent = 'Please insert the team to add!'
+    if ( team.match(/[\`\~\!\$\@\#\%\^\&\*\(\)\_\-\=\{\}\[\]\|\/\'\?\>\<\,\.\\"\;\:]/)) {
+        return entryFb.textContent = 'Team name cannot contain symbols!'
+    }
     entryFb.textContent = ''
     const url = `/scl/groups/team/add?team=${team}`
     fetch(url).then((response) => {
@@ -284,6 +289,9 @@ sclTeamAddBtn.addEventListener('click', () => {
 sclTeamRemoveBtn.addEventListener('click', () => {
     const team = document.querySelector('.group-action-input').value.toLowerCase().trim()  
     if (team === '') return entryFb.textContent = 'Please insert the team to remove!'
+    if ( team.match(/[\`\~\!\$\@\#\%\^\&\*\(\)\_\-\=\{\}\[\]\|\/\'\?\>\<\,\.\\"\;\:]/)) {
+        return entryFb.textContent = 'Team name cannot contain symbols!'
+    }
     entryFb.textContent = ''
     const url = `/scl/groups/team/remove?team=${team}`
     fetch(url).then((response) => {
