@@ -64,3 +64,45 @@
 .span-col-6 {
   grid-column: 5 / 10;
 }
+/* Blob animation loader */
+.frame {
+  height: 500px;
+  /* border: 1px solid #ccc; */
+}
+.circle,
+.inner-circle {
+  border-radius: 50%;
+}
+.circle {
+  height: 60px;
+  width: 60px;
+  background: rgba(255, 255, 255, 0.5);
+  animation: blob infinite .4s alternate ease;
+}
+.inner-circle:hover {
+  width: 50%;
+  height: 50%;
+}
+.inner-circle {
+  height: 30%;
+  width: 30%;
+  background: rgb(255, 255, 255);
+  animation: blob2 infinite .4s alternate ease;
+  /* display: none; */
+}
+@keyframes blob {
+  0% {
+      transform: scale(.3)
+  }
+  100% {
+      transform: scale(1)
+  }
+}
+@keyframes blob2 {
+  0% {
+      transform: scale(3)
+  }
+  100% {
+      transform: scale(0)
+  }
+}

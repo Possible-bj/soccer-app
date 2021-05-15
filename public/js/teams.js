@@ -1,13 +1,23 @@
 const teamPane = document.querySelector('#team-pane')
 window.addEventListener('DOMContentLoaded', () => {
-const setUp = () => {
+    
+  const setUp = () => {
     fetch('/team/logo')
       .then((response) => {
         response.json()
           .then((data) => {
+            personalise()
             plot(data)
         })
     })
+}
+const personalise = () => {
+  const pane = document.querySelector('.body-content')
+  for (i=0; i<pane.childElementCount; i++) {
+      if ( pane.children[i].classList.contains('frame') ) {
+          pane.removeChild(pane.children[i])
+      }
+  }
 }
 // const supreme = {
 //     name: 'supreme',
@@ -114,101 +124,3 @@ teamPane.append(team)
 }
 setUp()
 })
-
-
-
-// </div>
-// <div class="team">
-//     <div class="team-logo"><img src="/team/logo/${rightTeam.name}"/></div>
-//     <div class="team-info">
-//     <div align="center" class="league-stats">
-//                             <h3 class="league-stats-header">
-//                                 League Stats
-//                             </h3>
-//                             <table class="stats-table rel">
-//                             <tr>
-//                                 <td></td>
-//                                 <td>P</td>
-//                                 <td>W</td>
-//                                 <td>D</td>
-//                                 <td>L</td>
-//                                 <td>GF</td>
-//                                 <td>GA</td>
-//                                 <td>GD</td>
-//                                 <td>Pts</td>
-//                             </tr>
-//                             <tr>
-//                                 <td>Overall</td>
-//                                 <td>${rightTeam.leagueStats.overall.P}</td>
-//                                 <td>${rightTeam.leagueStats.overall.W}</td>
-//                                 <td>${rightTeam.leagueStats.overall.D}</td>
-//                                 <td>${rightTeam.leagueStats.overall.L}</td>
-//                                 <td>${rightTeam.leagueStats.overall.GF}</td>
-//                                 <td>${rightTeam.leagueStats.overall.GA}</td>
-//                                 <td>${rightTeam.leagueStats.overall.GD}</td>
-//                                 <td>${rightTeam.leagueStats.overall.Pts}</td>
-//                             </tr>
-//                             <tr>
-//                                 <td>Current</td>
-//                                 <td>${rightTeam.leagueStats.current.P}</td>
-//                                 <td>${rightTeam.leagueStats.current.W}</td>
-//                                 <td>${rightTeam.leagueStats.current.D}</td>
-//                                 <td>${rightTeam.leagueStats.current.L}</td>
-//                                 <td>${rightTeam.leagueStats.current.GF}</td>
-//                                 <td>${rightTeam.leagueStats.current.GA}</td>
-//                                 <td>${rightTeam.leagueStats.current.GD}</td>
-//                                 <td>${rightTeam.leagueStats.current.Pts}</td>
-//                             </tr>
-//                             <tr>
-//                                 <td colspan="4">Trophies</td>
-//                                 <td colspan="5">${rightTeam.leagueStats.trophies}</td>
-//                             </tr>
-//                                             </table>
-//                         </div>
-//                         <hr>
-//                         <div align="center" class="scl-stats">
-//                             <h3 class="scl-stats-header">
-//                                 SCL Stats
-//                             </h3>
-//                             <table class="stats-table rel">
-//                             <tr>
-//                                 <td></td>
-//                                 <td>P</td>
-//                                 <td>W</td>
-//                                 <td>D</td>
-//                                 <td>L</td>
-//                                 <td>GF</td>
-//                                 <td>GA</td>
-//                                 <td>GD</td>
-//                                 <td>Pts</td>
-//                             </tr>
-//                             <tr>
-//                                 <td>Overall</td>
-//                                 <td>${rightTeam.sclStats.overall.P}</td>
-//                                 <td>${rightTeam.sclStats.overall.W}</td>
-//                                 <td>${rightTeam.sclStats.overall.D}</td>
-//                                 <td>${rightTeam.sclStats.overall.L}</td>
-//                                 <td>${rightTeam.sclStats.overall.GF}</td>
-//                                 <td>${rightTeam.sclStats.overall.GA}</td>
-//                                 <td>${rightTeam.sclStats.overall.GD}</td>
-//                                 <td>${rightTeam.sclStats.overall.Pts}</td>
-//                             </tr>
-//                             <tr>
-//                                 <td>Current</td>
-//                                 <td>${rightTeam.sclStats.current.P}</td>
-//                                 <td>${rightTeam.sclStats.current.W}</td>
-//                                 <td>${rightTeam.sclStats.current.D}</td>
-//                                 <td>${rightTeam.sclStats.current.L}</td>
-//                                 <td>${rightTeam.sclStats.current.GF}</td>
-//                                 <td>${rightTeam.sclStats.current.GA}</td>
-//                                 <td>${rightTeam.sclStats.current.GD}</td>
-//                                 <td>${rightTeam.sclStats.current.Pts}</td>
-//                             </tr>
-//                             <tr>
-//                                 <td colspan="4">Trophies</td>
-//                                 <td colspan="5">${rightTeam.sclStats.trophies}</td>
-//                             </tr>
-//                                             </table>
-//                         </div>
-//     </div>
-// </div>
