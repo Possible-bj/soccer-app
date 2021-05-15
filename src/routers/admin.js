@@ -53,8 +53,7 @@ router.get('/admin/logout', auth, async (req, res) => {
 router.get('/admin/board', auth, (req, res) => {
     res.render('admin', {
         title: 'Admin Board',
-        name: 'Benjamin Possible',
-        username: req.query.username
+        name: 'Benjamin Possible'
     })
 })
 router.get('/admin/add', async (req, res) => {

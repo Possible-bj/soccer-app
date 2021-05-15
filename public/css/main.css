@@ -18,8 +18,8 @@ body {
     position: relative;
     width: 100%;
     min-height: 100vh;
-    margin: 0 auto;
-    padding: 0 16px;
+    margin: 0;
+    padding: 0;
     color: #333;
     font-family: arial, sans-serif;
     display: flex;
@@ -45,7 +45,7 @@ body:before {
 .body-content {
     position: relative;
     flex-grow: 1;
-    margin-top: 35px;
+    margin-top: 50px;
 }
 .body-content h1 {
     color: #fff;
@@ -143,6 +143,7 @@ tr:last-child td:first-child div::before {
     border-bottom-left-radius: 6px;
 }
 header {
+    top: 0;
     left: 0;
     right: 0;
     z-index: 50;
@@ -160,7 +161,7 @@ header h1 > a {
     color: #fff;
 }
 .nav-header {
-    height: 50px;
+    height: 50px; 
 }
 .nav-header h1 {
     padding: 10px;
@@ -171,7 +172,7 @@ header h1 > a {
 }
 header div > h1 {
     font-size: 180%;
-    width: 94%;
+    width: 50%;
     height: 100%;
     text-transform: uppercase;
     margin-top: 0;
@@ -203,9 +204,9 @@ header div > h1 {
     width: 6%;
     margin: 0;
     margin-right: 5px;
+    margin-left: auto;
     padding: 0;
     height: 100%;
-    border: 2px solid transparent;
 }
 .nav-icon .icon {
     margin: 3px auto;
@@ -352,6 +353,7 @@ hr {
     height: 40px;
     margin-top: 10px;
     border-radius: 3px;
+    /* border: 1px solid black; */
 }
 .switch-left, .switch-right,
 .switch-left-result, .switch-right-result {
@@ -362,7 +364,9 @@ hr {
     font-size: 150%;
     font-weight: 600;
 }
+
 .switch-right {
+    /* margin-left: 0; */
     max-width: 75%;
 }
 .switch-right-result {

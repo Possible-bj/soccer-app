@@ -42,6 +42,12 @@ router.get('/backdoor', (req, res) => {
         name: 'Benjamin Possible'
     })
 })
+router.get('/team/test', (req, res) => {
+  res.render('test', {
+      title: 'Supreme Back Office!',
+      name: 'Benjamin Possible'
+  })
+})
 // router.get('*', (req, res) => {
 //     res.render('404', {
 //         title: 'Page Not Found!',

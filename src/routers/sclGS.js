@@ -98,7 +98,7 @@ const picker = async (team, season, callback) => {
         Pts: 0
     }
         const g = groups[Math.floor(Math.random()*groups.length)]
-        GS.groups[g][0].teams
+        // GS.groups[g][0].teams
         const teamSize = GS.groups[g][0].teams.length
         if(teamSize === 0 || teamSize !== 4) {        
             if (isGrouped(team, GS.groups)) {

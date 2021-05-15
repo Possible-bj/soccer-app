@@ -1,66 +1,66 @@
-#team-pane, .row {
-    display: flex;
-    flex-direction: column;
-}
-.row img {
+
+#team-pane {
+  width: 100%; 
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  grid-gap: 10px;
+  } 
+  .stats-pane {
     width: 100%;
-    position: relative;    
-    margin: 16px auto;
-}
-.team {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    grid-gap: 0;
+  }
+  .stats-pane div {
+    border: .5px solid rgba(5, 90, 16, .5);
+    width: 100%;
+    margin: 0;
+    text-align: center;
+  }
+  .team {
     position: relative;
     background: linear-gradient(-45deg, rgb(5, 90, 16), rgb(10, 167, 31));
-    /* linear-gradient(-45deg, rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.5)); */    
     box-shadow: 0 -4px 1px .5px rgb(1, 2, 17);
     border-radius: 3px;
-    margin: 10px;
-}
-.team-logo {
-    width: 200px;
     margin: auto;
+    display: grid;
+    grid-template-columns: 1fr; 
+    grid-template-rows: .8fr 1.3fr; 
+  }
+  .team-logo {
+    width: 100%;
+    height: 100%;
+    display: grid;
+  }
+  .team-logo img {
+    position: relative;    
+    margin: auto;
+    align-self: center;
+    width: 60%;
 }
-.team-info {
-    height: 250px;
-    display: flex;
-    flex-direction: column;
-}
+  .team-info {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 5px;
+    display: grid;
+    grid-template-columns: 1fr;
+    align-self: end;
+  }
 .league-stats,
 .scl-stats {
-    position: relative;
-    height: 50%;
-    width: 100%;
-    margin: 0 auto;
-    padding: 0;
-    color: #fff;
-    text-shadow: 2px 2px 1px rgb(1, 2, 17);
+  color: #fff;
+  text-shadow: 2px 2px 1px rgb(1, 2, 17);
+  text-align: center;
     /* border: 1px solid #000; */
 }
-.team-info hr {
-    position: relative;
-    width: 80%;
-    background:rgba(5, 90, 16, .5) !important;
-    margin: 0 auto 5px auto;
+.hd {
+  color: rgb(10, 167, 31);
+  grid-column: 1 / 10;
 }
-.team-info h3 {
-    margin: 0;
-    color: rgb(10, 167, 31);
+.span-col-5 {
+  grid-column: 1 / 5;
 }
-/* stats table style */
-.stats-table {
-    width: 90%;
-    color: rgb(2, 4, 43);
-    font-weight: 600;
-    text-shadow: none;
-    border-collapse: collapse;
+.span-col-6 {
+  grid-column: 5 / 10;
 }
-.stats-table tr {
-    position: relative;
-    background: transparent !important;
-}
-.stats-table td {
-    border: .05px solid rgba(5, 90, 16, .5) !important;
-    text-align: center !important;
-}
-/* hr {
-    background: .05px solid rgba(5, 90, 16, .5) !important;
-} */
