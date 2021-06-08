@@ -1,5 +1,4 @@
 const express = require('express')
-const sclQF = require('../models/sclQF')
 const sclGS = require('../models/sclGS')
 const metadata = require('../models/metadata')
 const { createQF } = require('../utils/combination')
@@ -16,6 +15,8 @@ router.get('/scl/start/QF', async (req, res) => {
     await createQF(season, teams, (feedBack) => {
         res.send(feedBack)
     })
+}, (error, req, res, next) => {
+  res.status(400).send({error: error.message})
 })
 
 module.exports = router

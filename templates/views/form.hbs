@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport", content="width=device-width, initial-scale=.75"/>
+  <title>
+    Supreme | Back Office
+  </title>
+  <link rel="stylesheet" href="/css/main.css" type="text/css"/>
+  <link rel="stylesheet" href="/css/lgscreen.css" type="text/css"/>
+  <link rel="stylesheet" href="./css/common.css" type="text/css">
+  <link rel="icon" href="/img/spm-logo.png" type="image/png"/>
+  <style>
+    .grid {
+      width: 50%;
+      grid-template-columns: 2fr 1fr;
+      height: 100%;
+    }
+    .grid h3, 
+    .info {
+      grid-column: 1 / 3;
+      text-align: center;
+    }
+
+  </style>
+</head>
+
+<body>
+    <div class="body-content rel">
+    <h1 align="center">
+      {{!-- {{title}} --}}
+      Supreme Master 
+    </h1> 
+    <div class="margin-auto max-height grid grid-gap-0" id="form">
+      <h3 class="margin-auto">
+        Enter Your Master Code
+      </h3>
+
+      <input type="password" id="m_code">
+      <input type="submit" value="submit">
+      <div class="info">{{info}}</div>
+    </div>
+</div>
+
+
+{{>footer}}
+<script>
+  const form = document.querySelector('input[type=submit]')
+  const auth = () => {
+    const body = JSON.stringify({ masterCode: document.querySelector('#m_code').value })
+    fetch('/master/auth', {
+      method: 'post',
+      headers: {'Content-Type': 'application/json'},
+      body
+    }).then(( response ) => {
+      response.json().then((data) => {
+        window.location.replace(`${data.url}`)
+      })
+    })
+  }
+  form.onclick = auth
+</script>
+</body>
+</html>

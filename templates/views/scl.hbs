@@ -484,25 +484,25 @@ Supreme Champions League
 
 <script src="../js/scl-app.js"></script>
     <script>
-             const btn = document.querySelectorAll('.st-btn')
-             const container = document.querySelector('.scroller')
-             const box = document.querySelector('.stage')
-             const ctrl = document.querySelectorAll('.second-leg')
-             for(i = 0; i<btn.length; i++) {
-                 btn[i].addEventListener("click", (e) => {
-                    container.scrollLeft = box.clientWidth * (e.target.id - 1)
-                 })
-             }
-             for (let i = 0; i<ctrl.length; i++) {
-             ctrl[i].addEventListener("click", (e) => {
-                 let collapser = ctrl[i].nextElementSibling
-                 if(collapser.style.maxHeight) {
-                     collapser.style.maxHeight = null
-                 } else {
-                     collapser.style.maxHeight = collapser.scrollHeight + "px"
-                 }
-             })
-             }
+      const btn = document.querySelectorAll('.st-btn')
+      const container = document.querySelector('.scroller')
+      const box = document.querySelector('.stage')
+      const ctrl = document.querySelectorAll('.second-leg')
+      for(i = 0; i<btn.length; i++) {
+        btn[i].addEventListener("click", (e) => {
+          container.scrollLeft = box.clientWidth * (e.target.id - 1)
+        })
+      }
+      for (let i = 0; i<ctrl.length; i++) {
+        ctrl[i].addEventListener("click", (e) => {
+          let collapser = ctrl[i].nextElementSibling
+          if(collapser.style.maxHeight) {
+            collapser.style.maxHeight = null
+          } else {
+            collapser.style.maxHeight = collapser.scrollHeight + "px"
+          }
+        })
+      }
     </script>
 </body>
 </html>

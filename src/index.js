@@ -36,7 +36,12 @@ app.set('views', viewsPath)
 hbs.registerPartials(partialsPath)
 
 app.use(express.static(publicPath))
-
+app.get('/*', (req, res) => {
+  res.render('404', {
+      title: 'Page Not Found!',
+      name: 'Benjamin Possible'
+  })
+})
 app.listen(port, () => {
     console.log(`Server started at port ${port}`)
 })
