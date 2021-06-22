@@ -1,3 +1,12 @@
 node_modules
 config
 .env
+templates/views/resume.hbs
+public/fonts
+public/fontawesome-5.15.3-web
+public/bootstrap.min.css
+public/font-awesome.min.css
+public/styles.css
+public/img/fiverrUse.jpeg
+public/img/particles.png
+public/img/mongodb.svg

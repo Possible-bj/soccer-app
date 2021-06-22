@@ -10,12 +10,12 @@ router.get('/scl/groups/team/add', async (req, res) => {
     })
 })
 router.get('/scl/groups/team/remove', async (req, res) => {
-    const team = req.query.team
-    const meta = await metadata.find({})
-    const season = meta[0].scl.season
-    removeTeam(team, season, (response) => {
-        res.send(response)
-    }) 
+  const team = req.query.team
+  const meta = await metadata.find({})
+  const season = meta[0].scl.season
+  removeTeam(team, season, async (response) => {
+    await res.send(response)
+  })
 })
 router.get('/scl/fetch/group', async (req, res) => {
     const season = req.query.sn, g = req.query.g
@@ -60,24 +60,30 @@ router.get('/scl/start/GS', async (req, res) => {
     
 })
 const removeTeam = async (team, season, callback) => {
-    const GS = await sclGS.findOne({ season })
-    for (x in GS.groups) {
-        const result = await sclGS.updateOne({ season }, {
-            $pull: {
-                [`groups.${x}.0.teams`]: {
-                    team: team
-                }
-            }
-        })
-        if (result) {
-            if (result.nModified === 0 && x === 'D') {
-                callback({feedBack: "Team Not Found!"})
-            } else if (result.nModified === 1) {
-                return callback({feedBack: 'Team Removed!'})
-            }
-        }
-        }
+  const GS = await sclGS.findOne({ season })
+  const teamGroup = []
+  for (x in GS.groups) {
+    GS.groups[x][0].teams.forEach( async (data) => {
+      if ( data.team === team ) {
+        return teamGroup.push(x)
+      }
+    })
+  }
+  if (!teamGroup[0]) {
+    return callback({feedBack: 'Team Not Found!'})
+  }
+  const result = await sclGS.updateOne({ season }, {
+    $pull: {
+      [`groups.${teamGroup[0]}.0.teams`]: {
+        "team": team
+      }
     }
+  })  
+  if (!result.nModified) {
+    return callback({feedBack: 'There was an error, try again'})
+  }
+  callback({feedBack: 'Team Removed!'})
+}
 const groupSelector = async (team, callback) => {
     const meta = await metadata.find({})
     const season = meta[0].scl.season
