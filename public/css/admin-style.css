@@ -408,11 +408,12 @@ footer {
 }
 .team1,
 .team2 {
-  width: 40%;
-  padding: 10px;
-  font-weight: 600;
-  text-align: center;
   color: #09831b;
+  cursor: pointer;
+  font-weight: 600;
+  padding: 10px;
+  text-align: center;
+  width: 40%;
 }
 .vs {
   width: 15%;
