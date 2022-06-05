@@ -2,7 +2,8 @@
   .home-tab {
     display: flex;
   }
-  .table-tab, .result-tab {
+  .table-tab,
+  .result-tab {
     width: 47%;
   }
   #table {
@@ -24,7 +25,7 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 10px;
-    width: 100%
+    width: 100%;
   }
   .league-main-section > div {
     flex-shrink: 0;
@@ -59,9 +60,9 @@
   #auth-form-pane,
   .admin-pane {
     width: 25% !important;
-  } 
+  }
   .nav-icon {
-    display: none
+    display: none;
   }
   header {
     display: flex;
@@ -84,5 +85,25 @@
   }
   .nav a {
     margin: 0 auto !important;
+  }
+
+  /* FA DRAWS  */
+  .fa-draws-input-frame {
+    display: flex;
+    height: 100px;
+  }
+  .fa-teams {
+    width: 68% !important;
+  }
+  .fa-btn-frame {
+    /* display: inline; */
+    flex-direction: column;
+    width: 30%;
+    height: 100%;
+  }
+  .fa-draw-btn,
+  .fa-elapse-time {
+    margin: auto;
+    width: 100% !important;
   }
 }

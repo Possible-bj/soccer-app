@@ -1,479 +1,460 @@
 .body-content {
-    display: block;
+  display: block;
 }
 #table-form {
-    display: flex;
-    flex-direction: column;
-    margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
 }
 #form-pane {
-    color: #000;
+  color: #000;
 }
 #form-pane::-webkit-scrollbar {
-    display: none;
-    width: 0;
+  display: none;
+  width: 0;
 }
-/* .auth-pane {
-    background: linear-gradient(-45deg, rgba(0, 0, 0, 0.5), rgba(255, 255, 255, 0.5));
-    display: block;
-    width: 100%;
-    height: 100%;   
-}
-.auth-box {
-    display: none;
-} */
-/* #update-btn {
-    width: 50%;
-    height: 50%;
-    border: 2px solid transparent;
-    border-radius: 5px;
-    padding: 5px;
-    background: transparent;
-    box-shadow: none;
-    right: 0;
-    left: 0;
-    bottom: 100px;
-} */
 
 .key-box {
-    width: 90%;
-    height: 90%;
+  width: 90%;
+  height: 90%;
 }
 .key-box::before {
-    position: absolute;
-    margin: auto;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+  position: absolute;
+  margin: auto;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 .second-section {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 .league-action-section,
 .scl-action-section {
-    box-shadow: -.5px -.5px 1px 1px #333;    
-    overflow: auto;
-    background: linear-gradient(-45deg, rgb(5, 90, 16), rgb(10, 167, 31));
-    /* linear-gradient(-45deg, rgb(6, 82, 6), rgb(60, 241, 60)); */
-    margin-top: 10px;
+  box-shadow: -0.5px -0.5px 1px 1px #333;
+  overflow: auto;
+  background: linear-gradient(-45deg, rgb(5, 90, 16), rgb(10, 167, 31));
+  /* linear-gradient(-45deg, rgb(6, 82, 6), rgb(60, 241, 60)); */
+  margin-top: 10px;
 }
 .league-action-section,
 .scl-action-section {
-    width: 100%;
-    height: 103vh;
-    padding: 10px;
+  width: 100%;
+  height: 103vh;
+  padding: 10px;
 }
 .league-action-section::-webkit-scrollbar,
 .scl-action-section::-webkit-scrollbar {
-    display: none;
-    width: 0;
+  display: none;
+  width: 0;
 }
 .form-input-pane {
-    width: 90%;
-    height: 30%;
-    display:flex;
+  width: 90%;
+  height: 30%;
+  display: flex;
 }
 #auth-input {
-    width: 70%;
+  width: 70%;
 }
 #auth-btn {
-    width: 30%;
+  width: 30%;
 }
-#table-form input {  
-    margin: 3px auto;
-    width: 95%;
-    padding: 6px;
+#table-form input {
+  margin: 3px auto;
+  width: 95%;
+  padding: 6px;
 }
 #btn-pane {
-    width: 100%;
-    margin-bottom: 10px;
+  width: 100%;
+  margin-bottom: 10px;
 }
 #btn-pane button {
-    width: 45%;
-    padding: 7.5px;
+  width: 45%;
+  padding: 7.5px;
 }
 #league-ctrl button {
-    width: 45%;
+  width: 45%;
 }
 #right-pane-btn button {
-    width: 50%;
+  width: 50%;
 }
 .top {
-    width: 100%;
-    height: 50px;
-    /* background: rgb(46, 135, 218); */
-    display: flex;
-    margin-top: 15px;
+  width: 100%;
+  height: 50px;
+  /* background: rgb(46, 135, 218); */
+  display: flex;
+  margin-top: 15px;
 }
 .top-btn {
-    width: 30%;
-    border: transparent;
-    border-radius: 3px;
-    font-weight: 600;
-    font-size: 100%; 
-    color: #fff;
-    text-shadow: .5px .5px 1px #000;
+  width: 30%;
+  border: transparent;
+  border-radius: 3px;
+  font-weight: 600;
+  font-size: 100%;
+  color: #fff;
+  text-shadow: 0.5px 0.5px 1px #000;
 }
 #first-section {
-    width: 100%;
+  width: 100%;
 }
 #res-form {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 .first-section-pane {
-    box-shadow:  -.5px -.5px 1px 1px #333;
-    padding: 10px;
-    border-radius: 3px;
-    margin: 10px auto; 
-    background: linear-gradient(-45deg, rgb(5, 90, 16), rgb(10, 167, 31));
+  box-shadow: -0.5px -0.5px 1px 1px #333;
+  padding: 10px;
+  border-radius: 3px;
+  margin: 10px auto;
+  background: linear-gradient(-45deg, rgb(5, 90, 16), rgb(10, 167, 31));
 }
 /* .scl-action-section {
 } */
 .group-action-form {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 .group-action-input,
 .group-action-btn {
-    border-radius: 3px;
-    padding: 7.5px;
-    border: 2px solid transparent;
-    margin: auto;
+  border-radius: 3px;
+  padding: 7.5px;
+  border: 2px solid transparent;
+  margin: auto;
 }
 .group-action-input {
-    width: 95%;
-    margin-bottom: 5px;
+  width: 95%;
+  margin-bottom: 5px;
 }
 .group-action-btn {
-    width: 45%;
+  width: 45%;
 }
-#res-form input, #res-form button {
-    padding: 10px;
-    border-radius: 3px;
-    border: 2px solid transparent;
-    margin: 5px auto;
+#res-form input,
+#res-form button {
+  padding: 10px;
+  border-radius: 3px;
+  border: 2px solid transparent;
+  margin: 5px auto;
 }
 #res-form button {
-    width: 100%;
+  width: 100%;
 }
 #h-a {
-    margin: 5px auto;
-    display: flex;
-    width: 100%;
+  margin: 5px auto;
+  display: flex;
+  width: 100%;
 }
-#h, #a {
-    width: 30%;
+#h,
+#a {
+  width: 30%;
 }
 #a {
-    text-align: center;
+  text-align: center;
 }
-#h-s, #a-s {
-    width: 15%;
-    text-align: center;
+#h-s,
+#a-s {
+  width: 15%;
+  text-align: center;
 }
 select {
-    margin: 5px auto;
-    padding: 5px;
-    border-radius: 3px;
-    border: 2px solid transparent;
-    outline-color: #09831B;
+  margin: 5px auto;
+  padding: 5px;
+  border-radius: 3px;
+  border: 2px solid transparent;
+  outline-color: #09831b;
 }
 option {
-    text-align: center;
-    padding: 5px auto; 
+  text-align: center;
+  padding: 5px auto;
 }
 #nr {
-    width: 50% !important;
-    border-radius: 3px;
-    color: #fff;
-    font-weight: 600;
-    font-size: 100%; 
+  width: 50% !important;
+  border-radius: 3px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 100%;
 }
 .act-info {
-    margin-bottom: 10px;
-    line-height: 35px;
+  margin-bottom: 10px;
+  line-height: 35px;
 }
 i {
-    color:red;
-    text-shadow: 0 0 1px #000;
-    font-weight: 600;
+  color: red;
+  text-shadow: 0 0 1px #000;
+  font-weight: 600;
 }
 .scl-fixtures {
-    height: 70vh;
+  height: 70vh;
 }
 .scl-fixture-controls {
-    width: 100%;
-    display: none;
+  width: 100%;
+  display: none;
 }
 /* .scl-fixture-controls > form, */
 .scl-fixture-controls > div {
-    width: 100%;
+  width: 100%;
 }
 .scl-stage-ind {
-    width: 40%;
-    padding: 10px;
-    background: #fff;
-    border-radius: 3px;
+  width: 40%;
+  padding: 10px;
+  background: #fff;
+  border-radius: 3px;
 }
 .scl-group-chn-btn {
-    width: 15%;
-    padding: 10px;
+  width: 15%;
+  padding: 10px;
 }
 .scl-leg-chn-btn {
-    width: 50%;
-    padding: 10px; 
+  width: 50%;
+  padding: 10px;
 }
 .league-leg-chn-btn {
-    width: 50%;
+  width: 50%;
 }
 .fixture-box {
-    width: 100%;
-    border: 2px solid #fff;
-    flex-grow: 1;
+  width: 100%;
+  border: 2px solid #fff;
+  flex-grow: 1;
 }
 .leg-boxes {
-    overflow-x: scroll;
-    height: 100%;
+  overflow-x: scroll;
+  height: 100%;
 }
 .leg-boxes::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 .first-leg-box,
 .second-leg-box {
-    width: 100%; 
-    align-self: center;   
+  width: 100%;
+  align-self: center;
 }
 .stage-chn-btn {
-    width: 100%;
-    padding: 10px;
-    font-size: 100%;
-    font-weight: 600;
+  width: 100%;
+  padding: 10px;
+  font-size: 100%;
+  font-weight: 600;
 }
 /* fixture */
 .draw {
-    display: flex;
-    width: 90%;
-    height: 40px;
-    border-radius: 5px;
-    background: transparent; 
-    margin: 20px auto;
-    align-items: center;
-    justify-content: center;
-    align-self: center;
+  display: flex;
+  width: 90%;
+  height: 40px;
+  border-radius: 5px;
+  background: transparent;
+  margin: 20px auto;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
 }
 .fix-res-sub {
-    width: 90%;
-    padding: 10px;
-    font-size: 100;
-    font-weight: 600;
+  width: 90%;
+  padding: 10px;
+  font-size: 100;
+  font-weight: 600;
 }
 .home-draw,
 .away-draw {
-    width: 35%;
-    padding: 12px;
-    background: #fff;
-    border: transparent;
-    text-align: center;
+  width: 35%;
+  padding: 12px;
+  background: #fff;
+  border: transparent;
+  text-align: center;
 }
 .home-draw {
-    border-top-left-radius: 3px;
-    border-bottom-left-radius: 3px;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
 }
 .away-draw {
-    border-top-right-radius: 3px;
-    border-bottom-right-radius: 3px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
 }
 .score-board {
-    height: 100%;
-    width: 30%;
-    background: rgb(1, 2, 17);
+  height: 100%;
+  width: 30%;
+  background: rgb(1, 2, 17);
 }
 .score-board .scores {
-    width: 100%;
-    height: 100%;
-    display: flex;
+  width: 100%;
+  height: 100%;
+  display: flex;
 }
 .scores {
-    background: #000;
+  background: #000;
 }
 .scores select {
-    height: 100%;
-    width: 50%;
-    padding: 10px 10px;
-    margin: 0;
-    text-align: center;
-    color: #fff;
-    background: rgb(1, 2, 17);
+  height: 100%;
+  width: 50%;
+  padding: 10px 10px;
+  margin: 0;
+  text-align: center;
+  color: #fff;
+  background: rgb(1, 2, 17);
 }
 .league-ctrl-frame {
-    max-height: 0;
-    overflow: hidden;
-    margin-top: 5px;
+  max-height: 0;
+  overflow: hidden;
+  margin-top: 5px;
 }
 #entry-fb {
-    color: blue;
+  color: blue;
 }
 .logo-submit-form {
-    padding: 25px;
-    border: 2px solid #000;
+  padding: 25px;
+  border: 2px solid #000;
 }
 .frameset::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 .frameset {
-    overflow: hidden;
-    height: 350px;
+  overflow: hidden;
+  height: 350px;
 }
 .frame {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 footer {
-    display: block;
+  display: block;
 }
 
 /* checkbox */
 .league-leg-frame {
-    height: 30px;
-    width: 60px;
-    float: right;
+  height: 30px;
+  width: 60px;
+  float: right;
 }
 .league-leg-nob {
-    top: 0;
-    bottom: 0;
-    left: 0;
-    border-radius: 50%;
-    height: 100%;
-    width: 30px; 
-    color: #fff;
-    line-height: 25px;
-    font-size: 70%;
-    text-align: center;
-    cursor: pointer;
-    background: rgb(4, 90, 17);
-    border: 2px solid transparent;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  border-radius: 50%;
+  height: 100%;
+  width: 30px;
+  color: #fff;
+  line-height: 25px;
+  font-size: 70%;
+  text-align: center;
+  cursor: pointer;
+  background: rgb(4, 90, 17);
+  border: 2px solid transparent;
 }
 .league-leg {
-    -webkit-appearance: none;
-    outline: none;
-    height: 100%;
-    width: 100%;
-    top: -5px;
-    bottom: 0;
-    background: linear-gradient(
-    -45deg,
-    rgba(0,0,0,0),
-    rgba(255, 255, 255,0)
-    );
-    border-radius: 90px !important;
-    border: 2px solid rgba(255,255,255,0.5) !important;
-  }
-  .league-leg:before {
-    position: absolute;
-    content: "2nd";
-    width: 100%;
-    height: 100%;
-    top: 5px;
-    left: 8%;
-    color: #fff;
-    transition: all .3s ease; 
-  }
-  .league-leg:after {
-    position: absolute;
-    content: "1st";
-    width: 0;
-    height: 60%;
-    top: 5px;
-    left: 60%;
-    color: #fff;
-    transition: all .3s ease; 
-  }
-  .league-leg:checked {
-    background: linear-gradient(
-    -45deg,
-    #10AB3F,
-    #09831B
-    );
-  }
+  -webkit-appearance: none;
+  outline: none;
+  height: 100%;
+  width: 100%;
+  top: -5px;
+  bottom: 0;
+  background: linear-gradient(-45deg, rgba(0, 0, 0, 0), rgba(255, 255, 255, 0));
+  border-radius: 90px !important;
+  border: 2px solid rgba(255, 255, 255, 0.5) !important;
+}
+.league-leg:before {
+  position: absolute;
+  content: '2nd';
+  width: 100%;
+  height: 100%;
+  top: 5px;
+  left: 8%;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+.league-leg:after {
+  position: absolute;
+  content: '1st';
+  width: 0;
+  height: 60%;
+  top: 5px;
+  left: 60%;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+.league-leg:checked {
+  background: linear-gradient(-45deg, #10ab3f, #09831b);
+}
 
-  /* FA CUP DRAW */
-  .fa-teams {
-      width: 80%;
-      padding: 10px;
-  }
-  .fa-draw-btn {
-      width: 18%;
-  }
-  .fa-draws {
-    background: #fff;
-    box-shadow: -.5px -.5px 1px 1px #333;    
-    border: transparent;
-    border-radius: 3px;
-    margin-bottom: 10px;
-  }
-  .draw-info {
-    padding: 10px;
-    background: #09831B;
-  }
-  .draw-info p {
-    text-align: center;
-    word-spacing: 5px;
-    color: #fff;
-    letter-spacing: 1px;
-  }
-  .fa-draw {
-    height: 50px;
-  }
-  .team1, .team2 {
-    width: 40%;
-    padding: 10px;
-    font-weight: 600;
-    text-align: center;
-    color: #09831B;
-  }
-  .vs {
-    width: 15%;
-    padding: 10px;
-    font-size: 30px;
-    color: #09831B;
-    text-align: center;
-  }
+/* FA CUP DRAW */
+.fa-teams {
+  width: 100%;
+  padding: 10px;
+}
+.fa-draw-btn,
+.fa-elapse-time {
+  margin: auto;
+  width: 49%;
+}
+/* .fa-elapse-time {
+  margin: auto;
+  width: 50%;
+} */
+.fa-draws {
+  background: #fff;
+  box-shadow: -0.5px -0.5px 1px 1px #333;
+  border: transparent;
+  border-radius: 3px;
+  margin-bottom: 10px;
+}
+.draw-info {
+  padding: 10px;
+  background: #09831b;
+}
+.draw-info p {
+  text-align: center;
+  word-spacing: 5px;
+  color: #fff;
+  letter-spacing: 1px;
+}
+.fa-draw {
+  height: 50px;
+}
+.team1,
+.team2 {
+  width: 40%;
+  padding: 10px;
+  font-weight: 600;
+  text-align: center;
+  color: #09831b;
+}
+.vs {
+  width: 15%;
+  padding: 10px;
+  font-size: 30px;
+  color: #09831b;
+  text-align: center;
+}
 /* correction style */
 .correction-pane {
-    background: linear-gradient(-45deg, rgb(5, 90, 16), rgb(10, 167, 31));
-    box-shadow: -.5px -.5px 1px 1px #333;    
-    min-height: 200px;
-    padding: 15px;
-    margin-bottom: 10px;
+  background: linear-gradient(-45deg, rgb(5, 90, 16), rgb(10, 167, 31));
+  box-shadow: -0.5px -0.5px 1px 1px #333;
+  min-height: 200px;
+  padding: 15px;
+  margin-bottom: 10px;
 }
 .correction-pane input {
-    width: 35%;
-    padding: 10px;
-    margin-bottom: 10px;
+  width: 35%;
+  padding: 10px;
+  margin-bottom: 10px;
 }
 .correction-pane button {
-    width: 20%;
-    padding: 10px;
-    margin-bottom: 10px;
+  width: 20%;
+  padding: 10px;
+  margin-bottom: 10px;
 }
 .correction-pane h3,
 .correction-pane p {
-    word-spacing: 5px;
-    color: #fff;
-    letter-spacing: 1px;
+  word-spacing: 5px;
+  color: #fff;
+  letter-spacing: 1px;
 }
 #log-out-btn {
-    margin: auto 15px;
-    border: transparent;
-    color: #fff;
-    background: linear-gradient(rgb(255, 0, 0), rgb(146, 12, 12));
-    outline: none;
-    border-radius: 35px;
-    transition: all .2s ease;
-    /* box-shadow: none; */
+  margin: auto 15px;
+  border: transparent;
+  color: #fff;
+  background: linear-gradient(rgb(255, 0, 0), rgb(146, 12, 12));
+  outline: none;
+  border-radius: 35px;
+  transition: all 0.2s ease;
+  /* box-shadow: none; */
 }
 #log-out-btn:focus {
-    transform: scale(.95)
+  transform: scale(0.95);
 }

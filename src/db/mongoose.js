@@ -1,12 +1,14 @@
 const mongoose = require('mongoose')
-mongoose.connect(encodeURI(process.env.MONGODB_URL), {
+mongoose
+  .connect(encodeURI(process.env.DEV_MONGODB_URI), {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
-    useFindAndModify: false
-}
-).then((result) => {
-    console.log(result.Mongoose)
-}).catch(e => {
+    useFindAndModify: false,
+  })
+  .then((res) => {
+    console.log(`MongoDB Connected: ${res.connection.host}`)
+  })
+  .catch((e) => {
     console.log(e.message)
-})
+  })

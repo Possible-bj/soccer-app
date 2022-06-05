@@ -11,6 +11,7 @@ Admin Board
     <link rel="stylesheet" href="/css/main.css" type="text/css"/>
     <link rel="stylesheet" href="/css/lgscreen.css" type="text/css"/>
     <link rel="stylesheet" href="/css/admin-style.css" type="text/css"/>
+    <link rel="stylesheet" href="/css/common.css" type="text/css"/>
     <link rel="icon" href="/img/spm-logo.png" type="image/png"/>
     <style>
     .body-content {
@@ -22,7 +23,7 @@ Admin Board
 <body>
 
 <div class="body-content">
-{{!-- {{>header}} --}}
+{{>header}}
 <h1 class="admin-board">Admin Board</h1>
                     <div align='right' style="color: white;" class="text-shadow">Active: <span style="text-transform: capitalize;" class="admin-presence"></span><span><button id="log-out-btn">Log Out</button></span></div>
     <div id='form-pane' class=" margin-auto centered">
@@ -51,9 +52,9 @@ Admin Board
             </center>
             <div id="table-form" class="rel">
     
-        <div align="center" class="flex flex-column margin-auto max-percent rel">
+        <div align="center" class="flex flex-column margin-auto max-width rel">
                         <input id="team" type="text" class="rel league-team-input" placeholder="Insert League Participant">
-                        <div id="btn-pane" class="flex margin-auto rel max-percent">
+                        <div id="btn-pane" class="flex margin-auto rel max-width">
                         <button class="rel margin-auto">Add</button>
                         <button class="rel margin-auto">Remove</button>
                         </div>
@@ -62,7 +63,7 @@ Admin Board
         {{!-- league start and end button --}}
         <button class="league-ctrl-collapser-btn">Start Or End League</button>
         <div class="league-ctrl-frame">
-        <div id="league-ctrl" class="flex max-percent rel margin-auto">
+        <div id="league-ctrl" class="flex max-width rel margin-auto">
             <button class="rel league-st-btn margin-auto no-shrink">Start League</button>    
            <button class="rel league-end-btn margin-auto no-shrink">End League</button>
         </div>
@@ -74,7 +75,7 @@ Admin Board
             {{!-- <div id="s-r"> --}}
                 <button id="nr" class="margin-auto rel">New Result</button> 
                     {{!-- </div> --}}
-                    <div class="league-leg-changer max-percent rel">
+                    <div class="league-leg-changer max-width rel">
                         <div class="rel league-leg-frame">
                             <input disabled type="checkbox" name="league-leg" class="league-leg abs margin-auto">
                             <div class="league-leg-nob abs margin-auto">Leg</div>
@@ -100,9 +101,9 @@ Admin Board
                 </center>
                 <h3 align="center"> SCL Updates</h3>
                 <div class="group-action rel">
-                    <div align="center" class="flex flex-column margin-auto max-percent group-action-form rel">
+                    <div align="center" class="flex flex-column margin-auto max-width group-action-form rel">
                         <input type="text" class="group-action-input" placeholder="insert a team into a champions league group">
-                        <div class="flex margin-auto rel max-percent">
+                        <div class="flex margin-auto rel max-width">
                         <button class="group-action-btn scl-team-add-btn">Add</button>
                         <button class="group-action-btn scl-team-remove-btn">Remove</button>
                         </div>
@@ -174,22 +175,22 @@ Admin Board
         
     </div>
     {{!-- point deduction, result deletion and correction --}}
-<div class="correction-pane rel flex flex-column margin-auto max-percent curved-edges">
+<div class="correction-pane rel flex flex-column margin-auto max-width curved-edges">
     <div align="center"> <h3> Point Deduction Section</h3> 
          <p>Insert the team you wish to deduct a point from and the amount of point you wish to deduct.
             if you wish to cancel out a deduction send off the team name with zero (0) as deduction </p>
     </div>
-    <div class="point-deduction flex rel no-shrink margin-auto max-percent">
+    <div class="point-deduction flex rel no-shrink margin-auto max-width">
         <input type="text" id="deduct-team" class="rel no-shrink margin-auto" placeholder="Team to deduct point from">
         <input type="number" id="deduct-point" class="rel no-shrink margin-auto" placeholder="point to deduct">
         <button class="deduct-btn rel no-shrink margin-auto">Deduct</button>
     </div>
 
-    <div class="delete-correct flex flex-column rel no-shrink margin-auto max-percent">
+    <div class="delete-correct flex flex-column rel no-shrink margin-auto max-width">
         <div align="center"> <h3> Result Deletion Section</h3> 
          <p>Insert the position of the result in the match day slot, there are 20 slots available, five on each page. the first entry on the first page has slot ID of 1, this means that if you wish to delete that result you have to insert (1) into the 'Slot ID' and indicate the 'match day' it can be found then hit 'Delete'. </p>
     </div>
-        <div class="deletion rel flex margin-auto no-shrink max-percent">
+        <div class="deletion rel flex margin-auto no-shrink max-width">
             <input type="number" id="slot-id" class="rel no-shrink margin-auto" placeholder="Slot ID">
             <input type="number" id="match-day" class="rel no-shrink margin-auto" placeholder="Match Day">
             <button class="delete-btn rel no-shrink margin-auto">Delete</button>
@@ -197,7 +198,7 @@ Admin Board
         <div align="center"> <h3> Result Correction Section</h3> 
          <p>Insert the Slot ID, Match Day (above), the correct home (what you wish to correct the score for the home team to) and the correct away score then hit 'Correct', you would know the home and away team from the result inserted! </p>
     </div>
-        <div class="correction rel flex margin-auto no-shrink max-percent">
+        <div class="correction rel flex margin-auto no-shrink max-width">
             <input type="number" id="hs" class="rel no-shrink margin-auto" placeholder="correct home score">
             <input type="number" id="as" class="rel no-shrink margin-auto" placeholder="correct away score">
             <button class="correct-btn rel no-shrink margin-auto">Correct</button>
@@ -207,27 +208,35 @@ Admin Board
 </div>
 
     {{!-- FA DRAW --}}
-<input type="text" class="fa-teams margin-auto" placeholder="insert all teams for FA draw">
-<button class="fa-draw-btn margin-auto">Draw</button>
-<div class="max-percent rel margin-auto fa-draws curved-edges">
-<div class="draw-info rel margin-auto max-percent curved-edges">
-    <p class="max-percent rel margin-auto">Insert the teams by separating each team from the other by a 'space', if the team name is a compound word join it with a hyphen as done below. 
-        <br>For example:  <i>'Possible DC-Lord Smash-Pro Inside-life Marks Psg'</i>
+<div class="max-width rel margin-auto fa-draws curved-edges">
+<div class="draw-info rel margin-auto max-width curved-edges">
+    <p class="max-width rel margin-auto">Insert the teams by separating each team from the other by a 'comma',
+        <br>For example:  <i>'Possible, DC Lord, Smash Pro, Inside life, Marks, Psg'</i><br />
+        Select the Date and time for the current draw to elapse, set minutes to '00'
         </p>
 </div>
-<div align="center" class="max-percent rel margin-auto suc-font"> <h2>FA CUP DRAWS</h2> </div>
+<div class="fa-draws-input-frame">
+
+<textarea type="text" class="fa-teams margin-auto input-control br-6" rows="5" placeholder="insert all teams for FA draw sparating each with a comma"></textarea>
+<div align="center" class="flex margin-auto fa-btn-frame">
+
+<input class="margin-auto input-control br-6 fa-elapse-time" type="datetime-local" />
+<button class="fa-draw-btn">DRAW</button>
+</div>
+</div>
+<div align="center" class="max-width rel margin-auto suc-font"> <h2>FA CUP DRAWS</h2> </div>
 <div class="draw-pane"></div>
-{{!-- <div class="fa-draw flex rel max-percent margin-auto">
+{{!-- <div class="fa-draw flex rel max-width margin-auto">
     <div class="team1 rel margin-auto"> Possible</div>
     <div class="vs rel margin-auto">Vs</div>
     <div class="team2 rel margin-auto">Pain</div>
 </div> --}}
-    {{!-- <ul class="fa-draw-list rel margin-auto max-percent">
+    {{!-- <ul class="fa-draw-list rel margin-auto max-width">
 
     </ul> --}}
 </div>
 
-    <div class="max-percent frameset rel margin-auto curved-edges">
+    <div class="max-width frameset rel margin-auto curved-edges">
 {{!-- <frameset cols="100%"> --}}
     <iframe class="frame rel" src="/logo"> </iframe>
     {{!-- </frameset> --}}
