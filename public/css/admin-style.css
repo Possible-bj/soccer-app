@@ -382,10 +382,23 @@ footer {
   margin: auto;
   width: 49%;
 }
-/* .fa-elapse-time {
+.fa-draw-header h2 {
   margin: auto;
-  width: 50%;
-} */
+  width: 40%;
+  text-align: center;
+}
+.fa-draw-header div {
+  text-shadow: 0.5px 0.5px 2px #000;
+  margin: 5px auto;
+  padding: 10px;
+  text-align: center;
+  width: 30%;
+}
+.fa-draw-header .fa-elapse-date-display {
+  display: flex;
+  flex-direction: column;
+}
+
 .fa-draws {
   background: #fff;
   box-shadow: -0.5px -0.5px 1px 1px #333;

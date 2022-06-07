@@ -1,17 +1,23 @@
+const $drawBoard = document.querySelector('.draw-pane')
 const $faDrawBtn = document.querySelector('.fa-draw-btn')
 const $teamsInput = document.querySelector('.fa-teams')
 const $elapseDate = document.querySelector('.fa-elapse-time')
+const $dateSpan = document.querySelector('.date-span')
+const $timeSpan = document.querySelector('.time-span')
 
 const drawBtnAction = {
   draw: 'DRAW',
   refresh: 'Refresh',
 }
 
+const timeProgress = {
+  ended: 'ENDED',
+  inprogress: 'INPROGRESS',
+}
+
 const currentDateTime = () => {
   const now = new Date()
-  return `${now.getFullYear()}-${
-    now.getMonth() + 1
-  }-${now.getDate()}T${now.getHours()}:${now.getMinutes()}`
+  return `${now.getFullYear()}-0${now.getMonth() + 1}-0${now.getDate()}T`
 }
 
 const populateTeamInput = (e) => {
@@ -41,24 +47,20 @@ const getSavedFixtures = () => {
     ? JSON.parse(localStorage.getItem('fa-fixtures'))
     : []
 }
+
 const parseDate = (str) => {
   const [yyyy, mm, dd] = str.split('T')[0].split('-')
-  const [hh, min] = str.split('T')[1].split(':')
-  return new Date(yyyy, mm - 1, dd, hh, min)
+  return new Date(yyyy, mm - 1, dd)
 }
 
 const datediff = (now, elapseTime) =>
   Math.round((elapseTime - now) / (1000 * 60 * 60 * 24))
 
-const dateDiffHandler = (elapseTime) => {
-  const now = currentDateTime()
-  return datediff(parseDate(now), parseDate(elapseTime))
-}
+const dateDiffHandler = (elapseTime) =>
+  datediff(parseDate(currentDateTime()), parseDate(elapseTime))
 
 const displayFixtures = (fixtures) => {
-  const drawBoard = document.querySelector('.draw-pane')
-
-  if (drawBoard.childElementCount !== 0) clearBoard(drawBoard)
+  if ($drawBoard.childElementCount !== 0) clearBoard($drawBoard)
   let i = 0
 
   while (i < fixtures.length) {
@@ -70,7 +72,7 @@ const displayFixtures = (fixtures) => {
     <div class="team1 rel margin-auto" onClick="qualify(this)"> ${fixture[0]}</div>
     <div class="vs rel margin-auto">${fixture[1]}</div>
     <div class="team2 rel margin-auto" onClick="qualify(this)">${fixture[2]}</div>`
-    drawBoard.append(draw)
+    $drawBoard.append(draw)
     i++
   }
 }
@@ -94,11 +96,13 @@ const fix = (teamsArray, elapseDate, cb) => {
   localStorage.setItem('fa-fixtures', JSON.stringify({ elapseDate, fixtures }))
 
   if (localStorage.getItem('fa-fixtures')) lockFunctions()
-
+  showElapseTime(timeProgress.inprogress, elapseDate)
   cb(fixtures)
 }
 
 const makeFixtures = () => {
+  if ($teamsInput.value === '') return alert('Please Provide teams to draw!')
+
   const teamsArray = $teamsInput.value.trim().split(',')
 
   if (teamsArray.length % 2 !== 0)
@@ -114,6 +118,9 @@ const makeFixtures = () => {
     return alert(
       'Elapse time Must be in hours, no minutes include. set minutes to 00!',
     )
+
+  if (datediff(parseDate($elapseDate.value), parseDate(currentDateTime())) > 0)
+    return alert('You can not pick a date in the past!')
 
   fix(teamsArray, $elapseDate.value, (fixtures) => displayFixtures(fixtures))
 }
@@ -145,13 +152,15 @@ const deepSort = (sortOrder) => {
 }
 
 const isTimeElapsed = (elapseDate) => {
-  if (!dateDiffHandler(elapseDate)) {
+  const date_diff = dateDiffHandler(elapseDate)
+  if (date_diff === 0) {
     const [hh] = elapseDate.split('T')[1].split(':')
-    const today = new Date()
-    const now_hh = today.getHours()
+    const now_hh = new Date().getHours()
     if (hh - now_hh > 0) return false
-    else return true
-  } else return false
+    return true
+  }
+  if (date_diff < 0) return true
+  return false
 }
 
 const lockFunctions = () => {
@@ -167,7 +176,19 @@ const unlockFunctions = () => {
   $elapseDate.removeAttribute('disabled')
   $faDrawBtn.textContent = drawBtnAction.draw
 }
-
+const showElapseTime = (progress, date) => {
+  switch (progress) {
+    case timeProgress.ended:
+      $dateSpan.textContent = ''
+      $timeSpan.textContent = timeProgress.ended
+      break
+    case timeProgress.inprogress:
+      $dateSpan.textContent = date.split('T')[0]
+      $timeSpan.textContent = date.split('T')[1]
+    default:
+      return
+  }
+}
 const runUpdate = () => {
   const savedFixtures = getSavedFixtures()
 
@@ -175,13 +196,15 @@ const runUpdate = () => {
     switch (isTimeElapsed(savedFixtures.elapseDate)) {
       case true:
         unlockFunctions()
-        displayFixtures(savedFixtures.fixtures)
+        showElapseTime(timeProgress.ended)
         break
       case false:
         lockFunctions()
-        displayFixtures(savedFixtures.fixtures)
+        showElapseTime(timeProgress.inprogress, savedFixtures.elapseDate)
       default:
+        return
     }
+    displayFixtures(savedFixtures.fixtures)
   }
 }
 runUpdate()

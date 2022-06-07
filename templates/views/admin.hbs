@@ -1,38 +1,39 @@
-<!DOCTYPE html>
 <html>
-<head>
-        <meta charset="UTF-8">
-    <meta name="description" content="Supreme Admin Board">
-    <meta name="author" content="Benjamin Possible">
-    <meta name="viewport" content="width=device-width, initial-scale=.75"/>
+  <head>
+    <meta charset='UTF-8' />
+    <meta name='description' content='Supreme Admin Board' />
+    <meta name='author' content='Benjamin Possible' />
+    <meta name='viewport' content='width=device-width, initial-scale=.75' />
     <title>
-Admin Board
+      Admin Board
     </title>
-    <link rel="stylesheet" href="/css/main.css" type="text/css"/>
-    <link rel="stylesheet" href="/css/lgscreen.css" type="text/css"/>
-    <link rel="stylesheet" href="/css/admin-style.css" type="text/css"/>
-    <link rel="stylesheet" href="/css/common.css" type="text/css"/>
-    <link rel="icon" href="/img/spm-logo.png" type="image/png"/>
+    <link rel='stylesheet' href='/css/main.css' type='text/css' />
+    <link rel='stylesheet' href='/css/lgscreen.css' type='text/css' />
+    <link rel='stylesheet' href='/css/admin-style.css' type='text/css' />
+    <link rel='stylesheet' href='/css/common.css' type='text/css' />
+    <link rel='icon' href='/img/spm-logo.png' type='image/png' />
     <style>
-    .body-content {
-        margin-top: 0;
-    }
+      .body-content { margin-top: 0; }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
 
-<div class="body-content">
-{{>header}}
-<h1 class="admin-board">Admin Board</h1>
-                    <div align='right' style="color: white;" class="text-shadow">Active: <span style="text-transform: capitalize;" class="admin-presence"></span><span><button id="log-out-btn">Log Out</button></span></div>
-    <div id='form-pane' class=" margin-auto centered">
-        {{!-- <div class="top margin top-center">
+    <div class='body-content'>
+      {{>header}}
+      <h1 class='admin-board'>Admin Board</h1>
+      <div align='right' style='color: white;' class='text-shadow'>Active:
+        <span
+          style='text-transform: capitalize;'
+          class='admin-presence'
+        ></span><span><button id='log-out-btn'>Log Out</button></span></div>
+      <div id='form-pane' class='margin-auto centered'>
+        {{! <div class="top margin top-center">
               
             
-        </div> --}}
-        <div class="lg-format">
-            {{!-- <div id="first-section" class="rel margin-auto">
+        </div> }}
+        <div class='lg-format'>
+          {{! <div id="first-section" class="rel margin-auto">
                 <div class="first-section-pane act-info rel margin-auto">
                 <b>
                         <p>When creating a New Result to display, first click on <i>New Result</i> for a new match day  </p>
@@ -40,229 +41,357 @@ Admin Board
                     </b>
                 </div>
 
-            </div> --}}
-        <div class="second-section">
-            <div class="league-action-section curved-edges rel margin-auto">
-            
-            <center>
-                <button id="ns" class="top-btn margin-auto">New league</button>
-                 <h3>Supreme League 
-                <br/> Add and Remove a team from the table 
-                <br/> Start and End League </h3>
-            </center>
-            <div id="table-form" class="rel">
-    
-        <div align="center" class="flex flex-column margin-auto max-width rel">
-                        <input id="team" type="text" class="rel league-team-input" placeholder="Insert League Participant">
-                        <div id="btn-pane" class="flex margin-auto rel max-width">
-                        <button class="rel margin-auto">Add</button>
-                        <button class="rel margin-auto">Remove</button>
-                        </div>
-                    </div>
-        <div style="background: #fff; padding: 10px" class=" curved-edges" id="FB"></div>
-        {{!-- league start and end button --}}
-        <button class="league-ctrl-collapser-btn">Start Or End League</button>
-        <div class="league-ctrl-frame">
-        <div id="league-ctrl" class="flex max-width rel margin-auto">
-            <button class="rel league-st-btn margin-auto no-shrink">Start League</button>    
-           <button class="rel league-end-btn margin-auto no-shrink">End League</button>
-        </div>
-        </div> {{!-- ends --}}
-    </div>
-    {{!-- league result form --}}
-     <div id="res-form" class="first-section-pane rel margin-auto">
-                    <center> <h3>Update League Results</h3> </center>
-            {{!-- <div id="s-r"> --}}
-                <button id="nr" class="margin-auto rel">New Result</button> 
-                    {{!-- </div> --}}
-                    <div class="league-leg-changer max-width rel">
-                        <div class="rel league-leg-frame">
-                            <input disabled type="checkbox" name="league-leg" class="league-leg abs margin-auto">
-                            <div class="league-leg-nob abs margin-auto">Leg</div>
-                        </div>
-                    </div>
-                    <div id="h-a">
-                        <select name="ht" id="h" class="rel margin-auto"><option>Home Team</option></select>
-                        <select name="hs" id="h-s" class="rel margin-auto"><option></option></select>
-                        <select name="as" id="a-s" class="rel margin-auto"><option></option></select>
-                        <select name="at" id="a" class="rel margin-auto"><option>Away Team</option></select>
-                    </div>
-                    <div class="res-info"></div>
-                    <button class="res-sub">Record</button>
-                </div> {{!-- ends here --}}
-       
+            </div> }}
+          <div class='second-section'>
+            <div class='league-action-section curved-edges rel margin-auto'>
 
-        </div>
+              <center>
+                <button id='ns' class='top-btn margin-auto'>New league</button>
+                <h3>Supreme League
+                  <br />
+                  Add and Remove a team from the table
+                  <br />
+                  Start and End League
+                </h3>
+              </center>
+              <div id='table-form' class='rel'>
 
-
-            <div class="scl-action-section curved-edges rel margin-auto">
-                <center>
-                    <button id="nscl" class="top-btn margin-auto">New SCL</button>          
-                </center>
-                <h3 align="center"> SCL Updates</h3>
-                <div class="group-action rel">
-                    <div align="center" class="flex flex-column margin-auto max-width group-action-form rel">
-                        <input type="text" class="group-action-input" placeholder="insert a team into a champions league group">
-                        <div class="flex margin-auto rel max-width">
-                        <button class="group-action-btn scl-team-add-btn">Add</button>
-                        <button class="group-action-btn scl-team-remove-btn">Remove</button>
-                        </div>
-                    </div>
-                    <div id="entry-fb"></div>
-                    <div class="scl-fixtures flex flex-column">
-                        <div class="scl-fixture-controls flex flex-column rel margin-auto">
-                            <div class="scl-stages flex no-shrink rel margin-auto">
-                                <div class="scl-stage-ind"></div>
-                               
-                                    <button class="scl-group-chn-btn">
-                                   <label for="A">A</label> 
-                                    <input type="radio" name="group" id="A" value="A">
-                                </button>
-                               
-                                
-                                <button class="scl-group-chn-btn">
-                                    <label for="B">B</label> 
-                                    <input type="radio" name="group" id="B" value="B">
-                                </button>
-                                <button class="scl-group-chn-btn">
-                                    <label for="C">C</label> 
-                                    <input type="radio" name="group" id="C" value="C">
-                                </button>
-                                <button class="scl-group-chn-btn">
-                                    <label for="D">D</label> 
-                                    <input type="radio" name="group" id="D" value="D">
-                                </button>
-                            </div>
-                            <div class="scl-leg-changer flex no-shrink rel margin-auto">
-                                <button class="scl-leg-chn-btn">
-                                    <label for="first-leg">First Leg</label> 
-                                    <input type="radio" name="leg" id="first-leg" value="firstLeg">
-                                </button>
-                                <button class="scl-leg-chn-btn">
-                                    <label for="second-leg">Second Leg</label> 
-                                    <input type="radio" name="leg" id="second-leg" value="secondLeg">
-                                </button>
-                            </div>
-                        </div>
-                        <div class="fixture-box rel curved-edges">
-                            <div class="leg-boxes flex">
-                                <div align="center" class="first-leg-box flex flex-column no-shrink">
-                                    Update SCL Results
-                                    <div align="center" class="draw rel">
-                    <select class="home-draw"><option>Home Team</option></select>
-                    <div class="score-board rel">
-                        <div class="scores margin-auto">
-                            <select class="home-score"><option></option></select>
-                            <select class="away-score"><option></option></select>
-                        </div>
-                    </div>
-                    <select class="away-draw"><option>Away Team</option></select>
-                    
+                <div
+                  align='center'
+                  class='flex flex-column margin-auto max-width rel'
+                >
+                  <input
+                    id='team'
+                    type='text'
+                    class='rel league-team-input'
+                    placeholder='Insert League Participant'
+                  />
+                  <div id='btn-pane' class='flex margin-auto rel max-width'>
+                    <button class='rel margin-auto'>Add</button>
+                    <button class='rel margin-auto'>Remove</button>
+                  </div>
                 </div>
-                <button class="fix-res-sub margin-auto">Record</button>
-                        </div>
-                            </div>
-                        </div>
-                        <button class="stage-chn-btn curved-edges">Start Scl</button>
-                    </div>
+                <div
+                  style='background: #fff; padding: 10px'
+                  class='curved-edges'
+                  id='FB'
+                ></div>
+                {{! league start and end button }}
+                <button class='league-ctrl-collapser-btn'>Start Or End League</button>
+                <div class='league-ctrl-frame'>
+                  <div id='league-ctrl' class='flex max-width rel margin-auto'>
+                    <button
+                      class='rel league-st-btn margin-auto no-shrink'
+                    >Start League</button>
+                    <button class='rel league-end-btn margin-auto no-shrink'>End
+                      League</button>
+                  </div>
                 </div>
-                
+                {{! ends }}
+              </div>
+              {{! league result form }}
+              <div id='res-form' class='first-section-pane rel margin-auto'>
+                <center> <h3>Update League Results</h3> </center>
+                {{! <div id="s-r"> }}
+                <button id='nr' class='margin-auto rel'>New Result</button>
+                {{! </div> }}
+                <div class='league-leg-changer max-width rel'>
+                  <div class='rel league-leg-frame'>
+                    <input
+                      disabled
+                      type='checkbox'
+                      name='league-leg'
+                      class='league-leg abs margin-auto'
+                    />
+                    <div class='league-leg-nob abs margin-auto'>Leg</div>
+                  </div>
+                </div>
+                <div id='h-a'>
+                  <select name='ht' id='h' class='rel margin-auto'><option>Home
+                      Team</option></select>
+                  <select name='hs' id='h-s' class='rel margin-auto'><option
+                    ></option></select>
+                  <select name='as' id='a-s' class='rel margin-auto'><option
+                    ></option></select>
+                  <select name='at' id='a' class='rel margin-auto'><option>Away
+                      Team</option></select>
+                </div>
+                <div class='res-info'></div>
+                <button class='res-sub'>Record</button>
+              </div>
+              {{! ends here }}
+
             </div>
-        
-        </div>
-        
-        </div>
-        
-    </div>
-    {{!-- point deduction, result deletion and correction --}}
-<div class="correction-pane rel flex flex-column margin-auto max-width curved-edges">
-    <div align="center"> <h3> Point Deduction Section</h3> 
-         <p>Insert the team you wish to deduct a point from and the amount of point you wish to deduct.
-            if you wish to cancel out a deduction send off the team name with zero (0) as deduction </p>
-    </div>
-    <div class="point-deduction flex rel no-shrink margin-auto max-width">
-        <input type="text" id="deduct-team" class="rel no-shrink margin-auto" placeholder="Team to deduct point from">
-        <input type="number" id="deduct-point" class="rel no-shrink margin-auto" placeholder="point to deduct">
-        <button class="deduct-btn rel no-shrink margin-auto">Deduct</button>
-    </div>
 
-    <div class="delete-correct flex flex-column rel no-shrink margin-auto max-width">
-        <div align="center"> <h3> Result Deletion Section</h3> 
-         <p>Insert the position of the result in the match day slot, there are 20 slots available, five on each page. the first entry on the first page has slot ID of 1, this means that if you wish to delete that result you have to insert (1) into the 'Slot ID' and indicate the 'match day' it can be found then hit 'Delete'. </p>
-    </div>
-        <div class="deletion rel flex margin-auto no-shrink max-width">
-            <input type="number" id="slot-id" class="rel no-shrink margin-auto" placeholder="Slot ID">
-            <input type="number" id="match-day" class="rel no-shrink margin-auto" placeholder="Match Day">
-            <button class="delete-btn rel no-shrink margin-auto">Delete</button>
+            <div class='scl-action-section curved-edges rel margin-auto'>
+              <center>
+                <button id='nscl' class='top-btn margin-auto'>New SCL</button>
+              </center>
+              <h3 align='center'> SCL Updates</h3>
+              <div class='group-action rel'>
+                <div
+                  align='center'
+                  class='flex flex-column margin-auto max-width group-action-form rel'
+                >
+                  <input
+                    type='text'
+                    class='group-action-input'
+                    placeholder='insert a team into a champions league group'
+                  />
+                  <div class='flex margin-auto rel max-width'>
+                    <button
+                      class='group-action-btn scl-team-add-btn'
+                    >Add</button>
+                    <button
+                      class='group-action-btn scl-team-remove-btn'
+                    >Remove</button>
+                  </div>
+                </div>
+                <div id='entry-fb'></div>
+                <div class='scl-fixtures flex flex-column'>
+                  <div
+                    class='scl-fixture-controls flex flex-column rel margin-auto'
+                  >
+                    <div class='scl-stages flex no-shrink rel margin-auto'>
+                      <div class='scl-stage-ind'></div>
+
+                      <button class='scl-group-chn-btn'>
+                        <label for='A'>A</label>
+                        <input type='radio' name='group' id='A' value='A' />
+                      </button>
+
+                      <button class='scl-group-chn-btn'>
+                        <label for='B'>B</label>
+                        <input type='radio' name='group' id='B' value='B' />
+                      </button>
+                      <button class='scl-group-chn-btn'>
+                        <label for='C'>C</label>
+                        <input type='radio' name='group' id='C' value='C' />
+                      </button>
+                      <button class='scl-group-chn-btn'>
+                        <label for='D'>D</label>
+                        <input type='radio' name='group' id='D' value='D' />
+                      </button>
+                    </div>
+                    <div class='scl-leg-changer flex no-shrink rel margin-auto'>
+                      <button class='scl-leg-chn-btn'>
+                        <label for='first-leg'>First Leg</label>
+                        <input
+                          type='radio'
+                          name='leg'
+                          id='first-leg'
+                          value='firstLeg'
+                        />
+                      </button>
+                      <button class='scl-leg-chn-btn'>
+                        <label for='second-leg'>Second Leg</label>
+                        <input
+                          type='radio'
+                          name='leg'
+                          id='second-leg'
+                          value='secondLeg'
+                        />
+                      </button>
+                    </div>
+                  </div>
+                  <div class='fixture-box rel curved-edges'>
+                    <div class='leg-boxes flex'>
+                      <div
+                        align='center'
+                        class='first-leg-box flex flex-column no-shrink'
+                      >
+                        Update SCL Results
+                        <div align='center' class='draw rel'>
+                          <select class='home-draw'><option>Home Team</option></select>
+                          <div class='score-board rel'>
+                            <div class='scores margin-auto'>
+                              <select class='home-score'><option
+                                ></option></select>
+                              <select class='away-score'><option
+                                ></option></select>
+                            </div>
+                          </div>
+                          <select class='away-draw'><option>Away Team</option></select>
+
+                        </div>
+                        <button class='fix-res-sub margin-auto'>Record</button>
+                      </div>
+                    </div>
+                  </div>
+                  <button class='stage-chn-btn curved-edges'>Start Scl</button>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
         </div>
-        <div align="center"> <h3> Result Correction Section</h3> 
-         <p>Insert the Slot ID, Match Day (above), the correct home (what you wish to correct the score for the home team to) and the correct away score then hit 'Correct', you would know the home and away team from the result inserted! </p>
-    </div>
-        <div class="correction rel flex margin-auto no-shrink max-width">
-            <input type="number" id="hs" class="rel no-shrink margin-auto" placeholder="correct home score">
-            <input type="number" id="as" class="rel no-shrink margin-auto" placeholder="correct away score">
-            <button class="correct-btn rel no-shrink margin-auto">Correct</button>
+
+      </div>
+      {{! point deduction, result deletion and correction }}
+      <div
+        class='correction-pane rel flex flex-column margin-auto max-width curved-edges'
+      >
+        <div align='center'>
+          <h3> Point Deduction Section</h3>
+          <p>Insert the team you wish to deduct a point from and the amount of
+            point you wish to deduct. if you wish to cancel out a deduction send
+            off the team name with zero (0) as deduction
+          </p>
         </div>
-    </div>
-    <div style="color: blue" class="correct-pane-info"></div>
-</div>
+        <div class='point-deduction flex rel no-shrink margin-auto max-width'>
+          <input
+            type='text'
+            id='deduct-team'
+            class='rel no-shrink margin-auto'
+            placeholder='Team to deduct point from'
+          />
+          <input
+            type='number'
+            id='deduct-point'
+            class='rel no-shrink margin-auto'
+            placeholder='point to deduct'
+          />
+          <button class='deduct-btn rel no-shrink margin-auto'>Deduct</button>
+        </div>
 
-    {{!-- FA DRAW --}}
-<div class="max-width rel margin-auto fa-draws curved-edges">
-<div class="draw-info rel margin-auto max-width curved-edges">
-    <p class="max-width rel margin-auto">Insert the teams by separating each team from the other by a 'comma',
-        <br>For example:  <i>'Possible, DC Lord, Smash Pro, Inside life, Marks, Psg'</i><br />
-        Select the Date and time for the current draw to elapse, set minutes to '00'
-        </p>
-</div>
-<div class="fa-draws-input-frame">
+        <div
+          class='delete-correct flex flex-column rel no-shrink margin-auto max-width'
+        >
+          <div align='center'>
+            <h3> Result Deletion Section</h3>
+            <p>Insert the position of the result in the match day slot, there
+              are 20 slots available, five on each page. the first entry on the
+              first page has slot ID of 1, this means that if you wish to delete
+              that result you have to insert (1) into the 'Slot ID' and indicate
+              the 'match day' it can be found then hit 'Delete'.
+            </p>
+          </div>
+          <div class='deletion rel flex margin-auto no-shrink max-width'>
+            <input
+              type='number'
+              id='slot-id'
+              class='rel no-shrink margin-auto'
+              placeholder='Slot ID'
+            />
+            <input
+              type='number'
+              id='match-day'
+              class='rel no-shrink margin-auto'
+              placeholder='Match Day'
+            />
+            <button class='delete-btn rel no-shrink margin-auto'>Delete</button>
+          </div>
+          <div align='center'>
+            <h3> Result Correction Section</h3>
+            <p>Insert the Slot ID, Match Day (above), the correct home (what you
+              wish to correct the score for the home team to) and the correct
+              away score then hit 'Correct', you would know the home and away
+              team from the result inserted!
+            </p>
+          </div>
+          <div class='correction rel flex margin-auto no-shrink max-width'>
+            <input
+              type='number'
+              id='hs'
+              class='rel no-shrink margin-auto'
+              placeholder='correct home score'
+            />
+            <input
+              type='number'
+              id='as'
+              class='rel no-shrink margin-auto'
+              placeholder='correct away score'
+            />
+            <button
+              class='correct-btn rel no-shrink margin-auto'
+            >Correct</button>
+          </div>
+        </div>
+        <div style='color: blue' class='correct-pane-info'></div>
+      </div>
 
-<textarea type="text" class="fa-teams margin-auto input-control br-6" rows="5" placeholder="insert all teams for FA draw sparating each with a comma"></textarea>
-<div align="center" class="flex margin-auto fa-btn-frame">
+      {{! FA DRAW }}
+      <div class='max-width rel margin-auto fa-draws curved-edges'>
+        <div class='draw-info rel margin-auto max-width curved-edges'>
+          <p class='max-width rel margin-auto'>Insert the teams by separating
+            each team from the other by a 'comma',
+            <br />For example:
+            <i style='color: blue;'>'Possible, DC Lord, Smash Pro, Inside life,
+              Marks, Psg'</i><br />
+            Select the Date and time for the current draw to elapse, set minutes
+            to '00'
+          </p>
+        </div>
+        <div class='fa-draws-input-frame'>
 
-<input class="margin-auto input-control br-6 fa-elapse-time" type="datetime-local"/>
-<button class="fa-draw-btn">DRAW</button>
-</div>
-</div>
-<div align="center" class="max-width rel margin-auto suc-font"> <h2>FA CUP DRAWS</h2> </div>
-<div class="draw-pane"></div>
-{{!-- <div class="fa-draw flex rel max-width margin-auto">
+          <textarea
+            type='text'
+            class='fa-teams margin-auto input-control br-6'
+            rows='5'
+            placeholder='insert all teams for FA draw sparating each with a comma'
+          ></textarea>
+          <div align='center' class='flex margin-auto fa-btn-frame'>
+
+            <input
+              class='margin-auto input-control br-6 fa-elapse-time'
+              type='datetime-local'
+            />
+            <button class='fa-draw-btn'>DRAW</button>
+          </div>
+        </div>
+        <div
+          class='max-width rel margin-auto suc-font flex no-shrink fa-draw-header'
+        >
+          <div class='fa-elapse-date-display'>
+            {{!-- <span>Ends on</span> --}}
+            <span class="date-span"> dd ----- yyyy </span>
+          </div>
+          <h2>FA CUP DRAWS</h2>
+          <div class='fa-elapse-time-display'>
+
+          
+            <span class="time-span">
+              --:--
+            </span>
+          </div>
+        </div>
+        <div class='draw-pane'></div>
+        {{! <div class="fa-draw flex rel max-width margin-auto">
     <div class="team1 rel margin-auto"> Possible</div>
     <div class="vs rel margin-auto">Vs</div>
     <div class="team2 rel margin-auto">Pain</div>
-</div> --}}
-    {{!-- <ul class="fa-draw-list rel margin-auto max-width">
+</div> }}
+        {{! <ul class="fa-draw-list rel margin-auto max-width">
 
-    </ul> --}}
-</div>
+    </ul> }}
+      </div>
 
-    <div class="max-width frameset rel margin-auto curved-edges">
-{{!-- <frameset cols="100%"> --}}
-    <iframe class="frame rel" src="/logo"> </iframe>
-    {{!-- </frameset> --}}
+      <div class='max-width frameset rel margin-auto curved-edges'>
+        {{! <frameset cols="100%"> }}
+        <iframe class='frame rel' src='/logo'> </iframe>
+        {{! </frameset> }}
+      </div>
+      <div style='display: none' id='token'>{{token}}</div>
     </div>
-    <div style="display: none" id="token">{{token}}</div>
-</div>
     {{>footer}}
-    
-    <script src="../js/admin-app.js"></script>
-    <script src="../js/fa-draw.js"></script>
+
+    <script src='../js/admin-app.js'></script>
+    <script src='../js/fa-draw.js'></script>
     <script>
-        const collapseBtn = document.querySelector('.league-ctrl-collapser-btn')
-        collapseBtn.addEventListener('click', () => {
-            const slideOut =  collapseBtn.nextElementSibling
-            if (slideOut.style.maxHeight) {
-                slideOut.style.maxHeight = null
-            } else {
-                slideOut.style.maxHeight = slideOut.scrollHeight + 'px'
-            }
-        })
-/* window.addEventListener('DOMContentLoaded', () => {
-     const str = 'me you us we they '
-        const arr = str.trim().split(' ')
-        alert(arr.length)
- })*/
-        
+      const collapseBtn = document.querySelector('.league-ctrl-collapser-btn')
+      collapseBtn.addEventListener('click', () => { 
+        const slideOut = collapseBtn.nextElementSibling 
+        if (slideOut.style.maxHeight) {
+          slideOut.style.maxHeight = null 
+        } else { 
+          slideOut.style.maxHeight = slideOut.scrollHeight + 'px' 
+          } 
+      }) 
+      /* window.addEventListener('DOMContentLoaded', () => { const str = 'me you us
+      we they ' const arr = str.trim().split(' ') alert(arr.length) })*/
+
     </script>
-</body>
+  </body>
 </html>
