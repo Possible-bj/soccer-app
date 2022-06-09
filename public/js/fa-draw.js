@@ -186,7 +186,6 @@ const showElapseTime = (progress, date) => {
       $dateSpan.textContent = date.split('T')[0]
       $timeSpan.textContent = date.split('T')[1]
     default:
-      return
   }
 }
 const runUpdate = () => {
@@ -202,7 +201,6 @@ const runUpdate = () => {
         lockFunctions()
         showElapseTime(timeProgress.inprogress, savedFixtures.elapseDate)
       default:
-        return
     }
     displayFixtures(savedFixtures.fixtures)
   }
