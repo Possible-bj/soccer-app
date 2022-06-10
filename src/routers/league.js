@@ -46,8 +46,8 @@ router.get('/league/team/add', async (req, res) => {
       throw new Error('League has Started, cannot add more teams!')
     if (table.running === 'Ended')
       throw new Error('League has Ended, cannot add teams!')
-    if (table.teams.length === 30)
-      throw new Error('Table is full, max of 30 teams; cannot add more teams!')
+    if (table.teams.length === 33)
+      throw new Error('Table is full, max of 33 teams; cannot add more teams!')
     const duplicateTeam = table.teams.find((t) => t.team === team)
     if (duplicateTeam) {
       throw new Error('team has been taken')
@@ -125,7 +125,7 @@ router.get('/league/start', async (_req, res) => {
     if (table.teams.length < 10)
       return res.status(400).send({
         feedBack:
-          'Teams are not up to 10; min of 10 and max of 30 teams take in.',
+          'Teams are not up to 10; min of 10 and max of 33 teams take in.',
       })
     table.running = 'yes'
     for (i = 0; i < table.teams.length; i++) {
