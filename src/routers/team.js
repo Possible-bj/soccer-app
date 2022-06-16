@@ -129,7 +129,7 @@ router.get('/team/logo', async (req, res) => {
       teamsObj.push(toObj)
     }
   }
-  res.send(teamsObj)
+  res.send(teams)
 })
 router.get('/current/league/teams', async (req, res) => {
   const teamArray = []
