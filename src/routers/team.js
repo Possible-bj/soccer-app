@@ -88,7 +88,10 @@ router.get('/team/logo', async (req, res) => {
   const teams = await team.find({})
   const meta = await metadata.find({})
   const currentLeague = await league.findOne({ season: meta[0].league.season })
-  const allLeagues = await league.find({})
+  const allLeagues = await league.find({}, null, {
+    limits: parseInt(req.query.limit),
+    skip: parseInt(req.query.skip),
+  })
   for (let i = 0; i < teams.length; i++) {
     const toObj = teams[i].toObject()
     if (toObj.name !== 'supreme') {

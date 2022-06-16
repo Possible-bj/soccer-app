@@ -1,30 +1,31 @@
 const teamPane = document.querySelector('#team-pane')
 window.addEventListener('DOMContentLoaded', () => {
-    
-const setUp = () => {
-  fetch('/team/logo')
-    .then((response) => {
-      response.json()
-        .then((data) => {
-          personalise()
-          plot(data)
+  let $skip = 0
+  let $limit = 10
+  const $nxtBtn = document.querySelector('#next')
+  const $prevBtn = document.querySelector('#prev')
+  const setUp = (skip, limit = $limit) => {
+    fetch(`/team/logo?skip=${skip}&limit=${limit}`).then((response) => {
+      response.json().then((data) => {
+        personalise()
+        plot(data)
       })
-  })
-}
-const personalise = () => {
-  const pane = document.querySelector('.body-content')
-  for (i=0; i<pane.childElementCount; i++) {
-    if ( pane.children[i].classList.contains('frame') ) {
-      pane.removeChild(pane.children[i])
+    })
+  }
+  const personalise = () => {
+    const pane = document.querySelector('.body-content')
+    for (i = 0; i < pane.childElementCount; i++) {
+      if (pane.children[i].classList.contains('frame')) {
+        pane.removeChild(pane.children[i])
+      }
     }
   }
-}
 
-const plot = (data) => {
-  for (i = 0; i < data.length; i++) {
-    const team = document.createElement('div')
-    team.classList.add('team')
-    team.innerHTML = `
+  const plot = (data) => {
+    for (i = 0; i < data.length; i++) {
+      const team = document.createElement('div')
+      team.classList.add('team')
+      team.innerHTML = `
     <div class="team-logo margin-auto"><img src="/team/logo/${data[i].name}"/></div>
     <div class="team-info">
       <div class="stats-pane league-stats">
@@ -104,8 +105,17 @@ const plot = (data) => {
         <div class="span-col-6">${data[i].sclStats.trophies}</div>
       </div>
     </div>`
-teamPane.append(team)
+      teamPane.append(team)
+    }
   }
-}
-setUp()
+  setUp($skip, $limit)
+  $prevBtn.textContent = '<< Prev'
+  if ($skip > 0) {
+    $prevBtn.addEventListener('click', () => {
+      setUp($skip - $limit)
+    })
+  }
+  $nxtBtn.addEventListener('click', () => {
+    setUp($skip + $limit)
+  })
 })
