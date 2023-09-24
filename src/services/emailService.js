@@ -8,8 +8,8 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-const sendDetails = (userData, cb) => {
-  console.log("userData", userData);
+const sendDetails = async (userData, cb) => {
+  // console.log("userData", userData);
   // const link = `${FE_URL}/verify?email=${user.email}&token=${token}`
   const mailOptions = {
     from: `RESERVATION`,
@@ -27,12 +27,17 @@ const sendDetails = (userData, cb) => {
   `,
   };
 
-  transporter.sendMail(mailOptions, function (error, info) {
-    if (error) {
-      cb(error.message, null);
-    } else {
-      cb(null, info);
-    }
+  await new Promise((resolve, reject) => {
+    transporter.sendMail(mailOptions, (err, info) => {
+      if (err) {
+        cb(err.message, null);
+        console.error(err);
+        reject(err);
+      } else {
+        cb(null, info);
+        resolve(info);
+      }
+    });
   });
 };
 module.exports = {
