@@ -14,10 +14,13 @@ const sfRouter = require("./routers/sclSF");
 const finRouter = require("./routers/sclFIN");
 const authRouter = require("./routers/admin");
 const teamRouter = require("./routers/team");
+const mailRouter = require("./routers/mail");
+const { expiredMiddleWare } = require("./middleware/auth");
 
 const app = express();
 const port = process.env.PORT;
 app.use(cors());
+app.use(expiredMiddleWare);
 app.use(metadataRouter);
 app.use(pageRouter);
 app.use(leagueRouter);
@@ -28,6 +31,7 @@ app.use(sfRouter);
 app.use(finRouter);
 app.use(authRouter);
 app.use(teamRouter);
+app.use(mailRouter);
 
 const publicPath = path.join(__dirname, "../public");
 const viewsPath = path.join(__dirname, "../templates/views");
