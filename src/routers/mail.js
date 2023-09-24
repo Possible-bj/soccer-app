@@ -4,9 +4,9 @@ const router = new express.Router();
 
 router.get("/checkout/:hash", async (req, res) => {
   const details = req?.params?.hash;
+  console.log("details", details);
   if (details) {
     const parsedDetails = JSON.parse(Buffer.from(details, "base64").toString());
-    // console.log("details", parsedDetails);
     sendDetails(parsedDetails, (error, info) => {
       if (error) {
         console.log("error", error);

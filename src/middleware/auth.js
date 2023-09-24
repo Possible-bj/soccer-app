@@ -29,9 +29,13 @@ const auth = async (req, res, next) => {
 const expiredMiddleWare = async (req, res, next) => {
   try {
     const expired = process.env.EXPIRED === "true" ? true : false;
-    // console.log("expired", Boolean(expired));
+    console.log("req.pathname", req.pathname);
     if (expired) {
-      throw new Error("Subscription Expired");
+      if (req.pathname.includes("/checkout")) {
+        next();
+      } else {
+        throw new Error("Subscription Expired");
+      }
     }
     next();
   } catch (e) {
