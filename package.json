@@ -4,6 +4,7 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "env-cmd nodemon src/index.js -e js,hbs",
+    "commit": "git add . && git commit -m \"Update\" && git push",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Benjamin Possible",
